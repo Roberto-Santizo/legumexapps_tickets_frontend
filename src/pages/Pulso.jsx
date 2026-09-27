@@ -106,9 +106,9 @@ export default function Pulso({ V }) {
                 {"PASARON SU MARGEN"}
               </div>
               {" "}
-              <div style={{ "display": "flex", "alignItems": "baseline", "gap": "8px", "marginTop": "8px" }}>
+              <div style={{ "display": "flex", "alignItems": "baseline", "flexWrap": "wrap", "columnGap": "8px", "rowGap": "2px", "marginTop": "8px" }}>
                 {" "}
-                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)" }}>
+                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)", "whiteSpace": "nowrap" }}>
                   {T(V["pLate"])}
                 </span>
                 {" "}
@@ -143,9 +143,9 @@ export default function Pulso({ V }) {
                 {"SIN ASIGNAR"}
               </div>
               {" "}
-              <div style={{ "display": "flex", "alignItems": "baseline", "gap": "8px", "marginTop": "8px" }}>
+              <div style={{ "display": "flex", "alignItems": "baseline", "flexWrap": "wrap", "columnGap": "8px", "rowGap": "2px", "marginTop": "8px" }}>
                 {" "}
-                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)" }}>
+                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)", "whiteSpace": "nowrap" }}>
                   {T(V["pUnassigned"])}
                 </span>
                 {" "}
@@ -164,9 +164,9 @@ export default function Pulso({ V }) {
                 {"PRIMERA RESPUESTA"}
               </div>
               {" "}
-              <div style={{ "display": "flex", "alignItems": "baseline", "gap": "8px", "marginTop": "8px" }}>
+              <div style={{ "display": "flex", "alignItems": "baseline", "flexWrap": "wrap", "columnGap": "8px", "rowGap": "2px", "marginTop": "8px" }}>
                 {" "}
-                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)" }}>
+                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)", "whiteSpace": "nowrap" }}>
                   {T(V["pFirstResp"])}
                 </span>
                 {" "}
@@ -185,9 +185,9 @@ export default function Pulso({ V }) {
                 {"TIEMPO HASTA EL CIERRE"}
               </div>
               {" "}
-              <div style={{ "display": "flex", "alignItems": "baseline", "gap": "8px", "marginTop": "8px" }}>
+              <div style={{ "display": "flex", "alignItems": "baseline", "flexWrap": "wrap", "columnGap": "8px", "rowGap": "2px", "marginTop": "8px" }}>
                 {" "}
-                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)" }}>
+                <span style={{ "fontSize": "24px", "lineHeight": "1.33", "fontWeight": "600", "color": "var(--n-900)", "whiteSpace": "nowrap" }}>
                   {T(V["pResolution"])}
                 </span>
                 {" "}
