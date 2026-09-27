@@ -13,7 +13,7 @@ export default function BarraLateral({ V }) {
         {" "}
       </button>
       {" "}
-      <button data-m="campana-lateral" onClick={V["onBell"]} aria-label={V["bellAria"]} aria-expanded={V["notifOpen"]} title="Notificaciones" style={{ "position": "absolute", "top": "24px", "right": "12px", "width": "44px", "height": "44px", "borderRadius": "10px", "border": "none", "background": S(V["bellBg"]), "boxShadow": S(V["bellShadow"]), "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp7 scp8">
+      <button data-m="campana-lateral" data-recorrido="campana" onClick={V["onBell"]} aria-label={V["bellAria"]} aria-expanded={V["notifOpen"]} title="Notificaciones" style={{ "position": "absolute", "top": "24px", "right": "12px", "width": "44px", "height": "44px", "borderRadius": "10px", "border": "none", "background": S(V["bellBg"]), "boxShadow": S(V["bellShadow"]), "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp7 scp8">
         {" "}
         {V["bellPolling"] ? (<>
           <span aria-hidden="true" style={{ "position": "relative", "display": "inline-block", "height": "10px", "flexShrink": "0" }}>
@@ -34,7 +34,7 @@ export default function BarraLateral({ V }) {
         {" "}
       </button>
       {" "}
-      <nav style={{ "position": "relative", "display": "flex", "flexDirection": "column", "gap": "4px" }}>
+      <nav data-recorrido="menu-nav" style={{ "position": "relative", "display": "flex", "flexDirection": "column", "gap": "4px" }}>
         {" "}
         {V["navPillOn"] ? (<>
           {" "}
@@ -45,7 +45,7 @@ export default function BarraLateral({ V }) {
         {L(V["navItems"]).map((_n_2, $index) => (
           <React.Fragment key={$index}>
             {" "}
-            <button onClick={_n_2?.["go"]} onMouseEnter={_n_2?.["onEnter"]} onMouseLeave={_n_2?.["onLeave"]} style={{ "--nav-hover": S(_n_2?.["hoverBg"]), "--nav-press": S(_n_2?.["pressBg"]), "position": "relative", "zIndex": "1", "height": "44px", "textAlign": "left", "border": "none", "background": "transparent", "color": S(_n_2?.["ink"]), "fontSize": "14px", "fontWeight": S(_n_2?.["weight"]), "padding": "0 8px", "borderRadius": "8px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--nb,460ms) var(--ease-standard) var(--nbd,120ms),opacity var(--duration-fast) var(--ease-standard)" }} className="scp9 scpa">
+            <button data-recorrido={_n_2?.["recorrido"]} onClick={_n_2?.["go"]} onMouseEnter={_n_2?.["onEnter"]} onMouseLeave={_n_2?.["onLeave"]} style={{ "--nav-hover": S(_n_2?.["hoverBg"]), "--nav-press": S(_n_2?.["pressBg"]), "position": "relative", "zIndex": "1", "height": "44px", "textAlign": "left", "border": "none", "background": "transparent", "color": S(_n_2?.["ink"]), "fontSize": "14px", "fontWeight": S(_n_2?.["weight"]), "padding": "0 8px", "borderRadius": "8px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--nb,460ms) var(--ease-standard) var(--nbd,120ms),opacity var(--duration-fast) var(--ease-standard)" }} className="scp9 scpa">
               {" "}
               <span style={{ "display": "flex", "alignItems": "center", "gap": "8px", "minWidth": "0" }}>
                 {" "}
@@ -113,7 +113,7 @@ export default function BarraLateral({ V }) {
         {" "}
       </nav>
       {" "}
-      <div style={{ "background": "var(--n-0)", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "12px" }}>
+      <div data-recorrido="bandeja" style={{ "background": "var(--n-0)", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "12px" }}>
         {" "}
         <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
           <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
@@ -289,7 +289,14 @@ export default function BarraLateral({ V }) {
             {" "}
           </div>
           {" "}
-          <button onClick={V["onTema"]} aria-label={V["temaLabel"]} title={V["temaLabel"]} style={{ "marginLeft": "auto", "flexShrink": "0", "width": "32px", "height": "32px", "display": "inline-flex", "alignItems": "center", "justifyContent": "center", "background": "transparent", "border": "1px solid var(--n-200)", "borderRadius": "8px", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scp4">
+          <button data-recorrido="ayuda" onClick={V["onAyuda"]} aria-label="¿Cómo funciona? Recorrido guiado del sistema" title="¿Cómo funciona?" style={{ "marginLeft": "auto", "flexShrink": "0", "width": "32px", "height": "32px", "display": "inline-flex", "alignItems": "center", "justifyContent": "center", "background": "transparent", "border": "1px solid var(--n-200)", "borderRadius": "8px", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scp4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <path d="M12 17h.01"></path>
+            </svg>
+          </button>
+          <button data-recorrido="tema" onClick={V["onTema"]} aria-label={V["temaLabel"]} title={V["temaLabel"]} style={{ "flexShrink": "0", "width": "32px", "height": "32px", "display": "inline-flex", "alignItems": "center", "justifyContent": "center", "background": "transparent", "border": "1px solid var(--n-200)", "borderRadius": "8px", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scp4">
             {V["temaClaro"] ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="4"></circle>

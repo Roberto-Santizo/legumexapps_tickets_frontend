@@ -43,6 +43,7 @@ export const valoresApp = {
     v.temaClaro = tema === 'claro'; v.temaOscuro = tema === 'oscuro'; v.temaAuto = tema === 'sistema';
     v.temaLabel = 'Tema: ' + (tema === 'claro' ? 'claro' : tema === 'oscuro' ? 'oscuro' : 'automático (según el equipo)') + '. Tocá para cambiarlo.';
     v.onTema = () => this.ciclarTema();
+    v.onAyuda = () => this.iniciarRecorrido();
     const ra = this.seg(isAdmin), ru = this.seg(!isAdmin);
     v.adminBg = ra.bg; v.adminBorder = ra.border; v.userBg = ru.bg; v.userBorder = ru.border;
     const roleReset = { detailId: null, screen: 'tickets', chatId: null, chatOpen: false, chatMsg: '', chatErr: '', scope: 'all', chatScope: 'all', chatStatus: 'all', nudgedOnly: false, notifOpen: false, statusFilter: 'all', prioFilter: 'all', qa: null, asigOpen: false };
@@ -75,7 +76,7 @@ export const valoresApp = {
     });
     v.onHome = () => { this.setState({ screen: 'tickets', detailId: null, dir: 'down', chatOpen: false }); this.load(500); };
     v.navItems = navDefs.map(n => ({
-      label: n.label, count: n.count,
+      label: n.label, count: n.count, recorrido: 'nav-' + n.key,
       weight: n.key === activeKey ? '500' : '400',
       hoverBg: n.key === activeKey ? 'transparent' : 'rgba(var(--sf-rgb),0.7)',
       pressBg: n.key === activeKey ? 'rgba(10,10,10,0.06)' : 'var(--fondo-2)',

@@ -260,6 +260,14 @@ En modo demostración siguen visibles, como en el prototipo.
 - **Ventanas de confirmación accesibles** (`refDialogo`): `role="dialog"`, foco adentro al
   abrir ("Cancelar" si la acción es riesgosa), Tab no se escapa y al cerrar el foco
   vuelve al botón que la abrió.
+- **Recorrido guiado** ("¿Cómo funciona?"): botón **?** junto al del tema, abajo del
+  menú. Oscurece la pantalla, ilumina cada elemento y explica qué hace; pasos por rol en
+  `config/textos.js` (`RECORRIDO_ADMIN` / `RECORRIDO_USUARIO`, cada uno con los selectores
+  `donde`), reglas en `logic/metodos/recorrido.js`, posición de la tarjeta en
+  `logic/valores/capas.js` y capa en `components/capas/Recorrido.jsx` (z-index 90).
+  Los elementos se marcan con `data-recorrido="…"`; si se renombra o quita uno, actualizar
+  el paso. En teléfono y tablet la tarjeta es una hoja arriba o abajo. Teclado: ← → y Esc.
+  Solo lectura: no llama a la API.
 - Sierra animada en el fondo y logo de Legumex (`public/marca/`).
 - Tickets en tres vistas en escritorio: tarjetas, tabla y kanban (arrastrar entre
   columnas). En el teléfono, una sola: tarjetas (ver abajo).

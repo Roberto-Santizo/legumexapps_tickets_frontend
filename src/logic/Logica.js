@@ -16,6 +16,7 @@ import { metodosChat } from './metodos/chat.js';
 import { metodosPulso } from './metodos/pulso.js';
 import { metodosCatalogos } from './metodos/catalogos.js';
 import { metodosNotificaciones } from './metodos/notificaciones.js';
+import { metodosRecorrido } from './metodos/recorrido.js';
 import { valoresLogin } from './valores/login.js';
 import { valoresApp } from './valores/app.js';
 import { valoresPulso } from './valores/pulso.js';
@@ -49,7 +50,7 @@ export class Logica extends LogicaBase {
     loading: true, swap: 0, busy: '', modalClosing: false, toastOut: false,
     heavyMsg: '', moment: null, qa: null, staged: [], lightbox: null, viewOpen: false, periodOpen: false, period: '30',
     uploads: [], saving: '', err500Line: 'HTTP 500 · GET /api/tickets', draftFound: false, sessionOk: true, sessionMsg: '',
-    dragId: null, dragOver: null, landed: null, asigOpen: false, arrastre: false,
+    dragId: null, dragOver: null, landed: null, asigOpen: false, arrastre: false, recorrido: null, recRect: null,
     // Diseño móvil: se calcula al arrancar para no pintar primero el de escritorio
     movil: typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(MQ_MOVIL).matches,
     menuMovil: false,
@@ -98,6 +99,13 @@ export class Logica extends LogicaBase {
     this._keys = e => {
       const s = this.state;
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''));
+      // Recorrido guiado abierto: Escape sale y las flechas pasan de paso (solo mientras está abierto)
+      if (s.recorrido) {
+        if (e.key === 'Escape') this.salirRecorrido();
+        else if (e.key === 'ArrowRight') this.pasoRecorrido(1);
+        else if (e.key === 'ArrowLeft') this.pasoRecorrido(-1);
+        return;
+      }
       if (s.lightbox) {
         if (e.key === 'Escape') this.setState({ lightbox: null });
         else if (e.key === '+' || e.key === '=') this.lbZoomAt(((s.lbZ || {}).z || 1) * 1.5, 0, 0);
@@ -138,6 +146,8 @@ export class Logica extends LogicaBase {
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll, true);
     if (this._mqMovil) this._mqMovil.removeEventListener('change', this._onMq);
     this.dejarDeEscucharArrastre();
+    if (this._onRecMedir) { window.removeEventListener('resize', this._onRecMedir); window.removeEventListener('scroll', this._onRecMedir, true); }
+    clearInterval(this._recT); cancelAnimationFrame(this._recRaf);
     clearTimeout(this._boot); clearTimeout(this._bootOut);
     cancelAnimationFrame(this._fillRaf);
     clearTimeout(this._fabT);
@@ -185,6 +195,7 @@ Object.assign(Logica.prototype,
   metodosPulso,
   metodosCatalogos,
   metodosNotificaciones,
+  metodosRecorrido,
   valoresLogin,
   valoresApp,
   valoresPulso,

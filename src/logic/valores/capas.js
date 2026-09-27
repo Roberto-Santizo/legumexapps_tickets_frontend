@@ -122,6 +122,43 @@ export const valoresCapas = {
     v.hasToast = !!s.toast; v.toast = s.toast; v.toastAviso = !!s.toastAviso; v.toastOk = !s.toastAviso;
     v.hasUndo = !!s.undo;
     v.onUndo = () => { const fn = s.undo; if (fn) fn(); };
+    // Recorrido guiado: paso actual, recuadro iluminado y dónde va la tarjeta (sin tapar lo que se explica)
+    const rec = s.recorrido;
+    v.recOn = !!(rec && s.authed);
+    if (v.recOn) {
+      const pasos = this.pasosRecorrido(), i = Math.min(rec.i, pasos.length - 1), paso = pasos[i];
+      const R = s.recRect, W = window.innerWidth, H = window.innerHeight, pad = 8, gap = 16, CW = Math.min(360, W - 32);
+      v.recTitulo = paso.titulo; v.recTexto = paso.texto; v.recKey = 'rec' + i;
+      v.recPaso = 'PASO ' + (i + 1) + ' DE ' + pasos.length;
+      v.recHayAnterior = i > 0;
+      v.recSiguiente = i === pasos.length - 1 ? 'Terminar' : i === 0 ? 'Empezar' : 'Siguiente';
+      v.recPuntos = pasos.map((_, k) => ({ key: 'p' + k, bg: k === i ? 'var(--n-900)' : 'var(--n-300)', w: k === i ? '18px' : '6px' }));
+      v.recFoco = !!R; v.recSinFoco = !R;
+      v.recFocoStyle = R ? { left: (R.x - pad) + 'px', top: (R.y - pad) + 'px', width: (R.w + pad * 2) + 'px', height: (R.h + pad * 2) + 'px', borderRadius: (R.r + pad) + 'px' } : {};
+      const px = n => Math.round(n) + 'px', entre = (n, a, b) => Math.max(a, Math.min(b, n));
+      let pos;
+      if (s.movil) {
+        // teléfono y tablet: hoja abajo; si lo iluminado está en la mitad de abajo, la hoja va arriba
+        const arriba = R && R.y + R.h / 2 > H / 2;
+        pos = arriba ? { left: '12px', right: '12px', top: '12px', margin: '0 auto', maxWidth: '560px', borderRadius: '16px' }
+          : { left: '12px', right: '12px', bottom: '12px', margin: '0 auto', maxWidth: '560px', borderRadius: '16px' };
+      } else if (!R) {
+        pos = { left: px((W - CW) / 2), top: px(H * 0.3), width: px(CW) };
+      } else if (R.x + R.w + pad + gap + CW <= W - 16) {
+        pos = { left: px(R.x + R.w + pad + gap), top: px(entre(R.y - pad, 16, H - 300)), width: px(CW) };
+      } else if (R.y + R.h + pad + gap + 240 <= H) {
+        pos = { left: px(entre(R.x, 16, W - CW - 16)), top: px(R.y + R.h + pad + gap), width: px(CW) };
+      } else if (R.y - pad - gap - 200 >= 0) {
+        pos = { left: px(entre(R.x, 16, W - CW - 16)), bottom: px(H - (R.y - pad - gap)), width: px(CW) };
+      } else {
+        pos = { left: px(entre(R.x - pad - gap - CW, 16, W - CW - 16)), top: px(entre(R.y, 16, H - 300)), width: px(CW) };
+      }
+      v.recTarjetaStyle = pos;
+      v.recRef = this.refDialogo();
+      v.onRecSiguiente = () => this.pasoRecorrido(1);
+      v.onRecAnterior = () => this.pasoRecorrido(-1);
+      v.onRecSalir = () => this.salirRecorrido();
+    }
     // Arrastrar y soltar: qué dice la capa según dónde caería el archivo
     v.arrastreOn = !!(s.arrastre && s.authed);
     if (v.arrastreOn) {
