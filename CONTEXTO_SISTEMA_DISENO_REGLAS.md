@@ -229,10 +229,38 @@ En modo demostración siguen visibles, como en el prototipo.
 - Viene del prototipo aprobado y **no se cambia sin pedido explícito**. Estilos en línea
   por elemento; lo global en `src/index.css` (variables `--duration-*` y
   `--ease-standard`, todas las animaciones `@keyframes`, foco visible).
-- Fondo `#f4f5f1`, texto `#171717`, verde oscuro de marca `#0b2a1e` / `#14402c`, sierra
-  animada en el fondo y logo de Legumex (`public/marca/`).
-- Colores de estado y prioridad en `config/constantes.js` (`ST`, `PR`); colores de avatar
-  (`RING`) y de cada sección del menú (`NAV_INK`) también ahí.
+- **Colores como tokens** (sistema de diseño): toda la paleta vive en el bloque `:root`
+  del principio de `src/index.css` y el código usa `var(--…)`, nunca un color suelto.
+  - Neutros `--n-0` (blanco / superficie) a `--n-1000` (negro); texto principal
+    `--n-900`, secundario `--n-600`, terciario `--n-500` (cumple contraste AA).
+  - Fondo `--fondo` (`#f4f5f1`), marca `--marca` (`#0b2a1e`) y `--marca-2`, sierra
+    `--sierra`, y los de estado: `--azul`, `--naranja`, `--verde`, `--rojo`, `--violeta`,
+    `--ambar` con sus `-tinte`.
+  - Transparencias sobre superficie o fondo: `rgba(var(--sf-rgb),x)` y
+    `rgba(var(--fondo-rgb),x)`.
+  - Colores de estado y prioridad en `config/constantes.js` (`ST`, `PR`), ya como tokens.
+- **Modo oscuro "de noche"**: los mismos tokens con valores oscuros (bloque siguiente en
+  `index.css`).
+  - Se aplica con `data-tema="oscuro"` en `<html>` o, en "Auto", cuando el equipo está en
+    oscuro.
+  - En el inicio de sesión, el sol pasa a ser una luna creciente (`data-luna`) y hay
+    estrellas (`data-estrellas`); en el sistema, estrellas tenues detrás de la sierra.
+  - El logo se aclara con un filtro.
+- **Selector de tema**: botón junto al nombre en la tarjeta del usuario; cambia entre
+  Claro, Oscuro y Auto (`aplicarTema` / `ciclarTema` en `logic/metodos/interfaz.js`).
+  - Se guarda en `localStorage` (`mt-tema`).
+  - `index.html` lo aplica antes de pintar, para que no parpadee.
+- **Escala tipográfica**: 11 · 12 · 14 · 16 px para texto y 20 · 24 · 28 · 32 · 40 para
+  títulos y cifras. No agregar tamaños intermedios.
+- **Avatares propios**: SVG con iniciales y un tono fijo por persona (`blobUrl` en
+  `logic/metodos/interfaz.js`), sin servicio externo.
+- **Tarjetas de ticket**: solo el estado lleva chip con fondo. La prioridad y "esperando al
+  solicitante" van como texto con punto o ícono; "pasó su margen" conserva el borde
+  naranja porque es una alerta.
+- **Ventanas de confirmación accesibles** (`refDialogo`): `role="dialog"`, foco adentro al
+  abrir ("Cancelar" si la acción es riesgosa), Tab no se escapa y al cerrar el foco
+  vuelve al botón que la abrió.
+- Sierra animada en el fondo y logo de Legumex (`public/marca/`).
 - Tickets en tres vistas en escritorio: tarjetas, tabla y kanban (arrastrar entre
   columnas). En el teléfono, una sola: tarjetas (ver abajo).
 
@@ -310,6 +338,9 @@ automáticos); en el teléfono la misma interfaz se reacomoda.
   `logic/metodos/`, un valor nuevo para la pantalla en su archivo de `logic/valores/`.
 - Respetar el orden de secciones de `renderVals()` (ver comentario en `Logica.js`).
 - Constantes y textos editables en `src/config/`, no sueltos en el código.
+- **Colores solo con tokens** (`var(--…)` de `index.css`): así funcionan el modo oscuro y
+  cualquier ajuste de paleta en un solo lugar. Un color nuevo se agrega como token en
+  los dos bloques (claro y oscuro).
 - **Nada de datos de prueba fuera de `src/mocks/`.**
 - No inventar endpoints ni comportamiento del backend; preguntar si no está confirmado.
 - No crear componentes compartidos nuevos ni cambiar el estilo (por ejemplo, pasar a
