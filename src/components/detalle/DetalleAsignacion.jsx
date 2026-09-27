@@ -68,7 +68,7 @@ export default function DetalleAsignacion({ V }) {
                           {T(_u_31?.["nombre"])}
                         </span>
                         {_u_31?.["hasTag"] ? (<>
-                          <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "10px", "letterSpacing": "0.04em", "color": "var(--n-900)", "background": S(_u_31?.["tagBg"]), "borderRadius": "9999px", "padding": "2px 7px" }}>
+                          <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "letterSpacing": "0.04em", "color": "var(--n-900)", "background": S(_u_31?.["tagBg"]), "borderRadius": "9999px", "padding": "2px 7px" }}>
                             {T(_u_31?.["tag"])}
                           </span>
                         </>) : null}

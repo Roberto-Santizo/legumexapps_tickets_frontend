@@ -35,7 +35,7 @@ export default function Encabezado({ V }) {
                 {" "}
               </>) : null}
               {" "}
-              <div style={{ "fontSize": "15px", "lineHeight": "1.5", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
+              <div style={{ "fontSize": "14px", "lineHeight": "1.5", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
                 {T(V["pageSub"])}
               </div>
               {" "}

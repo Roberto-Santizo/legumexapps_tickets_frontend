@@ -146,7 +146,7 @@ export default function ChatFlotante({ V }) {
                 <path d="m21 21-4.3-4.3"></path>
               </svg>
               {" "}
-              <input value={(V["chatQ"] ?? "")} onChange={V["onChatQ"]} placeholder="Buscar por título o código" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "7px 10px 7px 32px", "fontSize": "13px", "outline": "none" }} />
+              <input value={(V["chatQ"] ?? "")} onChange={V["onChatQ"]} placeholder="Buscar por título o código" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "7px 10px 7px 32px", "fontSize": "14px", "outline": "none" }} />
               {" "}
             </div>
             {" "}
@@ -224,7 +224,7 @@ export default function ChatFlotante({ V }) {
                       {" "}
                     </span>
                     {" "}
-                    <span style={{ "fontSize": "13px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
+                    <span style={{ "fontSize": "14px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
                       {T(_c_60?.["titulo"])}
                     </span>
                     {" "}
@@ -258,7 +258,7 @@ export default function ChatFlotante({ V }) {
                   <path d="m21 21-4.3-4.3"></path>
                 </svg>
                 {" "}
-                <div style={{ "fontSize": "13px", "color": "var(--n-600)" }}>
+                <div style={{ "fontSize": "14px", "color": "var(--n-600)" }}>
                   {"Ningún ticket coincide con lo que buscás."}
                 </div>
                 {" "}
@@ -280,7 +280,7 @@ export default function ChatFlotante({ V }) {
                 {"REPORTÓ "}{T(V["chatAutor"])}
               </div>
               {" "}
-              <div style={{ "fontSize": "13px", "lineHeight": "1.5", "color": "var(--n-800)", "textWrap": "pretty" }}>
+              <div style={{ "fontSize": "14px", "lineHeight": "1.5", "color": "var(--n-800)", "textWrap": "pretty" }}>
                 {T(V["chatDesc"])}
               </div>
               {" "}
@@ -301,7 +301,7 @@ export default function ChatFlotante({ V }) {
                     {" "}
                     {_m_61?.["noBlob"] ? (<>
                       {" "}
-                      <span style={{ "width": "26px", "height": "26px", "borderRadius": "9999px", "background": "var(--n-50)", "border": "1px solid " + S(_m_61?.["ring"]), "color": "var(--n-900)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "flexShrink": "0", "marginTop": "auto" }}>
+                      <span style={{ "width": "26px", "height": "26px", "borderRadius": "9999px", "background": "var(--n-50)", "border": "1px solid " + S(_m_61?.["ring"]), "color": "var(--n-900)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "flexShrink": "0", "marginTop": "auto" }}>
                         {T(_m_61?.["ini"])}
                       </span>
                       {" "}
@@ -316,7 +316,7 @@ export default function ChatFlotante({ V }) {
                     </span>
                     {" "}
                     {_m_61?.["isText"] ? (<>
-                      <span style={{ "background": S(_m_61?.["bg"]), "color": S(_m_61?.["ink"]), "border": S(_m_61?.["border"]), "borderRadius": "14px", "padding": "9px 12px", "fontSize": "13px", "lineHeight": "1.5", "textWrap": "pretty" }}>
+                      <span style={{ "background": S(_m_61?.["bg"]), "color": S(_m_61?.["ink"]), "border": S(_m_61?.["border"]), "borderRadius": "14px", "padding": "9px 12px", "fontSize": "14px", "lineHeight": "1.5", "textWrap": "pretty" }}>
                         {T(_m_61?.["texto"])}
                       </span>
                     </>) : null}
@@ -394,13 +394,13 @@ export default function ChatFlotante({ V }) {
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
                 {" "}
-                <span style={{ "minWidth": "0", "flex": "1", "fontSize": "13px", "lineHeight": "1.45", "color": "var(--n-800)", "textWrap": "pretty" }}>
+                <span style={{ "minWidth": "0", "flex": "1", "fontSize": "14px", "lineHeight": "1.45", "color": "var(--n-800)", "textWrap": "pretty" }}>
                   {T(V["chatReplyLockMsg"])}
                 </span>
                 {" "}
                 {V["chatReplyLockTake"] ? (<>
                   {" "}
-                  <button onClick={V["chatReplyOnTake"]} style={{ "flexShrink": "0", "background": "var(--n-1000)", "color": "var(--n-0)", "border": "none", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "13px", "fontWeight": "500", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1n scp6">
+                  <button onClick={V["chatReplyOnTake"]} style={{ "flexShrink": "0", "background": "var(--n-1000)", "color": "var(--n-0)", "border": "none", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "14px", "fontWeight": "500", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1n scp6">
                     {T(V["chatReplyTakeLabel"])}
                   </button>
                   {" "}
@@ -477,7 +477,7 @@ export default function ChatFlotante({ V }) {
                           <img src="/marca/legumex-isotipo.png" alt="" style={{ "position": "absolute", "left": "0", "top": "0", "height": "12px", "width": "auto", "display": "block", "clipPath": "inset(0 " + S(_u_64?.["rest"]) + " 0 0)", "transition": "clip-path 240ms linear", "filter": "brightness(0) invert(1)" }} />
                         </span>
                         {" "}
-                        <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "10px", "color": "var(--n-0)", "letterSpacing": "0.04em" }}>
+                        <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-0)", "letterSpacing": "0.04em" }}>
                           {T(_u_64?.["pctLabel"])}
                         </span>
                         {" "}
@@ -499,7 +499,7 @@ export default function ChatFlotante({ V }) {
                   </svg>
                 </label>
                 {" "}
-                <textarea value={(V["chatMsg"] ?? "")} onChange={V["onChatMsg"]} onKeyDown={V["onChatKey"]} rows="2" placeholder="Escribí tu respuesta — Enter envía, Shift+Enter salta línea" style={{ "flex": "1", "minWidth": "0", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "10px", "padding": "9px 11px", "fontSize": "13px", "lineHeight": "1.5", "fontFamily": "inherit", "resize": "none", "outline": "none" }}></textarea>
+                <textarea value={(V["chatMsg"] ?? "")} onChange={V["onChatMsg"]} onKeyDown={V["onChatKey"]} rows="2" placeholder="Escribí tu respuesta — Enter envía, Shift+Enter salta línea" style={{ "flex": "1", "minWidth": "0", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "10px", "padding": "9px 11px", "fontSize": "14px", "lineHeight": "1.5", "fontFamily": "inherit", "resize": "none", "outline": "none" }}></textarea>
                 {" "}
                 <button onClick={V["onChatSend"]} aria-label="Enviar respuesta" title="Enviar respuesta" style={{ "background": "var(--n-950)", "color": "var(--n-0)", "border": "none", "borderRadius": "10px", "padding": "10px", "cursor": "pointer", "display": "flex", "alignItems": "center", "flexShrink": "0", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1c scp8">
                   {V["chatIdle"] ? (<>

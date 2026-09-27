@@ -30,7 +30,7 @@ export default function ChatLista({ V }) {
               <path d="m21 21-4.3-4.3"></path>
             </svg>
             {" "}
-            <input value={(V["chatQ"] ?? "")} onChange={V["onChatQ"]} placeholder="Buscar por título o código" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "7px 10px 7px 32px", "fontSize": "13px", "outline": "none" }} />
+            <input value={(V["chatQ"] ?? "")} onChange={V["onChatQ"]} placeholder="Buscar por título o código" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "7px 10px 7px 32px", "fontSize": "14px", "outline": "none" }} />
             {" "}
           </div>
           {" "}
@@ -108,7 +108,7 @@ export default function ChatLista({ V }) {
                     {" "}
                   </span>
                   {" "}
-                  <span style={{ "fontSize": "13px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
+                  <span style={{ "fontSize": "14px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
                     {T(_c_44?.["titulo"])}
                   </span>
                   {" "}
@@ -142,7 +142,7 @@ export default function ChatLista({ V }) {
                 <path d="m21 21-4.3-4.3"></path>
               </svg>
               {" "}
-              <div style={{ "fontSize": "13px", "color": "var(--n-600)" }}>
+              <div style={{ "fontSize": "14px", "color": "var(--n-600)" }}>
                 {"Ningún ticket coincide con lo que buscás."}
               </div>
               {" "}

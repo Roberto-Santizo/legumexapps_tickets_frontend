@@ -219,7 +219,7 @@ export const metodosTickets = {
       autor: (this.user(t.autor) || {}).nombre || '—', updated: idleTxt,
       slaShow: this.state.role === 'admin' ? (sla.late || sla.watch || sla.waiting) : !!sla.waiting, slaLate: sla.late, slaWatch: sla.watch, slaWaiting: !!sla.waiting,
       slaLabel: sla.label, slaTitle: sla.full || sla.label,
-      slaBg: sla.late ? 'var(--n-0)' : 'transparent', slaBorder: sla.late ? '1px solid var(--naranja)' : sla.waiting ? '1px solid var(--n-300)' : '1px solid transparent',
+      slaBg: sla.late ? 'var(--n-0)' : 'transparent', slaBorder: sla.late ? '1px solid var(--naranja)' : '1px solid transparent',
       slaInk: sla.late ? 'var(--n-900)' : sla.waiting ? 'var(--n-700)' : 'var(--n-600)',
       canTake: this.state.role === 'admin' && !t.asig && t.status !== 'closed',
       takeLabel: 'Tomar TIC-' + t.id,

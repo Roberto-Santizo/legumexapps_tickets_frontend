@@ -109,7 +109,7 @@ export default function Login({ V }) {
               {" "}
             </h2>
             {" "}
-            <p style={{ "fontSize": "17px", "lineHeight": "1.55", "color": "var(--n-700)", "maxWidth": "440px", "margin": "22px 0 0", "textWrap": "pretty", "animation": "dropIn 600ms var(--ease-standard) 1800ms both" }}>
+            <p style={{ "fontSize": "16px", "lineHeight": "1.55", "color": "var(--n-700)", "maxWidth": "440px", "margin": "22px 0 0", "textWrap": "pretty", "animation": "dropIn 600ms var(--ease-standard) 1800ms both" }}>
               {"Reportá lo que te frena y seguilo hasta que quede resuelto. Del campo a la planta, el mismo soporte."}
             </p>
             {" "}

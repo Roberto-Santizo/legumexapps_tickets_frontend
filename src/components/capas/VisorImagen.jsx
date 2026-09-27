@@ -109,7 +109,7 @@ export default function VisorImagen({ V }) {
                 {T(V["lbTipo"])}
               </span>
               {" "}
-              <span style={{ "fontSize": "13px", "color": "var(--n-300)" }}>
+              <span style={{ "fontSize": "14px", "color": "var(--n-300)" }}>
                 {"Archivo de ejemplo · sin imagen real en el prototipo"}
               </span>
               {" "}

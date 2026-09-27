@@ -25,7 +25,7 @@ export default function BarraMovil({ V }) {
           <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
         </svg>
         {V["hasUnread"] ? (
-          <span style={{ "position": "absolute", "top": "5px", "right": "5px", "minWidth": "18px", "height": "18px", "padding": "0 5px", "borderRadius": "9999px", "background": "var(--rojo)", "color": "var(--n-0)", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "10px", "fontWeight": "500", "display": "flex", "alignItems": "center", "justifyContent": "center", "boxShadow": "0 0 0 2px var(--fondo)" }}>
+          <span style={{ "position": "absolute", "top": "5px", "right": "5px", "minWidth": "18px", "height": "18px", "padding": "0 5px", "borderRadius": "9999px", "background": "var(--rojo)", "color": "var(--n-0)", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "fontWeight": "500", "display": "flex", "alignItems": "center", "justifyContent": "center", "boxShadow": "0 0 0 2px var(--fondo)" }}>
             {T(V["unreadLabel"])}
           </span>
         ) : null}

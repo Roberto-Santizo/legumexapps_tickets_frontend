@@ -92,7 +92,7 @@ export const valoresChat = {
         dot: ST[t.status].dot, bg: s.chatId === t.id ? 'var(--n-50)' : 'transparent',
         blobRef: el => { if (el) el.src = this.blobUrl(otherId, 60); }, hasBlob: !!otherId, noBlob: !otherId,
         last: last ? ((last.autor === me.id ? 'Vos: ' : '') + last.texto) : 'Sin respuestas todavía',
-        lastInk: last ? 'var(--n-600)' : 'var(--n-400)',
+        lastInk: last ? 'var(--n-600)' : 'var(--n-500)',
         when: this.ago(this.lastAt(t)).replace('hace ', ''),
         waiting: waits(t), asigId: t.asig || null,
         waitLabel: !isAdmin || t.asig === me.id ? 'Espera tu respuesta' : t.asig ? 'Espera a ' + ((this.user(t.asig) || {}).nombre || 'el equipo').split(' ')[0] : 'Espera que alguien lo tome',

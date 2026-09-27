@@ -26,7 +26,7 @@ export default function ZonaSoltar({ V }) {
             </svg>
           )}
         </span>
-        <div style={{ "fontSize": "18px", "fontWeight": "600", "color": "var(--n-900)", "letterSpacing": "-0.01em" }}>
+        <div style={{ "fontSize": "20px", "fontWeight": "600", "color": "var(--n-900)", "letterSpacing": "-0.01em" }}>
           {T(V["arrastreTitulo"])}
         </div>
         {V["arrastreTituloTicket"] ? (

@@ -85,7 +85,7 @@ export default function VistaTabla({ V }) {
                     {" "}
                     {_t_20?.["hasAsig"] ? (<>
                       {" "}
-                      <div style={{ "position": "absolute", "right": "-5px", "bottom": "-5px", "width": "20px", "height": "20px", "borderRadius": "6px", "background": "var(--n-0)", "border": "1px solid " + S(_t_20?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)" }}>
+                      <div style={{ "position": "absolute", "right": "-5px", "bottom": "-5px", "width": "20px", "height": "20px", "borderRadius": "6px", "background": "var(--n-0)", "border": "1px solid " + S(_t_20?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)" }}>
                         {T(_t_20?.["ini"])}
                       </div>
                       {" "}

@@ -167,7 +167,7 @@ export default function DetalleSituacion({ V }) {
                       {" "}
                       <div style={{ "minWidth": "0" }}>
                         {" "}
-                        <div style={{ "fontSize": "13px", "lineHeight": "1.4", "fontWeight": "500", "color": "var(--n-900)" }}>
+                        <div style={{ "fontSize": "14px", "lineHeight": "1.4", "fontWeight": "500", "color": "var(--n-900)" }}>
                           {T(_st_30?.["label"])}
                         </div>
                         {" "}
@@ -213,7 +213,7 @@ export default function DetalleSituacion({ V }) {
                 {" "}
                 <div style={{ "minWidth": "0" }}>
                   {" "}
-                  <div style={{ "fontSize": "13px", "lineHeight": "1.4", "fontWeight": "500", "color": "var(--n-900)" }}>
+                  <div style={{ "fontSize": "14px", "lineHeight": "1.4", "fontWeight": "500", "color": "var(--n-900)" }}>
                     {T(V["stuckTitle"])}
                   </div>
                   {" "}

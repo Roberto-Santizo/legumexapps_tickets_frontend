@@ -6,7 +6,7 @@ export default function DetalleDescripcion({ V }) {
   return (
     <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px" }}>
       {" "}
-      <h2 style={{ "fontSize": "30px", "lineHeight": "1.38", "fontWeight": "500", "letterSpacing": "-0.01em", "margin": "0", "color": "var(--n-900)", "textWrap": "pretty" }}>
+      <h2 data-m="titulo-detalle" style={{ "fontSize": "32px", "lineHeight": "1.38", "fontWeight": "500", "letterSpacing": "-0.01em", "margin": "0", "color": "var(--n-900)", "textWrap": "pretty" }}>
         {T(V["dTitulo"])}
       </h2>
       {" "}

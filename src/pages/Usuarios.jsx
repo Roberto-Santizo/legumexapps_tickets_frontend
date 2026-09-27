@@ -108,7 +108,7 @@ export default function Usuarios({ V }) {
                           {T(_u_54?.["nombre"])}
                         </span>
                         {_u_54?.["inactive"] ? (<>
-                          <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "10px", "letterSpacing": "0.06em", "color": "var(--n-600)", "border": "1px solid var(--n-300)", "borderRadius": "9999px", "padding": "1px 7px" }}>
+                          <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "letterSpacing": "0.06em", "color": "var(--n-600)", "border": "1px solid var(--n-300)", "borderRadius": "9999px", "padding": "1px 7px" }}>
                             {"INACTIVO"}
                           </span>
                         </>) : null}

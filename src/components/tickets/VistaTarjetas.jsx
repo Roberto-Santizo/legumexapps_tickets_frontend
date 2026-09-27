@@ -76,7 +76,7 @@ export default function VistaTarjetas({ V }) {
                       {" "}
                       {_t_15?.["hasAsig"] ? (<>
                         {" "}
-                        <div title={"Asignado a " + S(_t_15?.["asig"])} style={{ "position": "absolute", "right": "-5px", "bottom": "-5px", "width": "20px", "height": "20px", "borderRadius": "6px", "background": "var(--n-0)", "border": "1px solid " + S(_t_15?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)" }}>
+                        <div title={"Asignado a " + S(_t_15?.["asig"])} style={{ "position": "absolute", "right": "-5px", "bottom": "-5px", "width": "20px", "height": "20px", "borderRadius": "6px", "background": "var(--n-0)", "border": "1px solid " + S(_t_15?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)" }}>
                           {T(_t_15?.["ini"])}
                         </div>
                         {" "}
@@ -128,7 +128,7 @@ export default function VistaTarjetas({ V }) {
                         <button data-m="chip-asig" onClick={_t_15?.["qaToggle"]} aria-label={_t_15?.["asigTitle"]} style={{ "height": "30px", "padding": "0 10px 0 4px", "borderRadius": "9999px", "border": "1px " + S(_t_15?.["asigBorder"]), "background": S(_t_15?.["qaBg"]), "color": "var(--n-900)", "fontSize": "12px", "fontWeight": "500", "cursor": "pointer", "display": "inline-flex", "alignItems": "center", "gap": "6px", "whiteSpace": "nowrap", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp18 scp19">
                           {" "}
                           {_t_15?.["asigHas"] ? (<>
-                            <span style={{ "width": "22px", "height": "22px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "var(--im,translateY(0)) scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
+                            <span style={{ "width": "22px", "height": "22px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "var(--im,translateY(0)) scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
                               {T(_t_15?.["asigIni"])}
                             </span>
                             {T(_t_15?.["asigFirst"])}
@@ -162,7 +162,7 @@ export default function VistaTarjetas({ V }) {
                                 {" "}
                                 <button onClick={_o_16?.["go"]} role="menuitem" title={_o_16?.["full"]} style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": S(_o_16?.["bg"]), "border": "none", "borderRadius": "8px", "padding": "7px 8px", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scpq scpr">
                                   {" "}
-                                  <span style={{ "width": "24px", "height": "24px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
+                                  <span style={{ "width": "24px", "height": "24px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
                                     {T(_o_16?.["ini"])}
                                   </span>
                                   {" "}
@@ -170,7 +170,7 @@ export default function VistaTarjetas({ V }) {
                                     {T(_o_16?.["nombre"])}
                                   </span>
                                   {_o_16?.["hasTag"] ? (<>
-                                    <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "10px", "letterSpacing": "0.04em", "color": "var(--n-900)", "background": S(_o_16?.["tagBg"]), "borderRadius": "9999px", "padding": "2px 7px" }}>
+                                    <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "letterSpacing": "0.04em", "color": "var(--n-900)", "background": S(_o_16?.["tagBg"]), "borderRadius": "9999px", "padding": "2px 7px" }}>
                                       {T(_o_16?.["tag"])}
                                     </span>
                                   </>) : null}
@@ -186,7 +186,7 @@ export default function VistaTarjetas({ V }) {
                             {" "}
                             {_t_15?.["asigHas"] && V["canUnassign"] ? (<>
                               {" "}
-                              <button onClick={_t_15?.["qaClear"]} role="menuitem" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "transparent", "border": "none", "borderTop": "1px solid var(--n-200)", "borderRadius": "0 0 8px 8px", "marginTop": "4px", "padding": "9px 8px 7px", "fontSize": "13px", "color": "var(--n-600)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scp0 scpt">
+                              <button onClick={_t_15?.["qaClear"]} role="menuitem" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "transparent", "border": "none", "borderTop": "1px solid var(--n-200)", "borderRadius": "0 0 8px 8px", "marginTop": "4px", "padding": "9px 8px 7px", "fontSize": "14px", "color": "var(--n-600)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scp0 scpt">
                                 {"Quitar asignación"}
                               </button>
                               {" "}
@@ -235,7 +235,7 @@ export default function VistaTarjetas({ V }) {
                         {" "}
                         <span style={{ "width": "7px", "height": "7px", "borderRadius": "9999px", "background": S(_t_15?.["sitDot"]), "flexShrink": "0" }}></span>
                         {" "}
-                        <span style={{ "fontSize": "13px", "lineHeight": "1.46", "color": "var(--n-700)", "minWidth": "0", "textWrap": "pretty" }}>
+                        <span style={{ "fontSize": "14px", "lineHeight": "1.46", "color": "var(--n-700)", "minWidth": "0", "textWrap": "pretty" }}>
                           {T(_t_15?.["sitText"])}
                         </span>
                         {" "}
@@ -243,7 +243,7 @@ export default function VistaTarjetas({ V }) {
                       {" "}
                     </>) : null}
                     {" "}
-                    <div style={{ "fontSize": "13px", "lineHeight": "1.46", "color": "var(--n-600)", "marginTop": "4px", "textWrap": "pretty" }}>
+                    <div style={{ "fontSize": "14px", "lineHeight": "1.46", "color": "var(--n-600)", "marginTop": "4px", "textWrap": "pretty" }}>
                       {" "}
                       {L(_t_15?.["excerptParts"]).map((_p_18, $index) => (
                         <React.Fragment key={$index}>
@@ -283,7 +283,7 @@ export default function VistaTarjetas({ V }) {
                       {T(_t_15?.["statusLabel"])}
                     </span>
                     {" "}
-                    <span style={{ "display": "inline-flex", "alignItems": "center", "gap": "6px", "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "9999px", "padding": "4px 10px", "fontSize": "11px", "fontWeight": "500", "color": "var(--n-700)", "whiteSpace": "nowrap" }}>
+                    <span style={{ "display": "inline-flex", "alignItems": "center", "gap": "6px", "background": "transparent", "border": "1px solid transparent", "borderRadius": "9999px", "padding": "4px 4px", "fontSize": "12px", "fontWeight": "500", "color": "var(--n-700)", "whiteSpace": "nowrap" }}>
                       {" "}
                       <span style={{ "width": "6px", "height": "6px", "borderRadius": "9999px", "background": S(_t_15?.["prioDot"]) }}></span>
                       {T(_t_15?.["prioLabel"])}{" "}

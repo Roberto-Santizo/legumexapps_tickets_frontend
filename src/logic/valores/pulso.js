@@ -21,10 +21,28 @@ export const valoresPulso = {
       });
       const yMax = Math.max(2, Math.max.apply(null, ins.concat(outs)));
       const X = i => (i + 0.5) * (W / dias), Y = v => H - bot - (v / yMax) * (H - top - bot);
-      const line = arr => arr.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+      // Curva monótona (Fritsch–Carlson): suaviza sin pasar por encima ni por debajo de los datos reales
+      const line = arr => {
+        const px = arr.map((v, i) => X(i)), py = arr.map(v => Y(v)), n = arr.length;
+        const d = px.slice(0, -1).map((x, i) => (py[i + 1] - py[i]) / (px[i + 1] - x));
+        const m = py.map((_, i) => i === 0 ? d[0] : i === n - 1 ? d[n - 2] : (d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2));
+        for (let i = 0; i < n - 1; i++) {
+          if (d[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+          const a = m[i] / d[i], b = m[i + 1] / d[i], h = a * a + b * b;
+          if (h > 9) { const t = 3 / Math.sqrt(h); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+        }
+        let s = 'M' + px[0].toFixed(1) + ' ' + py[0].toFixed(1);
+        for (let i = 0; i < n - 1; i++) {
+          const dx = (px[i + 1] - px[i]) / 3;
+          s += ' C' + (px[i] + dx).toFixed(1) + ' ' + (py[i] + m[i] * dx).toFixed(1) + ' ' + (px[i + 1] - dx).toFixed(1) + ' ' + (py[i + 1] - m[i + 1] * dx).toFixed(1) + ' ' + px[i + 1].toFixed(1) + ' ' + py[i + 1].toFixed(1);
+        }
+        return s;
+      };
       v.pInPath = line(ins); v.pOutPath = line(outs);
       v.pOutArea = line(outs) + ' L' + X(dias - 1).toFixed(1) + ' ' + (H - bot) + ' L' + X(0).toFixed(1) + ' ' + (H - bot) + ' Z';
       v.pGrid = [0, 0.5, 1].map(r => ({ y: (H - bot - r * (H - top - bot)).toFixed(1) }));
+      // Escala del eje: cantidad de tickets en cada línea de la grilla
+      v.pEje = [1, 0.5, 0].map(r => ({ n: String(Math.round(r * yMax * 10) / 10).replace('.', ','), top: ((H - bot - r * (H - top - bot)) / H * 100).toFixed(1) + '%' }));
       v.pDays = ins.map((n, i) => {
         const ago = dias - 1 - i;
         return { yIn: (Y(n) / H * 100).toFixed(1) + '%', yOut: (Y(outs[i]) / H * 100).toFixed(1) + '%',

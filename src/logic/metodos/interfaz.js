@@ -67,12 +67,14 @@ export const metodosInterfaz = {
     if (runAfter && m.after) m.after();
   },
 
-  blobUrl(userId, size) {
+  // Avatar propio (SVG con iniciales y un tono fijo por persona): no depende de un servicio externo
+  blobUrl(userId) {
     const u = this.user(userId);
-    const seed = u ? (u.email || u.nombre) : 'tic-' + userId;
     const hue = BLOB_HUE[Math.abs(Number(userId) || 0) % BLOB_HUE.length];
-    return 'https://blobatar.dev/avatar/' + encodeURIComponent(seed.toLowerCase()) +
-      '?size=' + (size || 64) + '&background=circle&hue=' + hue + '&gen=2';
+    const ini = this.ini(u ? u.nombre : '') || '·';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="hsl(' + hue + ',70%,93%)"/>' +
+      '<text x="32" y="33" text-anchor="middle" dominant-baseline="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="hsl(' + hue + ',45%,32%)">' + ini + '</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   },
 
   tapped(key, name, ms) {

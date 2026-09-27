@@ -45,7 +45,7 @@ export default function BarraLateral({ V }) {
         {L(V["navItems"]).map((_n_2, $index) => (
           <React.Fragment key={$index}>
             {" "}
-            <button onClick={_n_2?.["go"]} onMouseEnter={_n_2?.["onEnter"]} onMouseLeave={_n_2?.["onLeave"]} style={{ "position": "relative", "zIndex": "1", "height": "44px", "textAlign": "left", "border": "none", "background": "transparent", "color": S(_n_2?.["ink"]), "fontSize": "14px", "fontWeight": S(_n_2?.["weight"]), "padding": "0 8px", "borderRadius": "8px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--nb,460ms) var(--ease-standard) var(--nbd,120ms),opacity var(--duration-fast) var(--ease-standard)" }} className="scp9 scpa">
+            <button onClick={_n_2?.["go"]} onMouseEnter={_n_2?.["onEnter"]} onMouseLeave={_n_2?.["onLeave"]} style={{ "--nav-hover": S(_n_2?.["hoverBg"]), "--nav-press": S(_n_2?.["pressBg"]), "position": "relative", "zIndex": "1", "height": "44px", "textAlign": "left", "border": "none", "background": "transparent", "color": S(_n_2?.["ink"]), "fontSize": "14px", "fontWeight": S(_n_2?.["weight"]), "padding": "0 8px", "borderRadius": "8px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--nb,460ms) var(--ease-standard) var(--nbd,120ms),opacity var(--duration-fast) var(--ease-standard)" }} className="scp9 scpa">
               {" "}
               <span style={{ "display": "flex", "alignItems": "center", "gap": "8px", "minWidth": "0" }}>
                 {" "}

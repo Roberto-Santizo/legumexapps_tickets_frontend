@@ -108,7 +108,7 @@ export default function VistaKanban({ V }) {
                           {" "}
                           {_t_23?.["hasAsig"] ? (<>
                             {" "}
-                            <div title={"Asignado a " + S(_t_23?.["asig"])} style={{ "position": "absolute", "right": "-5px", "bottom": "-5px", "width": "20px", "height": "20px", "borderRadius": "6px", "background": "var(--n-0)", "border": "1px solid " + S(_t_23?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)" }}>
+                            <div title={"Asignado a " + S(_t_23?.["asig"])} style={{ "position": "absolute", "right": "-5px", "bottom": "-5px", "width": "20px", "height": "20px", "borderRadius": "6px", "background": "var(--n-0)", "border": "1px solid " + S(_t_23?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)" }}>
                               {T(_t_23?.["ini"])}
                             </div>
                             {" "}
@@ -162,7 +162,7 @@ export default function VistaKanban({ V }) {
                             <button onClick={_t_23?.["qaToggle"]} aria-label={_t_23?.["asigTitle"]} style={{ "height": "30px", "padding": "0 10px 0 4px", "borderRadius": "9999px", "border": "1px " + S(_t_23?.["asigBorder"]), "background": S(_t_23?.["qaBg"]), "color": "var(--n-900)", "fontSize": "12px", "fontWeight": "500", "cursor": "pointer", "display": "inline-flex", "alignItems": "center", "gap": "6px", "whiteSpace": "nowrap", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp18 scp19">
                               {" "}
                               {_t_23?.["asigHas"] ? (<>
-                                <span style={{ "width": "22px", "height": "22px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "var(--im,translateY(0)) scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
+                                <span style={{ "width": "22px", "height": "22px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "var(--im,translateY(0)) scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
                                   {T(_t_23?.["asigIni"])}
                                 </span>
                                 {T(_t_23?.["asigFirst"])}
@@ -195,7 +195,7 @@ export default function VistaKanban({ V }) {
                                     {" "}
                                     <button onClick={_o_25?.["go"]} role="menuitem" title={_o_25?.["full"]} style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": S(_o_25?.["bg"]), "border": "none", "borderRadius": "8px", "padding": "7px 8px", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scpq scpr">
                                       {" "}
-                                      <span style={{ "width": "24px", "height": "24px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "10px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
+                                      <span style={{ "width": "24px", "height": "24px", "borderRadius": "9999px", "background": "var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "11px", "fontWeight": "600", "color": "var(--n-900)", "flexShrink": "0", "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
                                         {T(_o_25?.["ini"])}
                                       </span>
                                       {" "}
@@ -203,7 +203,7 @@ export default function VistaKanban({ V }) {
                                         {T(_o_25?.["nombre"])}
                                       </span>
                                       {_o_25?.["hasTag"] ? (<>
-                                        <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "10px", "letterSpacing": "0.04em", "color": "var(--n-900)", "background": S(_o_25?.["tagBg"]), "borderRadius": "9999px", "padding": "2px 7px" }}>
+                                        <span style={{ "flexShrink": "0", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "letterSpacing": "0.04em", "color": "var(--n-900)", "background": S(_o_25?.["tagBg"]), "borderRadius": "9999px", "padding": "2px 7px" }}>
                                           {T(_o_25?.["tag"])}
                                         </span>
                                       </>) : null}
@@ -219,7 +219,7 @@ export default function VistaKanban({ V }) {
                                 {" "}
                                 {_t_23?.["asigHas"] && V["canUnassign"] ? (<>
                                   {" "}
-                                  <button onClick={_t_23?.["qaClear"]} role="menuitem" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "transparent", "border": "none", "borderTop": "1px solid var(--n-200)", "borderRadius": "0 0 8px 8px", "marginTop": "4px", "padding": "9px 8px 7px", "fontSize": "13px", "color": "var(--n-600)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scp0 scpt">
+                                  <button onClick={_t_23?.["qaClear"]} role="menuitem" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "transparent", "border": "none", "borderTop": "1px solid var(--n-200)", "borderRadius": "0 0 8px 8px", "marginTop": "4px", "padding": "9px 8px 7px", "fontSize": "14px", "color": "var(--n-600)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scp0 scpt">
                                     {"Quitar asignación"}
                                   </button>
                                   {" "}

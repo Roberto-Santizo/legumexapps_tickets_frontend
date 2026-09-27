@@ -214,13 +214,13 @@ export default function DetalleActividad({ V }) {
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
             {" "}
-            <span style={{ "minWidth": "0", "flex": "1", "fontSize": "13px", "lineHeight": "1.45", "color": "var(--n-800)", "textWrap": "pretty" }}>
+            <span style={{ "minWidth": "0", "flex": "1", "fontSize": "14px", "lineHeight": "1.45", "color": "var(--n-800)", "textWrap": "pretty" }}>
               {T(V["dReplyLockMsg"])}
             </span>
             {" "}
             {V["dReplyLockTake"] ? (<>
               {" "}
-              <button onClick={V["dReplyOnTake"]} style={{ "flexShrink": "0", "background": "var(--n-1000)", "color": "var(--n-0)", "border": "none", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "13px", "fontWeight": "500", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1n scp6">
+              <button onClick={V["dReplyOnTake"]} style={{ "flexShrink": "0", "background": "var(--n-1000)", "color": "var(--n-0)", "border": "none", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "14px", "fontWeight": "500", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1n scp6">
                 {T(V["dReplyTakeLabel"])}
               </button>
               {" "}

@@ -133,7 +133,7 @@ export default function TicketFormulario({ V }) {
                       {" "}
                       <span style={{ "minWidth": "0", "flex": "1" }}>
                         {" "}
-                        <span style={{ "display": "block", "fontSize": "13px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
+                        <span style={{ "display": "block", "fontSize": "14px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
                           {T(_d_26?.["titulo"])}
                         </span>
                         {" "}

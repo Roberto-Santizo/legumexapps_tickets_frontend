@@ -29,7 +29,7 @@ export default function MomentoBloqueante({ V }) {
             {T(V["momentCode"])}{" MARCADO"}
           </div>
           {" "}
-          <div style={{ "fontSize": "18px", "lineHeight": "1.4", "fontWeight": "600", "color": "var(--n-900)", "marginTop": "8px", "textWrap": "pretty" }}>
+          <div style={{ "fontSize": "20px", "lineHeight": "1.4", "fontWeight": "600", "color": "var(--n-900)", "marginTop": "8px", "textWrap": "pretty" }}>
             {T(V["momentTitulo"])}
           </div>
           {" "}

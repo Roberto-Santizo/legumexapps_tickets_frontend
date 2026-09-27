@@ -35,7 +35,7 @@ export default function Pulso({ V }) {
                 {"SIN MOVER"}
               </div>
               {" "}
-              <div style={{ "fontSize": "13px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
+              <div style={{ "fontSize": "14px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
                 {"Pasaron su margen y nadie los tocó"}
               </div>
               {" "}
@@ -53,7 +53,7 @@ export default function Pulso({ V }) {
                 {"SIN DUEÑO"}
               </div>
               {" "}
-              <div style={{ "fontSize": "13px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
+              <div style={{ "fontSize": "14px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
                 {"Activos que todavía no tienen técnico"}
               </div>
               {" "}
@@ -71,7 +71,7 @@ export default function Pulso({ V }) {
                 {"PRIMERA RESPUESTA"}
               </div>
               {" "}
-              <div style={{ "fontSize": "13px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
+              <div style={{ "fontSize": "14px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
                 {"Promedio hasta que alguien contesta"}
               </div>
               {" "}
@@ -89,7 +89,7 @@ export default function Pulso({ V }) {
                 {"HASTA EL CIERRE"}
               </div>
               {" "}
-              <div style={{ "fontSize": "13px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
+              <div style={{ "fontSize": "14px", "lineHeight": "1.45", "color": "var(--n-600)", "marginTop": "6px", "textWrap": "pretty" }}>
                 {"Promedio de principio a fin"}
               </div>
               {" "}
@@ -261,7 +261,13 @@ export default function Pulso({ V }) {
                 {" "}
               </div>
               {" "}
-              <div style={{ "position": "relative", "height": "200px", "marginTop": "20px" }}>
+              <div style={{ "position": "relative", "height": "200px", "marginTop": "20px", "marginLeft": "28px" }}>
+                {/* Escala del eje: cuántos tickets marca cada línea */}
+                {L(V["pEje"]).map((_e_1, $index) => (
+                  <span key={$index} aria-hidden="true" style={{ "position": "absolute", "right": "calc(100% + 8px)", "top": S(_e_1?.["top"]), "transform": "translateY(-50%)", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-500)", "lineHeight": "1" }}>
+                    {T(_e_1?.["n"])}
+                  </span>
+                ))}
                 {" "}
                 <svg viewBox="0 0 640 200" preserveAspectRatio="none" style={{ "position": "absolute", "inset": "0", "width": "100%", "height": "100%", "overflow": "visible" }}>
                   {" "}
@@ -314,7 +320,7 @@ export default function Pulso({ V }) {
                 {" "}
               </div>
               {" "}
-              <div style={{ "display": "flex", "justifyContent": "space-between", "marginTop": "8px", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-500)" }}>
+              <div style={{ "display": "flex", "justifyContent": "space-between", "marginTop": "8px", "marginLeft": "28px", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-500)" }}>
                 <span>
                   {"HACE 13 D"}
                 </span>
@@ -362,7 +368,7 @@ export default function Pulso({ V }) {
                   {" "}
                   <div style={{ "position": "absolute", "inset": "0", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "pointerEvents": "none" }}>
                     {" "}
-                    <span style={{ "fontSize": "30px", "lineHeight": "1", "fontWeight": "600", "color": "var(--n-900)" }}>
+                    <span style={{ "fontSize": "32px", "lineHeight": "1", "fontWeight": "600", "color": "var(--n-900)" }}>
                       {T(V["pActTotal"])}
                     </span>
                     {" "}
@@ -374,7 +380,7 @@ export default function Pulso({ V }) {
                   {" "}
                 </div>
                 {" "}
-                <div style={{ "display": "flex", "flexDirection": "column", "gap": "10px", "minWidth": "0", "flex": "1" }}>
+                <div style={{ "display": "flex", "flexDirection": "column", "gap": "10px", "minWidth": "min(100%,220px)", "flex": "1" }}>
                   {" "}
                   {L(V["pDonut"]).map((_sg_38, $index) => (
                     <React.Fragment key={$index}>
@@ -383,7 +389,7 @@ export default function Pulso({ V }) {
                         {" "}
                         <span style={{ "width": "10px", "height": "10px", "borderRadius": "3px", "background": S(_sg_38?.["color"]), "flexShrink": "0" }}></span>
                         {" "}
-                        <span style={{ "fontSize": "14px", "color": "var(--n-900)", "minWidth": "0", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
+                        <span style={{ "fontSize": "14px", "lineHeight": "1.3", "color": "var(--n-900)", "minWidth": "0" }}>
                           {T(_sg_38?.["label"])}
                         </span>
                         {" "}

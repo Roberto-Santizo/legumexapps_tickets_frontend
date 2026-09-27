@@ -7,7 +7,7 @@
   --n-200:#e5e5e5;
   --n-300:#d4d4d4;
   --n-400:#a3a3a3;
-  --n-500:#737373;
+  --n-500:#666666;
   --n-600:#525252;
   --n-700:#404040;
   --n-800:#262626;
@@ -137,8 +137,8 @@
 .scp6:active{transform:scale(0.96) translateY(1px) !important}
 .scp7:hover{background:var(--n-0) !important;--ic:1.12 !important;--ir:-14deg !important}
 .scp8:active{transform:scale(0.94) translateY(1px) !important}
-.scp9:hover{background:{{ n.hoverBg }} !important;--ic:1.24 !important;--nt:240ms !important;--ne:cubic-bezier(0.34,1.56,0.64,1) !important;--nd:0ms !important;--nb:120ms !important;--nbd:0ms !important}
-.scpa:active{transform:scale(0.96) translateY(1px) !important;background:{{ n.pressBg }} !important}
+.scp9:hover{background:var(--nav-hover,transparent) !important;--ic:1.24 !important;--nt:240ms !important;--ne:cubic-bezier(0.34,1.56,0.64,1) !important;--nd:0ms !important;--nb:120ms !important;--nbd:0ms !important}
+.scpa:active{transform:scale(0.96) translateY(1px) !important;background:var(--nav-press,transparent) !important}
 .scpb:active{transform:scale(0.96) !important}
 .scpc:hover{background:var(--fondo) !important}
 .scpd:active{transform:scale(0.97) translateY(1px) !important;background:var(--n-200) !important}
@@ -276,6 +276,7 @@
   /* encabezado de cada pantalla: sin el aire de escritorio */
   [data-m="encabezado"]{padding:8px 16px 4px!important;margin:0!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;gap:10px!important}
   [data-m="encabezado"] h1{font-size:26px!important;line-height:1.15!important}
+  [data-m="titulo-detalle"]{font-size:24px!important;line-height:1.3!important}
   /* Pulso: indicadores de a dos */
   [data-m="kpis"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:20px!important;margin:4px 0 16px!important}
   [data-m="kpis"]>div{padding:16px 12px 0 0!important}

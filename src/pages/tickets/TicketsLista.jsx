@@ -95,7 +95,7 @@ export default function TicketsLista({ V }) {
             {" "}
             <div style={{ "display": "flex", "alignItems": "baseline", "gap": "8px" }}>
               {" "}
-              <span style={{ "fontSize": "36px", "lineHeight": "1.11", "fontWeight": "500", "letterSpacing": "-0.02em", "color": "var(--n-900)" }}>
+              <span style={{ "fontSize": "40px", "lineHeight": "1.11", "fontWeight": "500", "letterSpacing": "-0.02em", "color": "var(--n-900)" }}>
                 {T(V["statTotal"])}
               </span>
               {" "}
