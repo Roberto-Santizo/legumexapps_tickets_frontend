@@ -102,7 +102,7 @@ export const valoresLista = {
       const on = s.screen === 'tickets' && s.statusFilter === k[0];
       return {
         label: k[1], count: String(k[2]), dot: ST[k[0]].dot,
-        bg: on ? 'var(--fondo)' : 'transparent', border: on ? '1px solid #dcdfd6' : '1px solid transparent',
+        bg: on ? 'var(--fondo)' : 'transparent', border: on ? '1px solid var(--borde-suave)' : '1px solid transparent',
         weight: on ? '500' : '400', countColor: on ? 'var(--n-900)' : 'var(--n-600)',
         aria: on ? 'Quitar el filtro ' + k[1] : 'Ver solo ' + k[1].toLowerCase(),
         go: () => this.setState(st => ({

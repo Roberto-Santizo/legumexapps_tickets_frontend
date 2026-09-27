@@ -166,6 +166,51 @@ export const metodosInterfaz = {
     this.openModal(Object.assign({ type: 'confirm', kind: 'fn', skipKey: key, run }, opts));
   },
 
+  // Ventanas (diálogos) accesibles: al abrir, el foco entra (a "Cancelar" si la acción es
+  // riesgosa, si no al botón principal); Tab no se escapa detrás; al cerrar vuelve a donde estaba.
+  refDialogo() {
+    if (this._refDlg) return this._refDlg;
+    this._refDlg = el => {
+      if (el) {
+        this._focoPrevio = document.activeElement;
+        const botones = () => Array.prototype.filter.call(el.querySelectorAll('button, input, textarea, select, a[href], [tabindex="0"]'), x => !x.disabled && x.offsetParent !== null);
+        this._trampa = e => {
+          if (e.key !== 'Tab') return;
+          const b = botones(); if (!b.length) return;
+          const i = b.indexOf(document.activeElement);
+          if (e.shiftKey && i <= 0) { e.preventDefault(); b[b.length - 1].focus(); }
+          else if (!e.shiftKey && i === b.length - 1) { e.preventDefault(); b[0].focus(); }
+        };
+        el.addEventListener('keydown', this._trampa);
+        setTimeout(() => {
+          const campo = el.querySelector('input:not([type=checkbox]):not([type=radio]), textarea, select');
+          const b = botones(), riesgosa = el.getAttribute('data-riesgosa') === 'si';
+          const destino = campo || (riesgosa ? b.find(x => /Cancelar/.test(x.textContent)) : b[b.length - 1]) || b[0];
+          if (destino) destino.focus();
+        }, 30);
+      } else {
+        const prev = this._focoPrevio; this._focoPrevio = null;
+        if (prev && prev.focus && document.contains(prev)) setTimeout(() => prev.focus(), 0);
+      }
+    };
+    return this._refDlg;
+  },
+
+  // Tema: claro, oscuro o el del sistema (preferencia de cada persona en este navegador).
+  // El atributo data-tema en <html> elige los tokens de index.css; index.html lo aplica antes de pintar.
+  aplicarTema(tema) {
+    const t = tema === 'claro' || tema === 'oscuro' ? tema : 'sistema';
+    try { localStorage.setItem('mt-tema', t); } catch (e) {}
+    const el = document.documentElement;
+    if (t === 'sistema') el.removeAttribute('data-tema'); else el.setAttribute('data-tema', t);
+    if (this.state.tema !== t) this.setState({ tema: t });
+  },
+
+  ciclarTema() {
+    const orden = ['claro', 'oscuro', 'sistema'];
+    this.aplicarTema(orden[(orden.indexOf(this.state.tema) + 1) % orden.length]);
+  },
+
   // Saludo según la hora local
   saludo() {
     const h = new Date().getHours();

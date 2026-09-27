@@ -20,7 +20,7 @@ export default function Toast({ V }) {
         )}
         {T(V["toast"])}
         {V["hasUndo"] ? (<>
-          <button onClick={V["onUndo"]} style={{ "marginLeft": "4px", "background": "transparent", "color": "var(--n-0)", "border": "1px solid rgba(255,255,255,0.35)", "borderRadius": "9999px", "padding": "3px 10px", "fontSize": "12px", "fontWeight": "500", "cursor": "pointer", "display": "inline-flex", "alignItems": "center", "gap": "5px", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scp2l scp2m">
+          <button onClick={V["onUndo"]} style={{ "marginLeft": "4px", "background": "transparent", "color": "var(--n-0)", "border": "1px solid rgba(var(--sf-rgb),0.35)", "borderRadius": "9999px", "padding": "3px 10px", "fontSize": "12px", "fontWeight": "500", "cursor": "pointer", "display": "inline-flex", "alignItems": "center", "gap": "5px", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scp2l scp2m">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--n-0)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "var(--im,translateX(0)) scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard),stroke var(--duration-fast) var(--ease-standard)", "stroke": "var(--is,var(--n-0))" }}>
               <path d="M9 14 4 9l5-5"></path>
               <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5H11"></path>

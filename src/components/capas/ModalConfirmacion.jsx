@@ -9,13 +9,13 @@ export default function ModalConfirmacion({ V }) {
           pantalla y tapaba la confirmación; por debajo de avisos (72) y carga (80). */}
       <div style={{ "position": "fixed", "inset": "0", "background": "rgba(10,10,10,0.4)", "display": "flex", "alignItems": "center", "justifyContent": "center", "padding": "24px", "zIndex": "70", "animation": S(V["overlayAnim"]) + " both" }}>
         {" "}
-        <div style={{ "width": "100%", "maxWidth": "460px", "background": "var(--n-0)", "borderRadius": "16px", "padding": "24px", "animation": S(V["modalAnim"]) + " both", "boxShadow": "rgba(0,0,0,0.1) 0px 10px 15px -3px, rgba(0,0,0,0.1) 0px 4px 6px -4px" }}>
+        <div ref={V["modalRef"]} role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-detalle" data-riesgosa={V["modalRiesgosa"]} style={{ "width": "100%", "maxWidth": "460px", "background": "var(--n-0)", "borderRadius": "16px", "padding": "24px", "animation": S(V["modalAnim"]) + " both", "boxShadow": "rgba(0,0,0,0.1) 0px 10px 15px -3px, rgba(0,0,0,0.1) 0px 4px 6px -4px" }}>
           {" "}
-          <h3 style={{ "fontSize": "20px", "lineHeight": "1.4", "fontWeight": "600", "margin": "0", "color": "var(--n-900)" }}>
+          <h3 id="modal-titulo" style={{ "fontSize": "20px", "lineHeight": "1.4", "fontWeight": "600", "margin": "0", "color": "var(--n-900)" }}>
             {T(V["modalTitle"])}
           </h3>
           {" "}
-          <p style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-500)", "margin": "6px 0 20px" }}>
+          <p id="modal-detalle" style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-500)", "margin": "6px 0 20px" }}>
             {T(V["modalSub"])}
           </p>
           {" "}

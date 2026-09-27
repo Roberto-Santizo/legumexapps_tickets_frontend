@@ -13,6 +13,7 @@ export const valoresModal = {
     if (m) {
       v.modalTitle = m.title; v.modalSub = m.sub; v.modalOkLabel = m.ok; v.modalErr = m.err || '';
       v.modalIsDanger = !!m.danger; v.modalIsSafe = !m.danger;
+      v.modalRef = this.refDialogo(); v.modalRiesgosa = m.danger ? 'si' : 'no';
       v.modalHasName = m.type !== 'confirm';
       v.modalNameLabel = m.type === 'user' ? 'Nombre y apellido' : 'Nombre';
       v.modalName = m.name || '';

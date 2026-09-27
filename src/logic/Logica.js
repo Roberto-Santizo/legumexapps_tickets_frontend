@@ -53,6 +53,7 @@ export class Logica extends LogicaBase {
     // Diseño móvil: se calcula al arrancar para no pintar primero el de escritorio
     movil: typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(MQ_MOVIL).matches,
     menuMovil: false,
+    tema: (() => { try { return localStorage.getItem('mt-tema') || 'sistema'; } catch (e) { return 'sistema'; } })(),
     // Sin datos de arranque: llegan de la API. En modo demostración los manda main.jsx
     // desde src/mocks/datosDemo.js (prop datosDemo).
     users: (this.props.datosDemo || {}).users || [],
@@ -77,6 +78,7 @@ export class Logica extends LogicaBase {
     window.addEventListener('scroll', this._onScroll, true);
     this.escucharMovil();
     this.escucharArrastre();
+    this.aplicarTema(this.state.tema);
     this.load(650);
     this._vis = () => {
       if (document.visibilityState !== 'visible' || !this.state.authed) return;

@@ -14,7 +14,7 @@ export const valoresApp = {
     if (typeof requestAnimationFrame !== 'undefined') requestAnimationFrame(() => { const el = document.querySelector('[data-sheet]'); if (el) this.sheetEdges(el); });
     v.padBottom = noPageScroll ? '16px' : '96px';
     v.sheetMask = s.screen === 'tickets' ? 'linear-gradient(to bottom, var(--n-1000) 0, var(--n-1000) calc(100% - 72px), rgba(0,0,0,var(--fb,0.12)) 100%)' : 'none';
-    v.sheetBg = bare ? 'transparent' : 'rgba(255,255,255,0.86)';
+    v.sheetBg = bare ? 'transparent' : 'rgba(var(--sf-rgb),0.86)';
     v.sheetBlur = bare ? 'none' : 'blur(10px) saturate(1.1)';
     v.sheetShadow = bare ? 'none' : '0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200),0 24px 48px -24px rgba(11,42,30,0.18)';
 
@@ -31,13 +31,18 @@ export const valoresApp = {
     v.onBellClose = () => this.setState({ notifOpen: false });
     v.onReadAll = () => this.markRead(me, nf.map(n => n.key));
     v.notifs = nf.map(n => ({ kind: n.kind, kindColor: n.kindColor, code: 'TIC-' + n.tid, when: this.ago(n.h), title: n.title, sub: n.sub,
-      dot: n.read ? 'transparent' : 'var(--azul)', weight: n.read ? '400' : '600', bg: n.read ? 'var(--n-0)' : '#f8faf5',
+      dot: n.read ? 'transparent' : 'var(--azul)', weight: n.read ? '400' : '600', bg: n.read ? 'var(--n-0)' : 'var(--aviso-no-leido)',
       go: () => { this.markRead(me, [n.key]); this.setState({ notifOpen: false }); if (n.chat) this.openChat(n.tid); else this.openTicket(n.tid); } }));
     v.noNotifs = nf.length === 0;
     this._nUnread = nUnread;
     v.onLogout = () => { api.logout(); clearInterval(this._pollIv); this.setState({ session: null, authed: false, notifOpen: false, email: '', password: '', loginPhase: '', showPwd: false, screen: 'tickets', detailId: null }); };
 
     v.meNombre = me.nombre; v.meIni = this.ini(me.nombre); v.meRing = this.ring(me.id); v.meRol = isAdmin ? 'Administrador' : 'Usuario';
+    // Tema: el ícono muestra el actual; tocar pasa al siguiente (Claro → Oscuro → Auto)
+    const tema = s.tema || 'sistema';
+    v.temaClaro = tema === 'claro'; v.temaOscuro = tema === 'oscuro'; v.temaAuto = tema === 'sistema';
+    v.temaLabel = 'Tema: ' + (tema === 'claro' ? 'claro' : tema === 'oscuro' ? 'oscuro' : 'automático (según el equipo)') + '. Tocá para cambiarlo.';
+    v.onTema = () => this.ciclarTema();
     const ra = this.seg(isAdmin), ru = this.seg(!isAdmin);
     v.adminBg = ra.bg; v.adminBorder = ra.border; v.userBg = ru.bg; v.userBorder = ru.border;
     const roleReset = { detailId: null, screen: 'tickets', chatId: null, chatOpen: false, chatMsg: '', chatErr: '', scope: 'all', chatScope: 'all', chatStatus: 'all', nudgedOnly: false, notifOpen: false, statusFilter: 'all', prioFilter: 'all', qa: null, asigOpen: false };
@@ -72,7 +77,7 @@ export const valoresApp = {
     v.navItems = navDefs.map(n => ({
       label: n.label, count: n.count,
       weight: n.key === activeKey ? '500' : '400',
-      hoverBg: n.key === activeKey ? 'transparent' : 'rgba(255,255,255,0.7)',
+      hoverBg: n.key === activeKey ? 'transparent' : 'rgba(var(--sf-rgb),0.7)',
       pressBg: n.key === activeKey ? 'rgba(10,10,10,0.06)' : 'var(--fondo-2)',
       // Un acento por sección: aparece solo cuando está activa o señalada, nunca en reposo.
       ink: 'var(--n-900)',

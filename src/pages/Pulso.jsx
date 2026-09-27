@@ -23,7 +23,7 @@ export default function Pulso({ V }) {
           {" "}
           <div data-m="kpis" style={{ "position": "relative", "display": "grid", "gridTemplateColumns": "repeat(auto-fit,minmax(170px,1fr))", "columnGap": "0", "rowGap": "28px", "margin": "8px 0 20px", "padding": "24px 20px 20px", "background": "rgba(var(--fondo-rgb),0.9)", "backdropFilter": "blur(12px)", "WebkitBackdropFilter": "blur(12px)", "borderRadius": "12px", "borderRadius": "16px" }}>
             {" "}
-            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid #d4d6cf", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 0ms both" }}>
+            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid var(--linea-kpi)", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 0ms both" }}>
               {" "}
               <span aria-hidden="true" style={{ "position": "absolute", "top": "-4px", "left": "0", "width": "9px", "height": "9px", "borderRadius": "9999px", "background": "var(--naranja)", "boxShadow": "0 0 0 4px var(--fondo)" }}></span>
               {" "}
@@ -41,7 +41,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid #d4d6cf", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 60ms both" }}>
+            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid var(--linea-kpi)", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 60ms both" }}>
               {" "}
               <span aria-hidden="true" style={{ "position": "absolute", "top": "-4px", "left": "0", "width": "9px", "height": "9px", "borderRadius": "9999px", "background": "var(--naranja)", "boxShadow": "0 0 0 4px var(--fondo)" }}></span>
               {" "}
@@ -59,7 +59,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid #d4d6cf", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 120ms both" }}>
+            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid var(--linea-kpi)", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 120ms both" }}>
               {" "}
               <span aria-hidden="true" style={{ "position": "absolute", "top": "-4px", "left": "0", "width": "9px", "height": "9px", "borderRadius": "9999px", "background": "var(--azul)", "boxShadow": "0 0 0 4px var(--fondo)" }}></span>
               {" "}
@@ -77,7 +77,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid #d4d6cf", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 180ms both" }}>
+            <div style={{ "position": "relative", "padding": "22px 24px 0 0", "borderTop": "1px solid var(--linea-kpi)", "minWidth": "0", "animation": "dropIn var(--duration-page) var(--ease-standard) 180ms both" }}>
               {" "}
               <span aria-hidden="true" style={{ "position": "absolute", "top": "-4px", "left": "0", "width": "9px", "height": "9px", "borderRadius": "9999px", "background": "var(--verde)", "boxShadow": "0 0 0 4px var(--fondo)" }}></span>
               {" "}

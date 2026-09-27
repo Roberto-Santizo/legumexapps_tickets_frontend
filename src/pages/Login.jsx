@@ -10,18 +10,18 @@ export default function Login({ V }) {
         {" "}
         <div aria-hidden="true" data-curtain="" style={{ "position": "fixed", "inset": "0", "zIndex": "6", "pointerEvents": "none", "animation": "curtainDown 1500ms cubic-bezier(0.76,0,0.24,1) 1000ms both" }}>
           {" "}
-          <div style={{ "position": "absolute", "inset": "0", "background": "var(--marca)" }}></div>
+          <div style={{ "position": "absolute", "inset": "0", "background": "var(--marca-fondo)" }}></div>
           {" "}
           <svg viewBox="0 0 1280 120" preserveAspectRatio="none" style={{ "position": "absolute", "left": "0", "right": "0", "top": "calc(100% - 1px)", "width": "100%", "height": "clamp(80px,14vh,140px)", "display": "block" }}>
-            <polygon points="0,0 1280,0 1280,60 1100,25 900,58 680,10 460,55 250,20 0,60" fill="var(--marca)"></polygon>
+            <polygon points="0,0 1280,0 1280,60 1100,25 900,58 680,10 460,55 250,20 0,60" fill="var(--marca-fondo)"></polygon>
           </svg>
           {" "}
           <div style={{ "position": "absolute", "inset": "0", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "gap": "22px" }}>
             {" "}
             <img src="/marca/legumex-logo.png" alt="" style={{ "height": "clamp(72px,10vw,120px)", "width": "auto", "filter": "brightness(0) invert(1)", "animation": "curtainLogo 1000ms cubic-bezier(0.22,1,0.36,1) both" }} />
             {" "}
-            <div style={{ "width": "120px", "height": "1px", "background": "rgba(255,255,255,0.25)", "overflow": "hidden" }}>
-              <div style={{ "width": "100%", "height": "100%", "background": "#9bc96a", "transformOrigin": "left", "animation": "lineGrow 900ms cubic-bezier(0.65,0,0.35,1) 150ms both" }}></div>
+            <div style={{ "width": "120px", "height": "1px", "background": "rgba(var(--sf-rgb),0.25)", "overflow": "hidden" }}>
+              <div style={{ "width": "100%", "height": "100%", "background": "var(--login-sol)", "transformOrigin": "left", "animation": "lineGrow 900ms cubic-bezier(0.65,0,0.35,1) 150ms both" }}></div>
             </div>
             {" "}
           </div>
@@ -30,11 +30,25 @@ export default function Login({ V }) {
         {" "}
         <div aria-hidden="true" data-sierra="" style={{ "position": "fixed", "inset": "0", "pointerEvents": "none", "overflow": "hidden" }}>
           {" "}
-          <div style={{ "position": "absolute", "right": "18%", "bottom": "calc(clamp(140px,30vh,280px) - 70px)", "width": "clamp(180px,22vw,300px)", "aspectRatio": "1", "borderRadius": "9999px", "translate": "calc(var(--mx,0) * -6px) calc(var(--my,0) * -6px)", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "background": "radial-gradient(circle at 50% 50%,#eef2df 0%,#e6ecd2 55%,rgba(230,236,210,0) 72%)", "animation": "sunRise 2400ms cubic-bezier(0.22,1,0.36,1) 1700ms both,sunBreath 9s ease-in-out 4200ms infinite" }}></div>
+          {/* Cielo de noche (solo en modo oscuro): estrellas que titilan */}
+          <div data-estrellas="login"></div>
           {" "}
-          <div style={{ "position": "absolute", "left": "0", "bottom": "calc(clamp(140px,30vh,280px) - 40px)", "width": "200%", "height": "90px", "background": "radial-gradient(ellipse 18% 50% at 20% 50%,rgba(255,255,255,0.75),rgba(255,255,255,0) 70%),radial-gradient(ellipse 22% 45% at 65% 55%,rgba(255,255,255,0.6),rgba(255,255,255,0) 70%)", "animation": "sierraDrift 70s linear infinite", "zIndex": "1" }}></div>
+          {/* De día es el sol; en modo oscuro, index.css lo convierte en luna */}
+          <div data-astro="" style={{ "position": "absolute", "right": "18%", "bottom": "calc(clamp(140px,30vh,280px) - 70px)", "width": "clamp(180px,22vw,300px)", "aspectRatio": "1", "borderRadius": "9999px", "translate": "calc(var(--mx,0) * -6px) calc(var(--my,0) * -6px)", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "background": "radial-gradient(circle at 50% 50%,var(--login-cielo-1) 0%,var(--login-cielo-2) 55%,rgba(var(--cielo-2-rgb),0) 72%)", "animation": "sunRise 2400ms cubic-bezier(0.22,1,0.36,1) 1700ms both,sunBreath 9s ease-in-out 4200ms infinite" }}>
+            {/* Luna creciente (solo en modo oscuro): halo detrás y el creciente recortado encima */}
+            <svg data-luna="" viewBox="0 0 100 100" aria-hidden="true" style={{ "position": "absolute", "inset": "0", "width": "100%", "height": "100%", "display": "none", "overflow": "visible" }}>
+              <defs>
+                <mask id="luna-creciente"><rect width="100" height="100" fill="#fff"></rect><circle cx="63" cy="39" r="25" fill="#000"></circle></mask>
+                <radialGradient id="luna-halo"><stop offset="0.3" stopColor="#f1edd8" stopOpacity="0.2"></stop><stop offset="1" stopColor="#f1edd8" stopOpacity="0"></stop></radialGradient>
+              </defs>
+              <circle cx="50" cy="50" r="50" fill="url(#luna-halo)"></circle>
+              <circle cx="50" cy="50" r="29" fill="#f1edd8" mask="url(#luna-creciente)"></circle>
+            </svg>
+          </div>
           {" "}
-          <div style={{ "position": "absolute", "left": "0", "top": "8%", "width": "200%", "height": "38%", "translate": "calc(var(--mx,0) * -10px) 0", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "background": "radial-gradient(ellipse 9% 22% at 12% 40%,rgba(255,255,255,0.9),rgba(255,255,255,0) 70%),radial-gradient(ellipse 13% 18% at 38% 62%,rgba(255,255,255,0.7),rgba(255,255,255,0) 70%),radial-gradient(ellipse 8% 20% at 71% 30%,rgba(255,255,255,0.85),rgba(255,255,255,0) 70%),radial-gradient(ellipse 11% 16% at 90% 58%,rgba(255,255,255,0.65),rgba(255,255,255,0) 70%)", "animation": "chartFade 1600ms var(--ease-standard) 1700ms both,sierraDrift 140s linear 1700ms infinite" }}></div>
+          <div style={{ "position": "absolute", "left": "0", "bottom": "calc(clamp(140px,30vh,280px) - 40px)", "width": "200%", "height": "90px", "background": "radial-gradient(ellipse 18% 50% at 20% 50%,rgba(var(--sf-rgb),0.75),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 22% 45% at 65% 55%,rgba(var(--sf-rgb),0.6),rgba(var(--sf-rgb),0) 70%)", "animation": "sierraDrift 70s linear infinite", "zIndex": "1" }}></div>
+          {" "}
+          <div style={{ "position": "absolute", "left": "0", "top": "8%", "width": "200%", "height": "38%", "translate": "calc(var(--mx,0) * -10px) 0", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "background": "radial-gradient(ellipse 9% 22% at 12% 40%,rgba(var(--sf-rgb),0.9),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 13% 18% at 38% 62%,rgba(var(--sf-rgb),0.7),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 8% 20% at 71% 30%,rgba(var(--sf-rgb),0.85),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 11% 16% at 90% 58%,rgba(var(--sf-rgb),0.65),rgba(var(--sf-rgb),0) 70%)", "animation": "chartFade 1600ms var(--ease-standard) 1700ms both,sierraDrift 140s linear 1700ms infinite" }}></div>
           {" "}
         </div>
         {" "}
@@ -43,7 +57,7 @@ export default function Login({ V }) {
           <div style={{ "position": "absolute", "inset": "-34% -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -4px) calc(var(--my,0) * -1px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1400ms cubic-bezier(0.22,1,0.36,1) 1500ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 200s linear infinite reverse" }}>
-              <polygon points="0,240 0,90 140,55 300,85 430,30 600,70 760,20 920,65 1080,35 1280,90 1420,55 1580,85 1710,30 1880,70 2040,20 2200,65 2360,35 2560,90 2560,240" fill="var(--marca)" fillOpacity="0.05"></polygon>
+              <polygon points="0,240 0,90 140,55 300,85 430,30 600,70 760,20 920,65 1080,35 1280,90 1420,55 1580,85 1710,30 1880,70 2040,20 2200,65 2360,35 2560,90 2560,240" fill="var(--sierra)" fillOpacity="0.05"></polygon>
             </svg>
             {" "}
           </div>
@@ -51,7 +65,7 @@ export default function Login({ V }) {
           <div style={{ "position": "absolute", "inset": "0 -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -8px) calc(var(--my,0) * -2px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1200ms cubic-bezier(0.22,1,0.36,1) 1500ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 120s linear infinite" }}>
-              <polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240" fill="var(--marca)" fillOpacity="0.10"></polygon>
+              <polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240" fill="var(--sierra)" fillOpacity="0.10"></polygon>
             </svg>
             {" "}
           </div>
@@ -59,7 +73,7 @@ export default function Login({ V }) {
           <div style={{ "position": "absolute", "inset": "0 -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -16px) calc(var(--my,0) * -4px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1200ms cubic-bezier(0.22,1,0.36,1) 1620ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 80s linear infinite reverse" }}>
-              <polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240" fill="var(--marca)" fillOpacity="0.35"></polygon>
+              <polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240" fill="var(--sierra)" fillOpacity="0.35"></polygon>
             </svg>
             {" "}
           </div>
@@ -67,17 +81,17 @@ export default function Login({ V }) {
           <div style={{ "position": "absolute", "inset": "0 -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -28px) calc(var(--my,0) * -7px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1200ms cubic-bezier(0.22,1,0.36,1) 1740ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 52s linear infinite" }}>
-              <polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240" fill="var(--marca)" fillOpacity="1"></polygon>
+              <polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240" fill="var(--marca-fondo)" fillOpacity="1"></polygon>
             </svg>
             {" "}
           </div>
         </div>
         {" "}
-        <div style={{ "position": "fixed", "zIndex": "1", "left": "clamp(24px,5vw,72px)", "right": "clamp(24px,5vw,72px)", "bottom": "max(16px,2.4vh)", "display": "flex", "justifyContent": "space-between", "gap": "16px", "flexWrap": "wrap", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "letterSpacing": "0.1em", "color": "var(--n-0)", "animation": "chartFade 800ms var(--ease-standard) 2400ms both" }}>
+        <div style={{ "position": "fixed", "zIndex": "1", "left": "clamp(24px,5vw,72px)", "right": "clamp(24px,5vw,72px)", "bottom": "max(16px,2.4vh)", "display": "flex", "justifyContent": "space-between", "gap": "16px", "flexWrap": "wrap", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "letterSpacing": "0.1em", "color": "var(--sobre-marca)", "animation": "chartFade 800ms var(--ease-standard) 2400ms both" }}>
           <span>
             {"FROM GUATEMALA TO THE WORLD"}
           </span>
-          <span style={{ "color": "#cfd8cc" }}>
+          <span style={{ "color": "var(--login-linea)" }}>
             {"GROWING QUALITY · DELIVERING TRUST"}
           </span>
         </div>
@@ -102,7 +116,7 @@ export default function Login({ V }) {
               </span>
               {" "}
               <span style={{ "display": "block", "overflow": "hidden", "paddingBottom": "0.06em" }}>
-                <span style={{ "display": "block", "color": "#4d7c2a", "animation": "lineUp 900ms cubic-bezier(0.22,1,0.36,1) 1840ms both" }}>
+                <span style={{ "display": "block", "color": "var(--login-hoja)", "animation": "lineUp 900ms cubic-bezier(0.22,1,0.36,1) 1840ms both" }}>
                   {"TIC"}
                 </span>
               </span>

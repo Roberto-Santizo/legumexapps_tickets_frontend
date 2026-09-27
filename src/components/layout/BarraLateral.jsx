@@ -289,6 +289,27 @@ export default function BarraLateral({ V }) {
             {" "}
           </div>
           {" "}
+          <button onClick={V["onTema"]} aria-label={V["temaLabel"]} title={V["temaLabel"]} style={{ "marginLeft": "auto", "flexShrink": "0", "width": "32px", "height": "32px", "display": "inline-flex", "alignItems": "center", "justifyContent": "center", "background": "transparent", "border": "1px solid var(--n-200)", "borderRadius": "8px", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scp4">
+            {V["temaClaro"] ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+            ) : null}
+            {V["temaOscuro"] ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+              </svg>
+            ) : null}
+            {V["temaAuto"] ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="14" x="2" y="3" rx="2"></rect>
+                <path d="M8 21h8"></path><path d="M12 17v4"></path>
+              </svg>
+            ) : null}
+          </button>
+          {" "}
         </div>
         {" "}
         <button onClick={V["onLogout"]} style={{ "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "14px", "fontWeight": "500", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard),opacity var(--duration-fast) var(--ease-standard)" }} className="scpf scp4">

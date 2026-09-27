@@ -5,7 +5,7 @@ import { T } from '../../utils/runtime.js';
 export default function CargaPesada({ V }) {
   return (
     <>
-      <div key="heavywait" role="status" aria-live="polite" style={{ "position": "fixed", "inset": "0", "zIndex": "80", "background": "rgba(255,255,255,0.86)", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "gap": "18px", "animation": "overlayIn var(--duration-base) var(--ease-standard) both" }}>
+      <div key="heavywait" role="status" aria-live="polite" style={{ "position": "fixed", "inset": "0", "zIndex": "80", "background": "rgba(var(--sf-rgb),0.86)", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "gap": "18px", "animation": "overlayIn var(--duration-base) var(--ease-standard) both" }}>
         {" "}
         <span style={{ "position": "relative", "height": "34px", "width": "104px", "display": "block" }}>
           {" "}
