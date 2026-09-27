@@ -15,12 +15,12 @@ export default function CargaPesada({ V }) {
           {" "}
         </span>
         {" "}
-        <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252", "letterSpacing": "0.08em", "textTransform": "uppercase" }}>
+        <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.08em", "textTransform": "uppercase" }}>
           {T(V["heavyMsg"])}
         </div>
         {" "}
-        <div style={{ "width": "132px", "height": "2px", "borderRadius": "9999px", "background": "#e5e5e5", "overflow": "hidden" }}>
-          <span style={{ "display": "block", "height": "100%", "background": "#14402c", "animation": "progressBar 900ms linear both" }}></span>
+        <div style={{ "width": "132px", "height": "2px", "borderRadius": "9999px", "background": "var(--n-200)", "overflow": "hidden" }}>
+          <span style={{ "display": "block", "height": "100%", "background": "var(--marca-2)", "animation": "progressBar 900ms linear both" }}></span>
         </div>
       </div>
     </>

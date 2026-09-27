@@ -33,12 +33,12 @@ export const valoresPulso = {
       const tin = ins.reduce((a, b) => a + b, 0), tout = outs.reduce((a, b) => a + b, 0), net = tout - tin;
       v.pInTotal = String(tin); v.pOutTotal = String(tout);
       v.pNet = (net > 0 ? '−' : net < 0 ? '+' : '±') + Math.abs(net) + ' en cola';
-      v.pNetInk = net >= 0 ? '#16a34a' : '#ea580c';
+      v.pNetInk = net >= 0 ? 'var(--verde)' : 'var(--naranja)';
       const grp = { late: 0, watch: 0, ok: 0, waiting: 0 };
       p.act.forEach(t => { const sl = this.sla(t); grp[sl.waiting ? 'waiting' : sl.late ? 'late' : sl.watch ? 'watch' : 'ok']++; });
       const tot = p.act.length || 1;
       let acc = 0;
-      v.pDonut = [['late', 'Pasaron su margen', '#ea580c'], ['watch', 'Cerca del margen', '#ca8a04'], ['ok', 'Dentro del margen', '#16a34a'], ['waiting', 'Esperan al solicitante', '#2563eb']].map(g => {
+      v.pDonut = [['late', 'Pasaron su margen', 'var(--naranja)'], ['watch', 'Cerca del margen', 'var(--ambar-oscuro)'], ['ok', 'Dentro del margen', 'var(--verde)'], ['waiting', 'Esperan al solicitante', 'var(--azul)']].map(g => {
         const len = grp[g[0]] / tot * 100, seg = { label: g[1], color: g[2], n: String(grp[g[0]]), pct: Math.round(len) + '%',
           dash: Math.max(0, len - (len > 0 ? 0.8 : 0)).toFixed(2) + ' ' + (100 - Math.max(0, len - (len > 0 ? 0.8 : 0))).toFixed(2),
           off: (25 - acc).toFixed(2), title: g[1] + ': ' + grp[g[0]] };
@@ -54,17 +54,17 @@ export const valoresPulso = {
         : esperando.length + (esperando.length === 1 ? ' espera respuesta del solicitante' : ' esperan respuesta del solicitante');
       v.pWaitWeek = semana.length > 0;
       v.pWaitWeekNote = semana.length + (semana.length === 1 ? ' hace más de una semana' : ' hace más de una semana');
-      v.pLateBg = '#ffffff';
-      v.pLateBorder = p.late.length > 0 ? '1px solid #ea580c' : '1px solid #e5e5e5';
+      v.pLateBg = 'var(--n-0)';
+      v.pLateBorder = p.late.length > 0 ? '1px solid var(--naranja)' : '1px solid var(--n-200)';
       v.pUnassigned = String(p.sinAsignar);
       v.pUnassignedNote = p.sinAsignar === 0 ? 'Nadie esperando triage' : 'Activos sin dueño';
       v.pLoad = s.users.map(u => {
         const ld = this.loadOf(u.id), n = ld.n, lateN = ld.late;
         return {
           nombre: u.nombre, ini: this.ini(u.nombre), ring: this.ring(u.id), count: String(n),
-          width: Math.round((n / maxLoad) * 100) + '%', bar: lateN > 0 ? '#ea580c' : '#171717',
+          width: Math.round((n / maxLoad) * 100) + '%', bar: lateN > 0 ? 'var(--naranja)' : 'var(--n-900)',
           note: lateN > 0 ? lateN + ' atrasado' + (lateN === 1 ? '' : 's') : n === 0 ? 'Libre' : 'Al día',
-          noteInk: lateN > 0 ? '#171717' : '#737373'
+          noteInk: lateN > 0 ? 'var(--n-900)' : 'var(--n-500)'
         };
       }).sort((a, b) => Number(b.count) - Number(a.count));
       const maxCat = Math.max(1, ...s.cats.map(c => p.list.filter(t => t.cat === c.id).length));
@@ -74,7 +74,7 @@ export const valoresPulso = {
         return {
           nombre: c.nombre, count: String(total), abiertos: String(abiertos),
           width: Math.round((total / maxCat) * 100) + '%',
-          bar: c.activo ? '#171717' : '#a3a3a3',
+          bar: c.activo ? 'var(--n-900)' : 'var(--n-400)',
           note: abiertos > 0 ? abiertos + ' sin cerrar' : 'Sin pendientes'
         };
       }).sort((a, b) => Number(b.count) - Number(a.count));

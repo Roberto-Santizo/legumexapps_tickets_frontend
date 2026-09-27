@@ -19,7 +19,7 @@ export const valoresLogin = {
       v.gtClock = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
       const open = wd >= 1 && wd <= 5 && hh >= 7 && hh < 17;
       v.deskState = open ? 'Atendiendo' : 'Cerrada';
-      v.deskDot = open ? '#16a34a' : '#a3a3a3';
+      v.deskDot = open ? 'var(--verde)' : 'var(--n-400)';
       v.deskPulse = open ? 'deskPing 2.4s ease-out infinite' : 'none';
       v.loginHello = hh < 12 ? 'Buenos días' : hh < 19 ? 'Buenas tardes' : 'Buenas noches';
       const tk = s.tickets || [];
@@ -35,11 +35,11 @@ export const valoresLogin = {
     v.onPassword = e => this.setState({ password: e.target.value, loginErr: '' });
     const lp = s.loginPhase || '';
     v.loginIdle = lp === '' || lp === 'err'; v.loginChecking = lp === 'checking'; v.loginOk = lp === 'ok'; v.loginTitleIdle = lp !== 'ok'; v.loginBusy = lp === 'checking' ? 'true' : 'false';
-    v.loginBtnBg = lp === 'ok' ? '#15803d' : '#000000';
+    v.loginBtnBg = lp === 'ok' ? 'var(--verde-oscuro)' : 'var(--n-1000)';
     v.loginBtnPe = lp === 'checking' || lp === 'ok' ? 'none' : 'auto';
     v.loginBtnAnim = lp === 'ok' ? 'okPop 420ms cubic-bezier(0.22,1,0.36,1) both' : 'none';
     v.loginShake = lp === 'err' ? 'loginShake 420ms cubic-bezier(0.36,0.07,0.19,0.97) both' : 'none';
-    v.fieldBorder = lp === 'ok' ? '#15803d' : '#000000';
+    v.fieldBorder = lp === 'ok' ? 'var(--verde-oscuro)' : 'var(--n-1000)';
     v.fieldRing = lp === 'ok' ? '0 0 0 3px rgba(21,128,61,0.15)' : 'none';
     const hop = (str, d0, green) => Array.from(str).map((ch, i) => ({ ch: ch === ' ' ? '\u00a0' : ch,
       anim: 'letterHop 560ms cubic-bezier(0.34,1.56,0.64,1) ' + (d0 + i * 28) + 'ms both' + (green ? ', letterGreen 560ms ease ' + (d0 + i * 28) + 'ms both' : '') }));

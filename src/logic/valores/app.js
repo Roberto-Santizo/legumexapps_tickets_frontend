@@ -13,25 +13,25 @@ export const valoresApp = {
     v.onSheetScroll = this._onSheetScroll || (this._onSheetScroll = e => this.sheetEdges(e.currentTarget));
     if (typeof requestAnimationFrame !== 'undefined') requestAnimationFrame(() => { const el = document.querySelector('[data-sheet]'); if (el) this.sheetEdges(el); });
     v.padBottom = noPageScroll ? '16px' : '96px';
-    v.sheetMask = s.screen === 'tickets' ? 'linear-gradient(to bottom, #000 0, #000 calc(100% - 72px), rgba(0,0,0,var(--fb,0.12)) 100%)' : 'none';
+    v.sheetMask = s.screen === 'tickets' ? 'linear-gradient(to bottom, var(--n-1000) 0, var(--n-1000) calc(100% - 72px), rgba(0,0,0,var(--fb,0.12)) 100%)' : 'none';
     v.sheetBg = bare ? 'transparent' : 'rgba(255,255,255,0.86)';
     v.sheetBlur = bare ? 'none' : 'blur(10px) saturate(1.1)';
-    v.sheetShadow = bare ? 'none' : '0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5,0 24px 48px -24px rgba(11,42,30,0.18)';
+    v.sheetShadow = bare ? 'none' : '0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200),0 24px 48px -24px rgba(11,42,30,0.18)';
 
     const nf = this.notifList(me, isAdmin);
     const nUnread = nf.filter(n => !n.read).length;
     v.notifOpen = !!s.notifOpen; v.hasUnread = nUnread > 0; v.unreadLabel = nUnread > 9 ? '9+' : String(nUnread);
     v.unreadNote = nUnread ? nUnread + ' SIN LEER' : 'AL DÍA';
     v.bellAria = nUnread ? 'Notificaciones, ' + nUnread + ' sin leer' : 'Notificaciones';
-    v.bellBg = s.notifOpen ? '#ffffff' : 'transparent';
-    v.bellShadow = s.notifOpen ? '0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5' : 'none';
+    v.bellBg = s.notifOpen ? 'var(--n-0)' : 'transparent';
+    v.bellShadow = s.notifOpen ? '0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)' : 'none';
     v.bellPolling = !!s.notifPolling; v.bellSvgDisplay = s.notifPolling ? 'none' : 'block';
     v.bellAnim = s.notifPing ? 'iconBurst 640ms cubic-bezier(0.34,1.56,0.64,1) both' : 'none';
     v.onBell = () => this.setState(st => ({ notifOpen: !st.notifOpen }));
     v.onBellClose = () => this.setState({ notifOpen: false });
     v.onReadAll = () => this.markRead(me, nf.map(n => n.key));
     v.notifs = nf.map(n => ({ kind: n.kind, kindColor: n.kindColor, code: 'TIC-' + n.tid, when: this.ago(n.h), title: n.title, sub: n.sub,
-      dot: n.read ? 'transparent' : '#2563eb', weight: n.read ? '400' : '600', bg: n.read ? '#ffffff' : '#f8faf5',
+      dot: n.read ? 'transparent' : 'var(--azul)', weight: n.read ? '400' : '600', bg: n.read ? 'var(--n-0)' : '#f8faf5',
       go: () => { this.markRead(me, [n.key]); this.setState({ notifOpen: false }); if (n.chat) this.openChat(n.tid); else this.openTicket(n.tid); } }));
     v.noNotifs = nf.length === 0;
     this._nUnread = nUnread;
@@ -73,18 +73,18 @@ export const valoresApp = {
       label: n.label, count: n.count,
       weight: n.key === activeKey ? '500' : '400',
       hoverBg: n.key === activeKey ? 'transparent' : 'rgba(255,255,255,0.7)',
-      pressBg: n.key === activeKey ? 'rgba(10,10,10,0.06)' : '#ebede7',
+      pressBg: n.key === activeKey ? 'rgba(10,10,10,0.06)' : 'var(--fondo-2)',
       // Un acento por sección: aparece solo cuando está activa o señalada, nunca en reposo.
-      ink: '#171717',
-      iconColor: n.key === activeKey ? '#171717' : s.navHover === n.key ? NAV_INK[n.key] : '#525252',
-      countColor: n.key === activeKey ? '#525252' : '#737373',
+      ink: 'var(--n-900)',
+      iconColor: n.key === activeKey ? 'var(--n-900)' : s.navHover === n.key ? NAV_INK[n.key] : 'var(--n-600)',
+      countColor: n.key === activeKey ? 'var(--n-600)' : 'var(--n-500)',
       isTickets: n.key === 'tickets', isCats: n.key === 'cats', isUsers: n.key === 'users', isPulso: n.key === 'pulso', isChat: n.key === 'chat',
       // El trazo se redibuja cada vez que el puntero entra: navTick reinicia la animación.
       // Al salir vuelve a 'none', así que al re-entrar la animación arranca de cero sola.
       anim: s.navHover === n.key
         ? (n.key === 'pulso' ? 'navEcg 1000ms' : 'navDraw 620ms') + ' var(--ease-standard) both'
         : 'none',
-      pulseColor: n.key === activeKey ? '#171717' : s.navHover === 'pulso' ? NAV_INK.pulso : '#525252',
+      pulseColor: n.key === activeKey ? 'var(--n-900)' : s.navHover === 'pulso' ? NAV_INK.pulso : 'var(--n-600)',
       onEnter: () => this.setState({ navHover: n.key }),
       onLeave: () => this.setState({ navHover: '' }),
       go: () => {

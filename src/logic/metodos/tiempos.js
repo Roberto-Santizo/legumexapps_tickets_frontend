@@ -106,7 +106,7 @@ export const metodosTiempos = {
     const out = [];
     (t.comentarios || []).forEach((c, i) => {
       const u = this.user(c.autor) || {};
-      out.push({ key: 'c' + i + '-' + c.h, isComment: true, isEvent: false, isFile: false, autor: u.nombre || '—', ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 64); }, hasBlob: true, noBlob: false, texto: c.texto, meta: '', when: this.ago(c.h), h: c.h, at: c.at || 0, node: '#e5e5e5' });
+      out.push({ key: 'c' + i + '-' + c.h, isComment: true, isEvent: false, isFile: false, autor: u.nombre || '—', ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 64); }, hasBlob: true, noBlob: false, texto: c.texto, meta: '', when: this.ago(c.h), h: c.h, at: c.at || 0, node: 'var(--n-200)' });
     });
     (t.historial || []).forEach((x, i) => {
       const ev = EV[x.kind] || EV.edit;
@@ -114,7 +114,7 @@ export const metodosTiempos = {
     });
     (t.adjuntos || []).forEach((a, i) => {
       const u = this.user(a.autor) || {};
-      out.push({ key: 'f' + i + '-' + a.h, isComment: false, isEvent: false, isFile: true, autor: u.nombre || '—', ini: '', ring: '#a3a3a3', texto: a.nombre, meta: a.tipo + ' · ' + a.peso, when: this.ago(a.h), h: a.h, at: a.at || 0, node: '#a3a3a3' });
+      out.push({ key: 'f' + i + '-' + a.h, isComment: false, isEvent: false, isFile: true, autor: u.nombre || '—', ini: '', ring: 'var(--n-400)', texto: a.nombre, meta: a.tipo + ' · ' + a.peso, when: this.ago(a.h), h: a.h, at: a.at || 0, node: 'var(--n-400)' });
     });
     out.sort((a, b) => (b.h - a.h) || (a.at - b.at));
     return out.map((x, i) => Object.assign(x, { showLine: i < out.length - 1 }));

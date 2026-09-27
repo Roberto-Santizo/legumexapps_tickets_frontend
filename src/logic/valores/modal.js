@@ -27,7 +27,7 @@ export const valoresModal = {
       v.modalPwdOn = api.USE_API && m.type === 'user'; v.modalPwd = m.pwd || ''; v.onModalPwd = up('pwd');
       v.modalPwdLabel = m.id ? 'Contraseña nueva' : 'Contraseña';
       v.modalPwdHelp = m.id ? 'La API la pide también para guardar cambios: la que escribas pasa a ser su contraseña.' : 'Con esta inicia sesión. Pasásela por un canal seguro.';
-      v.modalPwdBorder = m.err && m.err.indexOf('contraseña') >= 0 ? '#ea580c' : '#000000';
+      v.modalPwdBorder = m.err && m.err.indexOf('contraseña') >= 0 ? 'var(--naranja)' : 'var(--n-1000)';
       v.onModalCancel = () => m.back ? this.openModal(m.back) : this.closeModal();
       v.modalCanSkip = !!m.skipKey; v.modalSkip = !!m.skip;
       v.onModalSkip = e => { const c = e.target.checked; this.setState(st => ({ modal: Object.assign({}, st.modal, { skip: c }) })); };

@@ -134,22 +134,22 @@ export const metodosTickets = {
     const equipo = c.filter(x => x.autor !== t.autor);
     if (t.status === 'closed') {
       const cierre = (t.historial || []).filter(h => h.kind === 'close')[0];
-      return { texto: 'Resuelto · se cerró ' + this.ago(cierre ? cierre.h : this.idle(t)), dot: '#16a34a' };
+      return { texto: 'Resuelto · se cerró ' + this.ago(cierre ? cierre.h : this.idle(t)), dot: 'var(--verde)' };
     }
     if (ultimo && ultimo.autor !== t.autor) {
-      return { texto: 'Te están esperando a vos · te preguntaron algo ' + this.ago(ultimo.h), dot: '#2563eb' };
+      return { texto: 'Te están esperando a vos · te preguntaron algo ' + this.ago(ultimo.h), dot: 'var(--azul)' };
     }
     if (t.asig || equipo.length) {
       const who = this.user(t.asig);
       const resp = equipo[equipo.length - 1];
       return {
         texto: (who ? who.nombre + ' lo está viendo' : 'El área lo está viendo') + (resp ? ' · te respondió ' + this.ago(resp.h) : ''),
-        dot: '#16a34a'
+        dot: 'var(--verde)'
       };
     }
     if (!MOSTRAR_SIN_ABRIR) return null;
     const n = this.state.users.filter(u => u.rol === 'admin').length;
-    return { texto: 'Aún no lo abren · lo recibieron ' + n + ' personas del área', dot: '#ea580c' };
+    return { texto: 'Aún no lo abren · lo recibieron ' + n + ' personas del área', dot: 'var(--naranja)' };
   },
 
   // Llamar por Teams: confirma, muestra "Abriendo Teams…" y abre el enlace de llamada al
@@ -193,7 +193,7 @@ export const metodosTickets = {
     const sla = this.sla(t), idleTxt = this.ago(this.idle(t));
     const sit = this.state.role === 'admin' ? null : this.situacion(t);
     return {
-      sitShow: !!sit, sitText: sit ? sit.texto : '', sitDot: sit ? sit.dot : '#a3a3a3',
+      sitShow: !!sit, sitText: sit ? sit.texto : '', sitDot: sit ? sit.dot : 'var(--n-400)',
       excerpt: this.excerpt(t.desc),
       tituloParts: this.hl(t.titulo, this.state.q.trim()),
       excerptParts: this.hl(this.excerpt(t.desc), this.state.q.trim()),
@@ -219,8 +219,8 @@ export const metodosTickets = {
       autor: (this.user(t.autor) || {}).nombre || '—', updated: idleTxt,
       slaShow: this.state.role === 'admin' ? (sla.late || sla.watch || sla.waiting) : !!sla.waiting, slaLate: sla.late, slaWatch: sla.watch, slaWaiting: !!sla.waiting,
       slaLabel: sla.label, slaTitle: sla.full || sla.label,
-      slaBg: sla.late ? '#ffffff' : 'transparent', slaBorder: sla.late ? '1px solid #ea580c' : sla.waiting ? '1px solid #d4d4d4' : '1px solid transparent',
-      slaInk: sla.late ? '#171717' : sla.waiting ? '#404040' : '#525252',
+      slaBg: sla.late ? 'var(--n-0)' : 'transparent', slaBorder: sla.late ? '1px solid var(--naranja)' : sla.waiting ? '1px solid var(--n-300)' : '1px solid transparent',
+      slaInk: sla.late ? 'var(--n-900)' : sla.waiting ? 'var(--n-700)' : 'var(--n-600)',
       canTake: this.state.role === 'admin' && !t.asig && t.status !== 'closed',
       takeLabel: 'Tomar TIC-' + t.id,
       take: e => { if (e && e.stopPropagation) { e.stopPropagation(); e.preventDefault(); } this.tap('take-' + t.id, () => this.take(t)); },
@@ -243,9 +243,9 @@ export const metodosTickets = {
       asigIni: t.asig ? this.ini((this.user(t.asig) || {}).nombre || '') : '',
       asigFirst: t.asig ? ((this.user(t.asig) || {}).nombre || '').split(' ')[0] : '',
       asigTitle: t.asig ? 'Asignado a ' + ((this.user(t.asig) || {}).nombre || '') + ' · cambiar' : 'Asignar sin abrir el ticket',
-      asigBorder: t.asig ? 'solid #e5e5e5' : 'dashed #a3a3a3',
+      asigBorder: t.asig ? 'solid var(--n-200)' : 'dashed var(--n-400)',
       qaOpen: this.state.qa === t.id,
-      qaBg: this.state.qa === t.id ? '#f5f5f5' : '#ffffff',
+      qaBg: this.state.qa === t.id ? 'var(--n-50)' : 'var(--n-0)',
       stop: e => { if (e && e.stopPropagation) e.stopPropagation(); },
       qaToggle: e => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(st => ({ qa: st.qa === t.id ? null : t.id })); },
       qaClear: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, null); },
@@ -255,7 +255,7 @@ export const metodosTickets = {
       // Orden: quien lo tiene hoy, después yo ("Tomarlo yo"), después el resto por carga
       qaOpts: this.state.users.filter(u => u.rol === 'admin' && u.activo).sort((a, b) => (b.id === t.asig) - (a.id === t.asig) || (b.id === this.me().id) - (a.id === this.me().id) || this.loadOf(a.id).n - this.loadOf(b.id).n).map(u => Object.assign(this.asigOptLabel(u, t.asig), {
         ini: this.ini(u.nombre), carga: this.loadOf(u.id).n + (this.loadOf(u.id).n === 1 ? ' activo' : ' activos'),
-        bg: t.asig === u.id ? '#f5f5f5' : 'transparent',
+        bg: t.asig === u.id ? 'var(--n-50)' : 'transparent',
         go: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, u.id); }
       })),
       edit: e => { if (e && e.stopPropagation) { e.stopPropagation(); e.preventDefault(); } this.openEdit(t); }
@@ -305,7 +305,7 @@ export const metodosTickets = {
   asigOptLabel(u, cur) {
     const mine = u.id === this.me().id, isCur = cur === u.id, take = mine && !isCur;
     return { nombre: take ? 'Tomarlo yo' : u.nombre, full: mine ? u.nombre + ' (yo)' : u.nombre, weight: take ? '600' : '400',
-      hasTag: isCur || mine, tag: isCur ? (mine ? 'YO · ACTUAL' : 'ACTUAL') : 'YO', tagBg: isCur ? '#dcfce7' : '#f5f5f5' };
+      hasTag: isCur || mine, tag: isCur ? (mine ? 'YO · ACTUAL' : 'ACTUAL') : 'YO', tagBg: isCur ? 'var(--verde-tinte)' : 'var(--n-50)' };
   },
 
   // Asignar desde afuera: mismo PATCH que el detalle, sin abrir el ticket

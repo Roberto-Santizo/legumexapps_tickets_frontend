@@ -72,9 +72,9 @@ export const valoresFormulario = {
       };
     });
     const fe = s.formErr || {};
-    v.errTituloBorder = fe.titulo ? '#ea580c' : '#000000';
-    v.errDescBorder = fe.desc ? '#ea580c' : '#000000';
-    v.errCatBorder = fe.cat ? '#ea580c' : '#000000';
+    v.errTituloBorder = fe.titulo ? 'var(--naranja)' : 'var(--n-1000)';
+    v.errDescBorder = fe.desc ? 'var(--naranja)' : 'var(--n-1000)';
+    v.errCatBorder = fe.cat ? 'var(--naranja)' : 'var(--n-1000)';
     v.hasFormBanner = !!s.formErr;
     v.errTitulo = !!fe.titulo; v.errTituloMsg = fe.titulo || '';
     v.errDesc = !!fe.desc; v.errDescMsg = fe.desc || '';

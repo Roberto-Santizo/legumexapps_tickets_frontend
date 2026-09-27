@@ -20,8 +20,8 @@ export const valoresDetalle = {
       const dsla = this.sla(det);
       v.dSlaLabel = dsla.label; v.dSlaFull = dsla.full || dsla.label;
       v.dSlaLate = dsla.late; v.dSlaWatch = dsla.watch; v.dSlaOk = dsla.ok && !dsla.waiting; v.dSlaDone = dsla.done; v.dSlaWaiting = !!dsla.waiting;
-      v.dSlaBg = '#ffffff';
-      v.dSlaBorder = dsla.late ? '1px solid #ea580c' : dsla.done ? '1px solid #16a34a' : dsla.waiting ? '1px solid #d4d4d4' : '1px solid #e5e5e5';
+      v.dSlaBg = 'var(--n-0)';
+      v.dSlaBorder = dsla.late ? '1px solid var(--naranja)' : dsla.done ? '1px solid var(--verde)' : dsla.waiting ? '1px solid var(--n-300)' : '1px solid var(--n-200)';
       // "En tiempo" sin decir en tiempo para qué no significa nada, y la meta es jerga interna
       // que nadie se compromete a cumplir: el solicitante ve la línea de situación en su lugar.
       v.dShowMeta = isAdmin;
@@ -165,7 +165,7 @@ export const valoresDetalle = {
         const remSent = manual || idle >= W_REM;
         const remAgo = manual ? det.recordado : idle - W_REM;
         const sol = (this.user(det.autor) || {}).nombre || 'el solicitante';
-        const dot = done => ({ dotBg: done ? '#2563eb' : '#ffffff', dotBorder: done ? '#2563eb' : '#d4d4d4' });
+        const dot = done => ({ dotBg: done ? 'var(--azul)' : 'var(--n-0)', dotBorder: done ? 'var(--azul)' : 'var(--n-300)' });
         v.fuSteps = [
           Object.assign({ label: 'El área respondió', sub: 'hace ' + this.dur(idle), done: true }, dot(true)),
           Object.assign({ label: 'Recordatorio a ' + sol, sub: remSent ? (manual ? 'Enviado a mano ' : 'Salió solo ') + (remAgo < 1 ? 'recién' : 'hace ' + this.dur(remAgo)) + ' por correo' : 'Sale solo en ' + this.dur(W_REM - idle) + ' por correo', done: remSent }, dot(remSent)),
@@ -206,7 +206,7 @@ export const valoresDetalle = {
           id: u.id, ini: this.ini(u.nombre), ring: this.ring(u.id),
           isAdmin: u.rol === 'admin', on: det.asig === u.id, isMe: u.id === me.id,
           load: n === 0 ? 'Libre' : n + (n === 1 ? ' activo' : ' activos'),
-          loadInk: lateN > 0 ? '#171717' : '#737373',
+          loadInk: lateN > 0 ? 'var(--n-900)' : 'var(--n-500)',
           hasLate: lateN > 0, lateLabel: lateN + ' sin mover',
           pick: () => setAsig(u.id)
         });

@@ -13,7 +13,7 @@ export const metodosInterfaz = {
     this._mqMovil.addEventListener('change', this._onMq);
   },
 
-  ring(id) { return id ? RING[(id - 1) % RING.length] : '#d4d4d4'; },
+  ring(id) { return id ? RING[(id - 1) % RING.length] : 'var(--n-300)'; },
 
   // ── 2. Guardado optimista: se aplica ya, y si el servidor falla se revierte
   optimistic(key, apply, revert, okMsg, failLine) {
@@ -138,7 +138,7 @@ export const metodosInterfaz = {
       const at = low.indexOf(needle, i);
       if (at < 0) { if (i < s.length) out.push({ t: s.slice(i), on: false, bg: 'transparent', k: 'p' + (n++) }); break; }
       if (at > i) out.push({ t: s.slice(i, at), on: false, bg: 'transparent', k: 'p' + (n++) });
-      out.push({ t: s.slice(at, at + needle.length), on: true, bg: '#dbeaff', k: 'm' + (n++) });
+      out.push({ t: s.slice(at, at + needle.length), on: true, bg: 'var(--azul-tinte)', k: 'm' + (n++) });
       i = at + needle.length;
     }
     return out;
@@ -171,7 +171,7 @@ export const metodosInterfaz = {
     return (h < 6 ? 'Buenas noches' : h < 13 ? 'Buenos días' : h < 20 ? 'Buenas tardes' : 'Buenas noches') + ', ' + n;
   },
 
-  seg(active) { return active ? { bg: '#ffffff', border: '1px solid #e5e5e5' } : { bg: 'transparent', border: '1px solid transparent' }; },
+  seg(active) { return active ? { bg: 'var(--n-0)', border: '1px solid var(--n-200)' } : { bg: 'transparent', border: '1px solid transparent' }; },
 
   openModal(m) { clearTimeout(this._modal); this.setState({ modal: m, modalClosing: false }); },
 

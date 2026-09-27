@@ -44,7 +44,7 @@ export const valoresChat = {
     const wide = s.chatWide !== false;
     v.chatCols = wide ? 'minmax(260px,340px) minmax(0,1fr)' : 'minmax(0,1fr)';
     v.chatShowList = wide || !ct; v.chatShowRight = wide || !!ct;
-    v.chatListBorder = wide ? '1px solid #e5e5e5' : 'none';
+    v.chatListBorder = wide ? '1px solid var(--n-200)' : 'none';
     // Ref estable: si cambiara en cada render, React desconectaría el observer antes de su primer aviso
     this._chatPageRef = this._chatPageRef || (el => {
       if (this._chatEl === el) return;
@@ -68,12 +68,12 @@ export const valoresChat = {
     const chatSt = (!s.chatStatus || s.chatStatus === 'mine') ? 'all' : s.chatStatus;
     const cMine = mine.filter(t => t.asig === me.id).length, cScope = s.chatScope || 'all';
     v.chatScopeOpts = [['all', 'Todos', String(mine.length)], ['mine', 'Míos', String(cMine)]].map(o => ({
-      label: o[1], count: o[2], bg: cScope === o[0] ? '#ffffff' : 'transparent', weight: cScope === o[0] ? '600' : '500',
+      label: o[1], count: o[2], bg: cScope === o[0] ? 'var(--n-0)' : 'transparent', weight: cScope === o[0] ? '600' : '500',
       shadow: cScope === o[0] ? 'rgba(0,0,0,0.06) 0px 1px 2px 0px' : 'none', pressed: cScope === o[0] ? 'true' : 'false',
       go: () => this.setState({ chatScope: o[0] })
     }));
     v.chatFilters = chatF.map(f => ({
-      label: f[1], bg: chatSt === f[0] ? '#ffffff' : 'transparent',
+      label: f[1], bg: chatSt === f[0] ? 'var(--n-0)' : 'transparent',
       go: () => this.setState({ chatStatus: f[0] })
     }));
     const cq = (s.chatQ || '').trim().toLowerCase();
@@ -89,15 +89,15 @@ export const valoresChat = {
       const au = this.user(otherId) || { nombre: 'Tickets TIC' };
       return {
         code: 'TIC-' + t.id, titulo: t.titulo, ini: this.ini(au.nombre), ring: this.ring(otherId),
-        dot: ST[t.status].dot, bg: s.chatId === t.id ? '#f5f5f5' : 'transparent',
+        dot: ST[t.status].dot, bg: s.chatId === t.id ? 'var(--n-50)' : 'transparent',
         blobRef: el => { if (el) el.src = this.blobUrl(otherId, 60); }, hasBlob: !!otherId, noBlob: !otherId,
         last: last ? ((last.autor === me.id ? 'Vos: ' : '') + last.texto) : 'Sin respuestas todavía',
-        lastInk: last ? '#525252' : '#a3a3a3',
+        lastInk: last ? 'var(--n-600)' : 'var(--n-400)',
         when: this.ago(this.lastAt(t)).replace('hace ', ''),
         waiting: waits(t), asigId: t.asig || null,
         waitLabel: !isAdmin || t.asig === me.id ? 'Espera tu respuesta' : t.asig ? 'Espera a ' + ((this.user(t.asig) || {}).nombre || 'el equipo').split(' ')[0] : 'Espera que alguien lo tome',
-        waitDot: !isAdmin || t.asig === me.id ? '#2563eb' : '#737373',
-        waitBg: !isAdmin || t.asig === me.id ? '#dbeaff' : '#f5f5f5',
+        waitDot: !isAdmin || t.asig === me.id ? 'var(--azul)' : 'var(--n-500)',
+        waitBg: !isAdmin || t.asig === me.id ? 'var(--azul-tinte)' : 'var(--n-50)',
         go: () => this.setState({ chatId: t.id, chatMsg: '', chatErr: '' })
       };
     });
@@ -109,7 +109,7 @@ export const valoresChat = {
       const mineW = x.asigId === me.id, ow = this.user(x.asigId);
       return Object.assign({}, x, { delay: (i * 60) + 'ms', ownOn: isAdmin,
         own: mineW ? 'TUYO' : ow ? 'EQUIPO · ' + ow.nombre.split(' ')[0].toUpperCase() : 'SIN ASIGNAR',
-        ownInk: mineW ? '#2563eb' : '#525252', ownBorder: mineW ? '#2563eb' : '#d4d4d4' });
+        ownInk: mineW ? 'var(--azul)' : 'var(--n-600)', ownBorder: mineW ? 'var(--azul)' : 'var(--n-300)' });
     });
     v.chatHasWait = wl.length > 0;
     const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
@@ -150,8 +150,8 @@ export const valoresChat = {
           open: x.file ? () => this.openLb(cLb, i) : null,
           key: (x.file ? 'f' : 'm') + i + '-' + c.h, texto: x.file ? '' : c.texto,
           theirs: !isMine, just: isMine ? 'flex-end' : 'flex-start', align: isMine ? 'flex-end' : 'flex-start',
-          bg: isMine ? '#0a0a0a' : '#ffffff', ink: isMine ? '#ffffff' : '#171717',
-          border: isMine ? 'none' : '1px solid #e5e5e5',
+          bg: isMine ? 'var(--n-950)' : 'var(--n-0)', ink: isMine ? 'var(--n-0)' : 'var(--n-900)',
+          border: isMine ? 'none' : '1px solid var(--n-200)',
           ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 52); }, hasBlob: true, noBlob: false,
           head: (isMine ? 'Vos' : (u.nombre || '—')) + ' · ' + this.ago(c.h)
         };

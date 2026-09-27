@@ -19,8 +19,8 @@ export const valoresLista = {
     v.statusFilters = filters.map(f => {
       const sg = this.seg(s.dStatus === f[0]);
       return {
-        label: f[1], bg: s.dStatus === f[0] ? '#f5f5f5' : 'transparent', border: sg.border, on: s.dStatus === f[0], off: s.dStatus !== f[0],
-        hasDot: f[0] !== 'all', dot: f[0] === 'all' ? '#737373' : ST[f[0]].dot,
+        label: f[1], bg: s.dStatus === f[0] ? 'var(--n-50)' : 'transparent', border: sg.border, on: s.dStatus === f[0], off: s.dStatus !== f[0],
+        hasDot: f[0] !== 'all', dot: f[0] === 'all' ? 'var(--n-500)' : ST[f[0]].dot,
         count: String(f[0] === 'all' ? mine.length : mine.filter(t => t.status === f[0]).length),
         go: () => this.setState({ dStatus: f[0] })
       };
@@ -29,7 +29,7 @@ export const valoresLista = {
     v.prioFilters = prios.map(p => {
       const sg = this.seg(s.dPrio === p[0]);
       return {
-        label: p[1], bg: s.dPrio === p[0] ? '#f5f5f5' : 'transparent', border: sg.border, hasDot: !!p[2], dot: p[2] || '#737373',
+        label: p[1], bg: s.dPrio === p[0] ? 'var(--n-50)' : 'transparent', border: sg.border, hasDot: !!p[2], dot: p[2] || 'var(--n-500)',
         on: s.dPrio === p[0], off: s.dPrio !== p[0],
         count: String(p[0] === 'all' ? mine.length : mine.filter(t => t.prio === p[0]).length),
         go: () => this.setState({ dPrio: p[0] })
@@ -65,7 +65,7 @@ export const valoresLista = {
     const cur = Math.min(s.cursor, pageRows.length - 1);
     v.rows = pageRows.map((t, i) => {
       const r = this.rowFor(t);
-      r.focusBorder = i === cur ? '#171717' : '#e5e5e5';
+      r.focusBorder = i === cur ? 'var(--n-900)' : 'var(--n-200)';
       r.focusShadow = i === cur ? 'rgba(0,0,0,0.05) 0px 1px 2px 0px' : 'none';
       return r;
     });
@@ -102,8 +102,8 @@ export const valoresLista = {
       const on = s.screen === 'tickets' && s.statusFilter === k[0];
       return {
         label: k[1], count: String(k[2]), dot: ST[k[0]].dot,
-        bg: on ? '#f4f5f1' : 'transparent', border: on ? '1px solid #dcdfd6' : '1px solid transparent',
-        weight: on ? '500' : '400', countColor: on ? '#171717' : '#525252',
+        bg: on ? 'var(--fondo)' : 'transparent', border: on ? '1px solid #dcdfd6' : '1px solid transparent',
+        weight: on ? '500' : '400', countColor: on ? 'var(--n-900)' : 'var(--n-600)',
         aria: on ? 'Quitar el filtro ' + k[1] : 'Ver solo ' + k[1].toLowerCase(),
         go: () => this.setState(st => ({
           screen: 'tickets', detailId: null, dir: 'none', swap: st.swap + 1, nudgedOnly: false,
@@ -124,7 +124,7 @@ export const valoresLista = {
     v.onClearNudged = () => this.setState({ nudgedOnly: false });
     const nMine = mine.filter(t => t.asig === me.id).length;
     v.scopeOpts = [['all', 'Todos', String(mine.length)], ['mine', 'Míos', String(nMine)]].map(o => ({
-      label: o[1], count: o[2], bg: (s.scope || 'all') === o[0] ? '#ffffff' : 'transparent', barBg: (s.scope || 'all') === o[0] ? '#ebede7' : 'transparent', weight: (s.scope || 'all') === o[0] ? '600' : '500',
+      label: o[1], count: o[2], bg: (s.scope || 'all') === o[0] ? 'var(--n-0)' : 'transparent', barBg: (s.scope || 'all') === o[0] ? 'var(--fondo-2)' : 'transparent', weight: (s.scope || 'all') === o[0] ? '600' : '500',
       shadow: (s.scope || 'all') === o[0] ? 'rgba(0,0,0,0.06) 0px 1px 2px 0px' : 'none', pressed: (s.scope || 'all') === o[0] ? 'true' : 'false',
       go: () => this.setState(st => ({ scope: o[0], swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     }));
@@ -135,11 +135,11 @@ export const valoresLista = {
     v.greetAnim = s.greetOut ? 'toastOut 300ms var(--ease-standard) both' : 'dropIn 420ms var(--ease-standard) both';
     v.periodLabel = { hoy: 'hoy', '7': '7 días', '30': '30 días', todo: 'todo el historial' }[per];
     v.periodOpts = [['hoy', 'Hoy'], ['7', 'Últimos 7 días'], ['30', 'Últimos 30 días'], ['todo', 'Todo el historial']].map(o => ({
-      label: o[1], on: per === o[0], bg: per === o[0] ? '#f5f5f5' : 'transparent',
+      label: o[1], on: per === o[0], bg: per === o[0] ? 'var(--n-50)' : 'transparent',
       go: () => this.setState(st => ({ period: o[0], periodOpen: false, swap: st.swap + 1 }))
     }));
     v.periodOpen = !!s.periodOpen; v.viewOpen = !!s.viewOpen;
-    v.viewBtnBg = s.viewOpen ? '#f5f5f5' : 'transparent';
+    v.viewBtnBg = s.viewOpen ? 'var(--n-50)' : 'transparent';
     v.onTogglePeriod = () => this.setState(st => ({ periodOpen: !st.periodOpen, viewOpen: false, filterOpen: false }));
     v.onToggleView = () => this.setState(st => ({ viewOpen: !st.viewOpen, periodOpen: false, filterOpen: false }));
     v.onDismissPop = () => this.setState({ viewOpen: false, periodOpen: false });
@@ -163,7 +163,7 @@ export const valoresLista = {
       clear: () => this.setState(st => ({ prioFilter: 'all', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     });
     if (s.q.trim()) chips.push({
-      label: '"' + s.q.trim() + '"', dot: '#737373', hasDot: false,
+      label: '"' + s.q.trim() + '"', dot: 'var(--n-500)', hasDot: false,
       clear: () => this.setState(st => ({ q: '', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     });
     v.chips = chips;
@@ -172,7 +172,7 @@ export const valoresLista = {
     v.filterCount = String(fcount);
     v.hasFilterCount = fcount > 0;
     v.filterOpen = !!s.filterOpen;
-    v.filterBg = s.filterOpen || fcount > 0 ? '#f5f5f5' : '#ffffff';
+    v.filterBg = s.filterOpen || fcount > 0 ? 'var(--n-50)' : 'var(--n-0)';
     v.onToggleFilter = () => this.setState(st => st.filterOpen ? { filterOpen: false } : { filterOpen: true, dStatus: st.statusFilter, dPrio: st.prioFilter });
     v.onDismissFilter = () => this.setState({ filterOpen: false });
     v.onClearDraft = () => this.setState({ dStatus: 'all', dPrio: 'all' });
@@ -206,8 +206,8 @@ export const valoresLista = {
     const subSh = 'rgba(0,0,0,0.05) 0px 1px 2px 0px';
     v.cardsShadow = v.isCards ? subSh : 'none';
     v.tableShadow = v.isTable ? subSh : 'none'; v.kanbanShadow = v.isKanban ? subSh : 'none';
-    v.cardsIcon = v.isCards ? '#171717' : '#525252';
-    v.tableIcon = v.isTable ? '#171717' : '#525252'; v.kanbanIcon = v.isKanban ? '#171717' : '#525252';
+    v.cardsIcon = v.isCards ? 'var(--n-900)' : 'var(--n-600)';
+    v.tableIcon = v.isTable ? 'var(--n-900)' : 'var(--n-600)'; v.kanbanIcon = v.isKanban ? 'var(--n-900)' : 'var(--n-600)';
     v.tapCards = this.tapped('vcards'); v.tapTable = this.tapped('vtable'); v.tapKanban = this.tapped('vkanban');
     v.onCards = () => this.tap('vcards', () => this.setState(st => ({ view: 'cards', swap: st.swap + 1 })));
     v.onTable = () => this.tap('vtable', () => this.setState(st => ({ view: 'table', swap: st.swap + 1 })));
@@ -227,8 +227,8 @@ export const valoresLista = {
       const blocked = !!(dragT && dragT.status !== k && !target);
       return {
         isTarget: target, isOver: over, isBlocked: blocked,
-        colBg: over ? '#dbeaff' : '#f5f5f5',
-        colRing: over ? '1px dashed #2563eb' : target ? '1px dashed #d4d4d4' : '1px solid transparent',
+        colBg: over ? 'var(--azul-tinte)' : 'var(--n-50)',
+        colRing: over ? '1px dashed var(--azul)' : target ? '1px dashed var(--n-300)' : '1px solid transparent',
         colOp: blocked ? '0.55' : '1',
         dropLabel: over ? 'Soltar en ' + ST[k].label : '',
         countKey: k + '-' + items.length,

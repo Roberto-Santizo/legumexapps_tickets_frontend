@@ -21,13 +21,13 @@ export default function BarraLateral({ V }) {
             <img src="/marca/legumex-isotipo.png" alt="" style={{ "position": "absolute", "left": "0", "top": "0", "height": "10px", "width": "auto", "display": "block", "animation": "logoLoop 1100ms cubic-bezier(0.65,0,0.35,1) infinite" }} />
           </span>
         </>) : null}
-        <svg display={V["bellSvgDisplay"]} width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#171717" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transformOrigin": "50% 10%", "transform": "rotate(var(--ir,0deg)) scale(var(--ic,1))", "transition": "transform 240ms cubic-bezier(0.34,1.56,0.64,1)", "animation": S(V["bellAnim"]) }}>
+        <svg display={V["bellSvgDisplay"]} width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--n-900)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transformOrigin": "50% 10%", "transform": "rotate(var(--ir,0deg)) scale(var(--ic,1))", "transition": "transform 240ms cubic-bezier(0.34,1.56,0.64,1)", "animation": S(V["bellAnim"]) }}>
           <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
           <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
         </svg>
         {" "}
         {V["hasUnread"] ? (<>
-          <span style={{ "position": "absolute", "top": "5px", "right": "5px", "minWidth": "18px", "height": "18px", "padding": "0 5px", "borderRadius": "9999px", "background": "#dc2626", "color": "#ffffff", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "fontWeight": "600", "lineHeight": "18px", "textAlign": "center", "boxShadow": "0 0 0 2px #f4f5f1", "animation": "badgePop 360ms cubic-bezier(0.34,1.56,0.64,1) both" }}>
+          <span style={{ "position": "absolute", "top": "5px", "right": "5px", "minWidth": "18px", "height": "18px", "padding": "0 5px", "borderRadius": "9999px", "background": "var(--rojo)", "color": "var(--n-0)", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "fontWeight": "600", "lineHeight": "18px", "textAlign": "center", "boxShadow": "0 0 0 2px var(--fondo)", "animation": "badgePop 360ms cubic-bezier(0.34,1.56,0.64,1) both" }}>
             {T(V["unreadLabel"])}
           </span>
         </>) : null}
@@ -38,7 +38,7 @@ export default function BarraLateral({ V }) {
         {" "}
         {V["navPillOn"] ? (<>
           {" "}
-          <span aria-hidden="true" style={{ "position": "absolute", "left": "0", "right": "0", "top": "0", "height": "44px", "borderRadius": "10px", "background": "#ffffff", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5", "transform": "translateY(" + S(V["navPillY"]) + ")", "transition": "transform var(--duration-fast) var(--ease-standard)", "pointerEvents": "none" }}></span>
+          <span aria-hidden="true" style={{ "position": "absolute", "left": "0", "right": "0", "top": "0", "height": "44px", "borderRadius": "10px", "background": "var(--n-0)", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)", "transform": "translateY(" + S(V["navPillY"]) + ")", "transition": "transform var(--duration-fast) var(--ease-standard)", "pointerEvents": "none" }}></span>
           {" "}
         </>) : null}
         {" "}
@@ -113,10 +113,10 @@ export default function BarraLateral({ V }) {
         {" "}
       </nav>
       {" "}
-      <div style={{ "background": "#ffffff", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "12px" }}>
+      <div style={{ "background": "var(--n-0)", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "12px" }}>
         {" "}
-        <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
-          <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "#a3a3a3", "flexShrink": "0" }}></span>
+        <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
+          <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
           {"EN TU BANDEJA"}
         </div>
         {" "}
@@ -127,9 +127,9 @@ export default function BarraLateral({ V }) {
             {L(V["scopeOpts"]).map((_o_3, $index) => (
               <React.Fragment key={$index}>
                 {" "}
-                <button onClick={_o_3?.["go"]} aria-pressed={_o_3?.["pressed"]} style={{ "flex": "1", "display": "inline-flex", "alignItems": "center", "justifyContent": "center", "gap": "6px", "height": "30px", "padding": "0 8px", "border": "none", "borderRadius": "6px", "background": S(_o_3?.["bg"]), "boxShadow": S(_o_3?.["shadow"]), "fontSize": "12px", "fontWeight": S(_o_3?.["weight"]), "color": "#171717", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scpb">
+                <button onClick={_o_3?.["go"]} aria-pressed={_o_3?.["pressed"]} style={{ "flex": "1", "display": "inline-flex", "alignItems": "center", "justifyContent": "center", "gap": "6px", "height": "30px", "padding": "0 8px", "border": "none", "borderRadius": "6px", "background": S(_o_3?.["bg"]), "boxShadow": S(_o_3?.["shadow"]), "fontSize": "12px", "fontWeight": S(_o_3?.["weight"]), "color": "var(--n-900)", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scpb">
                   {T(_o_3?.["label"])}
-                  <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252" }}>
+                  <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)" }}>
                     {T(_o_3?.["count"])}
                   </span>
                 </button>
@@ -143,11 +143,11 @@ export default function BarraLateral({ V }) {
         {" "}
         <div style={{ "display": "flex", "alignItems": "baseline", "gap": "6px" }}>
           {" "}
-          <span style={{ "fontSize": "40px", "lineHeight": "1", "fontWeight": "800", "letterSpacing": "-0.04em", "color": "#171717" }}>
+          <span style={{ "fontSize": "40px", "lineHeight": "1", "fontWeight": "800", "letterSpacing": "-0.04em", "color": "var(--n-900)" }}>
             {T(V["inboxTotal"])}
           </span>
           {" "}
-          <span style={{ "fontSize": "12px", "color": "#525252" }}>
+          <span style={{ "fontSize": "12px", "color": "var(--n-600)" }}>
             {"tickets"}
           </span>
           {" "}
@@ -162,7 +162,7 @@ export default function BarraLateral({ V }) {
                 {" "}
                 <span style={{ "width": "6px", "height": "6px", "borderRadius": "9999px", "background": S(_b_4?.["dot"]), "flexShrink": "0" }}></span>
                 {" "}
-                <span style={{ "fontSize": "12px", "fontWeight": S(_b_4?.["weight"]), "color": "#525252", "minWidth": "0" }}>
+                <span style={{ "fontSize": "12px", "fontWeight": S(_b_4?.["weight"]), "color": "var(--n-600)", "minWidth": "0" }}>
                   {T(_b_4?.["label"])}
                 </span>
                 {" "}
@@ -177,19 +177,19 @@ export default function BarraLateral({ V }) {
           {" "}
           {V["hasLate"] ? (<>
             {" "}
-            <button onClick={V["onlyLate"]} title="Ver primero los tickets sin movimiento" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "#ffffff", "border": "1px solid #ea580c", "borderRadius": "8px", "padding": "6px 8px", "marginTop": "4px", "cursor": "pointer", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scpe scpd">
+            <button onClick={V["onlyLate"]} title="Ver primero los tickets sin movimiento" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "var(--n-0)", "border": "1px solid var(--naranja)", "borderRadius": "8px", "padding": "6px 8px", "marginTop": "4px", "cursor": "pointer", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scpe scpd">
               {" "}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ea580c" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard),stroke var(--duration-fast) var(--ease-standard)", "stroke": "var(--is,#ea580c)" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--naranja)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard),stroke var(--duration-fast) var(--ease-standard)", "stroke": "var(--is,var(--naranja))" }}>
                 <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
                 <path d="M12 9v4"></path>
                 <path d="M12 17h.01"></path>
               </svg>
               {" "}
-              <span style={{ "fontSize": "12px", "fontWeight": "500", "color": "#171717", "minWidth": "0" }}>
+              <span style={{ "fontSize": "12px", "fontWeight": "500", "color": "var(--n-900)", "minWidth": "0" }}>
                 {"Sin mover"}
               </span>
               {" "}
-              <span style={{ "marginLeft": "auto", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "12px", "color": "#171717" }}>
+              <span style={{ "marginLeft": "auto", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "12px", "color": "var(--n-900)" }}>
                 {T(V["lateCount"])}
               </span>
               {" "}
@@ -199,18 +199,18 @@ export default function BarraLateral({ V }) {
           {" "}
           {V["hasNudged"] ? (<>
             {" "}
-            <button onClick={V["onlyNudged"]} title="Los que el solicitante marcó como bloqueantes" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "#ffffff", "border": "1px solid #ea580c", "borderRadius": "8px", "padding": "6px 8px", "marginTop": "4px", "cursor": "pointer", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scpe scpd">
+            <button onClick={V["onlyNudged"]} title="Los que el solicitante marcó como bloqueantes" style={{ "display": "flex", "alignItems": "center", "gap": "8px", "width": "100%", "textAlign": "left", "background": "var(--n-0)", "border": "1px solid var(--naranja)", "borderRadius": "8px", "padding": "6px 8px", "marginTop": "4px", "cursor": "pointer", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scpe scpd">
               {" "}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ea580c" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard),stroke var(--duration-fast) var(--ease-standard)", "stroke": "var(--is,#ea580c)" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--naranja)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard),stroke var(--duration-fast) var(--ease-standard)", "stroke": "var(--is,var(--naranja))" }}>
                 <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
                 <path d="M4 22v-7"></path>
               </svg>
               {" "}
-              <span style={{ "fontSize": "12px", "fontWeight": "500", "color": "#171717", "minWidth": "0" }}>
+              <span style={{ "fontSize": "12px", "fontWeight": "500", "color": "var(--n-900)", "minWidth": "0" }}>
                 {"Marcados como bloqueantes"}
               </span>
               {" "}
-              <span style={{ "marginLeft": "auto", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "12px", "color": "#171717" }}>
+              <span style={{ "marginLeft": "auto", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "12px", "color": "var(--n-900)" }}>
                 {T(V["nudgedCount"])}
               </span>
               {" "}
@@ -218,7 +218,7 @@ export default function BarraLateral({ V }) {
             {" "}
           </>) : null}
           {" "}
-          <span style={{ "fontSize": "11px", "color": "#525252", "padding": "2px 8px 0" }}>
+          <span style={{ "fontSize": "11px", "color": "var(--n-600)", "padding": "2px 8px 0" }}>
             {T(V["inboxHint"])}
           </span>
           {" "}
@@ -228,10 +228,10 @@ export default function BarraLateral({ V }) {
       {" "}
       {V["showMisMetricas"] ? (<>
         {" "}
-        <div style={{ "background": "#ffffff", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "10px" }}>
+        <div style={{ "background": "var(--n-0)", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "10px" }}>
           {" "}
-          <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
-            <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "#a3a3a3", "flexShrink": "0" }}></span>
+          <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
+            <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
             {"CÓMO TE FUE"}
           </div>
           {" "}
@@ -240,15 +240,15 @@ export default function BarraLateral({ V }) {
               {" "}
               <div style={{ "display": "flex", "alignItems": "baseline", "gap": "8px" }}>
                 {" "}
-                <span style={{ "fontSize": "12px", "color": "#525252", "minWidth": "0" }}>
+                <span style={{ "fontSize": "12px", "color": "var(--n-600)", "minWidth": "0" }}>
                   {T(_m_5?.["label"])}
                 </span>
                 {" "}
-                <span style={{ "marginLeft": "auto", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "14px", "color": "#171717", "flexShrink": "0" }}>
+                <span style={{ "marginLeft": "auto", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "14px", "color": "var(--n-900)", "flexShrink": "0" }}>
                   {T(_m_5?.["valor"])}
                 </span>
                 {" "}
-                <span style={{ "fontSize": "11px", "color": "#525252", "flexShrink": "0" }}>
+                <span style={{ "fontSize": "11px", "color": "var(--n-600)", "flexShrink": "0" }}>
                   {"promedio"}
                 </span>
                 {" "}
@@ -259,7 +259,7 @@ export default function BarraLateral({ V }) {
           {" "}
           {V["mmOverdue"] ? (<>
             {" "}
-            <div style={{ "fontSize": "12px", "lineHeight": "1.43", "color": "#525252", "textWrap": "pretty" }}>
+            <div style={{ "fontSize": "12px", "lineHeight": "1.43", "color": "var(--n-600)", "textWrap": "pretty" }}>
               {"Tu ticket abierto lleva más que tu promedio."}
             </div>
             {" "}
@@ -269,21 +269,21 @@ export default function BarraLateral({ V }) {
         {" "}
       </>) : null}
       {" "}
-      <div style={{ "marginTop": "auto", "background": "#ffffff", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5", "padding": "12px", "display": "flex", "flexDirection": "column", "gap": "12px" }}>
+      <div style={{ "marginTop": "auto", "background": "var(--n-0)", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)", "padding": "12px", "display": "flex", "flexDirection": "column", "gap": "12px" }}>
         {" "}
         <div style={{ "display": "flex", "alignItems": "center", "gap": "8px", "padding": "0 4px" }}>
           {" "}
-          <div style={{ "width": "32px", "height": "32px", "borderRadius": "9999px", "background": "#ffffff", "border": "1px solid " + S(V["meRing"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "12px", "fontWeight": "600", "color": "#171717" }}>
+          <div style={{ "width": "32px", "height": "32px", "borderRadius": "9999px", "background": "var(--n-0)", "border": "1px solid " + S(V["meRing"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "12px", "fontWeight": "600", "color": "var(--n-900)" }}>
             {T(V["meIni"])}
           </div>
           {" "}
           <div style={{ "minWidth": "0" }}>
             {" "}
-            <div style={{ "fontSize": "14px", "fontWeight": "500", "color": "#171717", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
+            <div style={{ "fontSize": "14px", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
               {T(V["meNombre"])}
             </div>
             {" "}
-            <div style={{ "fontSize": "11px", "color": "#737373" }}>
+            <div style={{ "fontSize": "11px", "color": "var(--n-500)" }}>
               {T(V["meRol"])}
             </div>
             {" "}
@@ -291,8 +291,8 @@ export default function BarraLateral({ V }) {
           {" "}
         </div>
         {" "}
-        <button onClick={V["onLogout"]} style={{ "background": "#ffffff", "color": "#171717", "border": "1px solid #e5e5e5", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "14px", "fontWeight": "500", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard),opacity var(--duration-fast) var(--ease-standard)" }} className="scpf scp4">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#525252" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "var(--im,translateX(0)) scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard)", "stroke": "var(--is,#525252)" }}>
+        <button onClick={V["onLogout"]} style={{ "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "8px 12px", "fontSize": "14px", "fontWeight": "500", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "gap": "8px", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard),opacity var(--duration-fast) var(--ease-standard)" }} className="scpf scp4">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "var(--im,translateX(0)) scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard)", "stroke": "var(--is,var(--n-600))" }}>
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
             <path d="m16 17 5-5-5-5"></path>
             <path d="M21 12H9"></path>

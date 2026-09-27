@@ -5,7 +5,7 @@ import { S } from '../../utils/runtime.js';
 export default function PantallaArranque({ V }) {
   return (
     <>
-      <div aria-hidden="true" style={{ "position": "fixed", "inset": "0", "zIndex": "90", "background": "#ffffff", "display": "flex", "alignItems": "center", "justifyContent": "center", "animation": S(V["bootAnim"]) }}>
+      <div aria-hidden="true" style={{ "position": "fixed", "inset": "0", "zIndex": "90", "background": "var(--n-0)", "display": "flex", "alignItems": "center", "justifyContent": "center", "animation": S(V["bootAnim"]) }}>
         {" "}
         <div style={{ "position": "relative", "width": "200px", "animation": "popIn var(--duration-page) var(--ease-standard) both" }}>
           {" "}
