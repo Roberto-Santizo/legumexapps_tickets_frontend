@@ -141,7 +141,7 @@ export default function ChatLista({ V }) {
               <Escena icono="lupa" ancho="120px" />
               {" "}
               <div style={{ "fontSize": "14px", "color": "var(--n-600)" }}>
-                {"Ningún ticket coincide con lo que buscás."}
+                {"Ningún ticket coincide con lo que buscas."}
               </div>
               {" "}
             </div>

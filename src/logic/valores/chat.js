@@ -91,7 +91,7 @@ export const valoresChat = {
         code: 'TIC-' + t.id, titulo: t.titulo, ini: this.ini(au.nombre), ring: this.ring(otherId),
         dot: ST[t.status].dot, bg: s.chatId === t.id ? 'var(--n-50)' : 'transparent',
         blobRef: el => { if (el) el.src = this.blobUrl(otherId, 60); }, hasBlob: !!otherId, noBlob: !otherId,
-        last: last ? ((last.autor === me.id ? 'Vos: ' : '') + last.texto) : 'Sin respuestas todavía',
+        last: last ? ((last.autor === me.id ? 'Tú: ' : '') + last.texto) : 'Sin respuestas todavía',
         lastInk: last ? 'var(--n-600)' : 'var(--n-500)',
         when: this.ago(this.lastAt(t)).replace('hace ', ''),
         waiting: waits(t), asigId: t.asig || null,
@@ -120,7 +120,7 @@ export const valoresChat = {
       : !isAdmin
       ? (wl.length ? 'El área te escribió en ' + (wl.length === 1 ? '1 ticket' : wl.length + ' tickets') : 'Estás al día con el área')
       : (wl.length ? (wl.length === 1 ? '1 persona espera tu respuesta' : wl.length + ' personas esperan tu respuesta') : 'Nadie espera respuesta');
-    v.chatPageHint = wl.length ? 'Empezá por la más vieja. Enter envía, Shift+Enter salta línea.' : 'Elegí cualquier conversación de la lista; lo que escribas se publica como comentario del ticket.';
+    v.chatPageHint = wl.length ? 'Empieza por la más vieja. Enter envía, Shift+Enter salta línea.' : 'Elige cualquier conversación de la lista; lo que escribas se publica como comentario del ticket.';
     v.chatFabOn = !!v.chatFab && s.screen !== 'chat';
     this._chatEls = this._chatEls || new Set();
     v.chatRef = this._chatRefFn || (this._chatRefFn = el => { if (el) { this._chatEls.add(el); el.scrollTop = el.scrollHeight; } });
@@ -153,7 +153,7 @@ export const valoresChat = {
           bg: isMine ? 'var(--n-950)' : 'var(--n-0)', ink: isMine ? 'var(--n-0)' : 'var(--n-900)',
           border: isMine ? 'none' : '1px solid var(--n-200)',
           ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 52); }, hasBlob: true, noBlob: false,
-          head: (isMine ? 'Vos' : (u.nombre || '—')) + ' · ' + this.ago(c.h)
+          head: (isMine ? 'Tú' : (u.nombre || '—')) + ' · ' + this.ago(c.h)
         };
       });
       v.chatNoMsgs = tl.length === 0;
@@ -176,14 +176,14 @@ export const valoresChat = {
       v.chatSending = !!s.chatSending; v.chatIdle = !s.chatSending;
       v.onChatSend = () => {
         if (s.chatSending) return;
-        if (!(s.chatMsg || '').trim() && !s.staged.some(x => x.tid === ct.id)) { this.setState({ chatErr: 'Escribí una respuesta o adjuntá una imagen antes de enviar.' }); return; }
+        if (!(s.chatMsg || '').trim() && !s.staged.some(x => x.tid === ct.id)) { this.setState({ chatErr: 'Escribe una respuesta o adjunta una imagen antes de enviar.' }); return; }
         this.setState({ chatSending: true });
         clearTimeout(this._cs); this._cs = setTimeout(() => { this.chatSend(false); this.setState({ chatSending: false }); }, 450);
       };
-      v.onChatSendClose = () => (s.chatMsg || '').indexOf('______') >= 0 ? this.setState({ chatErr: 'Completá el resumen donde dice ______ antes de cerrar.' }) : !(s.chatMsg || '').trim() ? this.setState({ chatErr: 'Escribí la respuesta con la que querés cerrar el ticket.' }) : this.confirmOr('close', { title: '¿Enviar y cerrar TIC-' + ct.id + '?', sub: 'La respuesta se envía y el ticket pasa a Cerrado.', ok: 'Enviar y cerrar', danger: true }, () => this.heavy('Publicando y cerrando', 900, () => this.chatSend(true)));
+      v.onChatSendClose = () => (s.chatMsg || '').indexOf('______') >= 0 ? this.setState({ chatErr: 'Completa el resumen donde dice ______ antes de cerrar.' }) : !(s.chatMsg || '').trim() ? this.setState({ chatErr: 'Escribe la respuesta con la que quieres cerrar el ticket.' }) : this.confirmOr('close', { title: '¿Enviar y cerrar TIC-' + ct.id + '?', sub: 'La respuesta se envía y el ticket pasa a Cerrado.', ok: 'Enviar y cerrar', danger: true }, () => this.heavy('Publicando y cerrando', 900, () => this.chatSend(true)));
       v.onChatKey = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); v.onChatSend(); } };
       v.chatCanClose = ct.status !== 'closed' && ct.asig === me.id;
-      const cHueco = 'Se resolvió: ______. Si vuelve a pasar, respondé este correo y lo reabrimos.';
+      const cHueco = 'Se resolvió: ______. Si vuelve a pasar, responde este correo y lo reabrimos.';
       const cMacros = (isAdmin ? MACROS : MACROS_USER).concat(v.chatCanClose ? [{ label: 'Cerrar con resumen', text: cHueco }] : []);
       v.chatMacros = cMacros.map(m => ({ label: m.label, text: m.text, use: () => this.setState({ chatMsg: m.text, chatErr: '' }) }));
       v.onChatOpenTicket = () => { this.setState({ chatOpen: false }); this.openTicket(ct.id); };

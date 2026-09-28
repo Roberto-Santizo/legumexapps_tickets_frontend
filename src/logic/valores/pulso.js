@@ -1,6 +1,8 @@
 // Valores para la plantilla — pulso (métricas del área).
 // Parte de Logica.renderVals(); "v" se comparte entre secciones y "ctx" lleva lo común.
 
+import { ST } from '../../config/constantes.js';
+
 export const valoresPulso = {
   valoresPulso(v, ctx) {
     const { s } = ctx;
@@ -80,9 +82,11 @@ export const valoresPulso = {
       v.pLateBorder = p.late.length > 0 ? '1px solid var(--naranja)' : '1px solid var(--n-200)';
       v.pUnassigned = String(this.cifra(p.sinAsignar));
       v.pUnassignedNote = p.sinAsignar === 0 ? 'Nadie esperando triage' : 'Activos sin dueño';
-      v.pLoad = s.users.map(u => {
+      // solo el área (administradores activos): son quienes reciben tickets y tienen ficha
+      v.pLoad = s.users.filter(u => u.rol === 'admin' && u.activo !== false).map(u => {
         const ld = this.loadOf(u.id), n = ld.n, lateN = ld.late;
         return {
+          uid: String(u.id), abrir: () => this.abrirFicha(u.id), aria: 'Ver la ficha de ' + u.nombre,
           nombre: u.nombre, ini: this.ini(u.nombre), ring: this.ring(u.id), count: String(n),
           width: Math.round((n / maxLoad) * 100) + '%', bar: lateN > 0 ? 'var(--naranja)' : 'var(--n-900)',
           note: lateN > 0 ? lateN + ' atrasado' + (lateN === 1 ? '' : 's') : n === 0 ? 'Libre' : 'Al día',
@@ -105,6 +109,60 @@ export const valoresPulso = {
       v.pNote = (p.late.length === 0 && p.rsCount === 0 && this.visible().length === 0)
         ? 'Sin datos todavía — los números aparecen cuando se cierre el primer ticket.'
         : 'Todo en esta pantalla se calcula en el navegador con los tickets, usuarios y categorías ya cargados — la API no expone métricas.';
+      // ── Ficha de la persona elegida en "Carga por persona"
+      v.fichaOn = !!s.fichaId && !!this.user(s.fichaId);
+      if (v.fichaOn) {
+        const f = this.statsPersona(s.fichaId), eq = this.statsEquipo();
+        const pila = (f.nombre || '').split(' ')[0], nC = f.cierres.length;
+        const mas = (a, b, menorEsMejor) => { if (a == null || b == null || !b) return ''; const r = a / b; const mejor = menorEsMejor ? r < 0.85 : r > 1.15, peor = menorEsMejor ? r > 1.15 : r < 0.85; return mejor ? 'mejor' : peor ? 'peor' : 'igual'; };
+        v.fichaNombre = f.nombre; v.fichaPila = pila; v.fichaIni = this.ini(f.nombre); v.fichaRing = this.ring(s.fichaId);
+        v.fichaRol = (f.u.rol === 'admin' ? 'Administrador' : 'Usuario') + (f.u.email ? ' · ' + f.u.email : '');
+        v.fichaEstado = f.activos.length === 0 ? 'Sin tickets activos' : f.activos.length + (f.activos.length === 1 ? ' activo' : ' activos') + (f.atrasados.length ? ' · ' + f.atrasados.length + ' fuera de margen' : ' · todos a tiempo');
+        v.fichaEstadoInk = f.atrasados.length ? 'var(--naranja)' : 'var(--verde)';
+        // En pocas palabras: frases cortas que comparan con el equipo sin exagerar con pocos datos
+        const frases = [];
+        const eqC = eq.cierres != null ? Math.round(eq.cierres * 10) / 10 : null;
+        if (nC === 0) frases.push(pila + ' no cerró tickets en los últimos 30 días.');
+        else {
+          const cmp = mas(nC, eq.cierres);
+          frases.push(pila + ' cerró ' + nC + (nC === 1 ? ' ticket' : ' tickets') + ' en los últimos 30 días' + (eq.n > 1 && eqC != null ? (cmp === 'mejor' ? ', más que el promedio del equipo (' + String(eqC).replace('.', ',') + ').' : cmp === 'peor' ? ', menos que el promedio del equipo (' + String(eqC).replace('.', ',') + ').' : ', en línea con el equipo.') : '.'));
+        }
+        if (f.respuesta != null) {
+          const cmp = mas(f.respuesta, eq.respuesta, true);
+          frases.push('Suele dar la primera respuesta en ' + this.dur(f.respuesta) + (eq.respuesta != null && eq.n > 1 ? (cmp === 'mejor' ? ', más rápido que el promedio (' + this.dur(eq.respuesta) + ').' : cmp === 'peor' ? '; el promedio del equipo es ' + this.dur(eq.respuesta) + '.' : ', como el resto del equipo.') : '.'));
+        }
+        if (nC === 1) frases.push(f.enMargen ? 'Su único cierre quedó dentro del margen de atención.' : 'Su único cierre quedó fuera del margen de atención.');
+        else if (nC) frases.push(f.enMargen === nC ? 'Todos sus cierres quedaron dentro del margen de atención.' : f.enMargen + ' de ' + nC + ' cierres quedaron dentro del margen de atención.');
+        if (f.reabiertos) frases.push(f.reabiertos === 1 ? 'Uno de sus tickets se reabrió después de cerrarlo.' : f.reabiertos + ' de sus tickets se reabrieron después de cerrarlos.');
+        frases.push(f.activos.length === 0 ? 'Hoy no tiene tickets activos: puede recibir más.' : f.atrasados.length ? 'Ahora tiene ' + f.activos.length + ' activos y ' + f.atrasados.length + ' fuera de margen: conviene revisarlos primero.' : 'Ahora tiene ' + f.activos.length + (f.activos.length === 1 ? ' activo' : ' activos') + ' y van a tiempo.');
+        v.fichaFrases = frases.map((t, i) => ({ key: 'f' + i, texto: t, retraso: (120 + i * 70) + 'ms' }));
+        v.fichaPocosDatos = nC > 0 && nC < 3;
+        // Cifras: persona contra equipo (la barra muestra la proporción, no un puntaje)
+        const barra = (a, b, menorEsMejor) => { if (a == null || b == null) return { yo: '0%', eq: '0%' }; const m = Math.max(a, b) || 1; return { yo: Math.round(a / m * 100) + '%', eq: Math.round(b / m * 100) + '%' }; };
+        const mg = nC ? f.enMargen / nC : null;
+        v.fichaCifras = [
+          { key: 'c', label: 'CERRÓ', valor: String(this.cifra(nC)), nota: 'últimos 30 días', eqNota: eqC != null ? 'equipo: ' + String(eqC).replace('.', ',') : '', b: barra(nC, eq.cierres) },
+          { key: 'r', label: 'PRIMERA RESPUESTA', valor: f.respuesta != null ? this.durCuenta(f.respuesta) : '—', nota: f.nResp + (f.nResp === 1 ? ' ticket respondido' : ' tickets respondidos'), eqNota: eq.respuesta != null ? 'equipo: ' + this.dur(eq.respuesta) : '', b: barra(f.respuesta, eq.respuesta) },
+          { key: 's', label: 'HASTA EL CIERRE', valor: f.resolucion != null ? this.durCuenta(f.resolucion) : '—', nota: 'promedio de sus cierres', eqNota: eq.resolucion != null ? 'equipo: ' + this.dur(eq.resolucion) : '', b: barra(f.resolucion, eq.resolucion) },
+          { key: 'm', label: 'DENTRO DEL MARGEN', valor: mg != null ? this.cifra(Math.round(mg * 100)) + '%' : '—', nota: nC ? f.enMargen + ' de ' + nC + ' cierres' : 'sin cierres todavía', eqNota: eq.margen != null ? 'equipo: ' + Math.round(eq.margen * 100) + '%' : '', b: barra(mg, eq.margen) }
+        ].map((c, i) => Object.assign(c, { retraso: (60 + i * 60) + 'ms', tam: String(c.valor).length > 6 ? '20px' : '26px' }));
+        const maxD = Math.max(1, ...f.dias);
+        v.fichaDias = f.dias.map((n, i) => ({ key: 'd' + i, alto: Math.max(n ? 12 : 4, Math.round(n / maxD * 100)) + '%', fondo: n ? 'var(--login-hoja)' : 'var(--n-200)', titulo: (i === 13 ? 'Hoy' : i === 12 ? 'Ayer' : 'Hace ' + (13 - i) + ' días') + ': ' + n + (n === 1 ? ' cierre' : ' cierres'), retraso: (i * 30) + 'ms' }));
+        v.fichaDiasTotal = f.dias.reduce((a, b) => a + b, 0) + ' en 14 días';
+        const cats = Object.keys(f.porCat).map(id => ({ c: s.cats.find(c => String(c.id) === String(id)), n: f.porCat[id] })).filter(x => x.c).sort((a, b) => b.n - a.n).slice(0, 4);
+        v.fichaHayCats = cats.length > 0;
+        v.fichaCats = cats.map(x => ({ key: 'k' + x.c.id, nombre: x.c.nombre, n: String(x.n) }));
+        v.fichaHayActivos = f.activos.length > 0;
+        v.fichaActivos = f.activos.slice().sort((a, b) => (this.sla(b).late ? 1 : 0) - (this.sla(a).late ? 1 : 0)).slice(0, 5).map(t => {
+          const sl = this.sla(t), st = ST[t.status];
+          return { key: 't' + t.id, code: 'TIC-' + t.id, titulo: t.titulo, estado: st.label, estadoBg: st.bg, tarde: sl.late, margen: sl.late ? 'Fuera de margen' : sl.label || '',
+            abrir: () => { this.setState({ fichaId: null }); this.openTicket(t.id); } };
+        });
+        v.fichaMasActivos = f.activos.length > 5 ? '+ ' + (f.activos.length - 5) + ' más' : '';
+        v.fichaComentarios = f.comentarios + (f.comentarios === 1 ? ' comentario' : ' comentarios') + ' en 30 días';
+        v.fichaRef = this.refDialogo();
+        v.onFichaCerrar = () => this.cerrarFicha();
+      }
     }
   }
 };

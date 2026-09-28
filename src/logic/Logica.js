@@ -48,7 +48,7 @@ export class Logica extends LogicaBase {
     forced: this.props.estadoError || 'ninguno',
     page: { tickets: 0, cats: 0, users: 0 },
     loading: true, swap: 0, busy: '', modalClosing: false, toastOut: false,
-    heavyMsg: '', moment: null, qa: null, staged: [], lightbox: null, viewOpen: false, periodOpen: false, period: '30',
+    heavyMsg: '', moment: null, qa: null, staged: [], lightbox: null, viewOpen: false, periodOpen: false, period: '30', fichaId: null,
     uploads: [], saving: '', err500Line: 'HTTP 500 · GET /api/tickets', draftFound: false, sessionOk: true, sessionMsg: '',
     dragId: null, dragOver: null, landed: null, asigOpen: false, arrastre: false, recorrido: null, recRect: null,
     // Diseño móvil: se calcula al arrancar para no pintar primero el de escritorio
@@ -64,7 +64,7 @@ export class Logica extends LogicaBase {
 
   componentDidMount() {
     if (api.USE_API) sync.silent(() => this.setState({ tickets: [], cats: [] }));
-    api.onUnauthorized(() => { if (this.state.authed) { clearInterval(this._pollIv); this.setState({ session: null, authed: false, screen: 'tickets', detailId: null, loginPhase: '', loginErr: 'Tu sesión expiró. Volvé a entrar.' }); } });
+    api.onUnauthorized(() => { if (this.state.authed) { clearInterval(this._pollIv); this.setState({ session: null, authed: false, screen: 'tickets', detailId: null, loginPhase: '', loginErr: 'Tu sesión expiró. Vuelve a entrar.' }); } });
     if (api.USE_API && api.getToken()) api.checkStatus().then(d => this.applySession(d)).catch(() => {});
     this._boot = setTimeout(() => {
       this.setState({ bootFading: true });
@@ -102,6 +102,7 @@ export class Logica extends LogicaBase {
       const s = this.state;
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''));
       // Recorrido guiado abierto: Escape sale y las flechas pasan de paso (solo mientras está abierto)
+      if (s.fichaId && e.key === 'Escape') { this.cerrarFicha(); return; }
       if (s.recorrido) {
         if (e.key === 'Escape') this.salirRecorrido();
         else if (e.key === 'ArrowRight') this.pasoRecorrido(1);

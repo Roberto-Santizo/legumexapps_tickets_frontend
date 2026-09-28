@@ -34,7 +34,7 @@ export const metodosCatalogos = {
           tickets: st.tickets.map(t => ids.indexOf(t.id) >= 0 ? Object.assign({}, t, { asig: alt ? alt.id : null,
             historial: [{ autor: me.nombre, texto: alt ? 'Asignado a ' + alt.nombre + ' (' + u.nombre + ' quedó inactivo)' : 'Sin asignar (' + u.nombre + ' quedó inactivo)', h: 0, at: Date.now(), kind: 'assign' }].concat(t.historial || []) }) : t)
         }));
-        this.say(u.nombre + ' ya no puede iniciar sesión.' + (act.length ? (alt ? ' Sus tickets pasaron a ' + alt.nombre + '.' : (api.USE_API ? ' Sus tickets siguen a su nombre: reasignalos.' : ' Sus tickets quedaron sin asignar.')) : ''));
+        this.say(u.nombre + ' ya no puede iniciar sesión.' + (act.length ? (alt ? ' Sus tickets pasaron a ' + alt.nombre + '.' : (api.USE_API ? ' Sus tickets siguen a su nombre: reasígnalos.' : ' Sus tickets quedaron sin asignar.')) : ''));
       } });
   },
 
@@ -67,7 +67,7 @@ export const metodosCatalogos = {
     }
     // La API pide contraseña para crear y también para guardar cambios de un usuario
     if (api.USE_API && e.type === 'user' && String(e.pwd || '').length < 8) {
-      this.setState({ entity: Object.assign({}, e, { err: 'Escribí una contraseña de al menos 8 caracteres.' }) }); return;
+      this.setState({ entity: Object.assign({}, e, { err: 'Escribe una contraseña de al menos 8 caracteres.' }) }); return;
     }
     if (api.USE_API && e.type === 'user') sync.rememberPassword(String(e.email || '').trim(), e.pwd);
     if (e.id && !sure) {
@@ -101,7 +101,7 @@ export const metodosCatalogos = {
         const dm = pu0.rol === 'admin' && e.rol === 'usuario' ? this.demoteMove(pu0) : null;
         if (dm) this.demoteApply(pu0, dm);
         this.setState(st => ({ users: st.users.map(u => u.id === e.id ? Object.assign({}, u, { nombre: name, email: String(e.email).trim(), rol: e.rol }) : u) }));
-        this.say('Usuario actualizado.' + (dm && dm.act.length ? (dm.alt ? ' Sus tickets pasaron a ' + dm.alt.nombre + '.' : (api.USE_API ? ' Sus tickets siguen a su nombre: reasignalos.' : ' Sus tickets quedaron sin asignar.')) : ''));
+        this.say('Usuario actualizado.' + (dm && dm.act.length ? (dm.alt ? ' Sus tickets pasaron a ' + dm.alt.nombre + '.' : (api.USE_API ? ' Sus tickets siguen a su nombre: reasígnalos.' : ' Sus tickets quedaron sin asignar.')) : ''));
       } else {
         const id = Math.max.apply(null, this.state.users.map(u => u.id)) + 1;
         this.setState(st => ({ users: st.users.concat([{ id, nombre: name, email: String(e.email).trim(), rol: e.rol || 'usuario', activo: true }]) }));

@@ -167,9 +167,9 @@ export const valoresCapas = {
       const at = this.ticket(this.destinoArrastre());
       const puede = this.puedeAdjuntar(at), lk = at && !puede ? this.replyLock(at) : null;
       v.arrastreOk = puede; v.arrastreNo = !puede;
-      v.arrastreTitulo = puede ? 'Soltá para adjuntar a TIC-' + at.id
-        : !at ? (s.chatOpen || s.screen === 'chat' ? 'Abrí una conversación para adjuntar' : 'Abrí un ticket para adjuntar')
-        : 'En este ticket no podés adjuntar';
+      v.arrastreTitulo = puede ? 'Suelta para adjuntar a TIC-' + at.id
+        : !at ? (s.chatOpen || s.screen === 'chat' ? 'Abre una conversación para adjuntar' : 'Abre un ticket para adjuntar')
+        : 'En este ticket no puedes adjuntar';
       v.arrastreSub = puede ? 'JPG, PNG o WEBP · hasta 5 MB · se sube al soltar'
         : !at ? 'Las imágenes se adjuntan al ticket o a la conversación que tengas abierta.'
         : (lk ? lk.msg : 'Está cerrado.');

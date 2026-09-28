@@ -257,7 +257,7 @@ export default function ChatFlotante({ V }) {
                 <Escena icono="lupa" ancho="120px" />
                 {" "}
                 <div style={{ "fontSize": "14px", "color": "var(--n-600)" }}>
-                  {"Ningún ticket coincide con lo que buscás."}
+                  {"Ningún ticket coincide con lo que buscas."}
                 </div>
                 {" "}
               </div>
@@ -497,7 +497,7 @@ export default function ChatFlotante({ V }) {
                   </svg>
                 </label>
                 {" "}
-                <textarea value={(V["chatMsg"] ?? "")} onChange={V["onChatMsg"]} onKeyDown={V["onChatKey"]} rows="2" placeholder="Escribí tu respuesta — Enter envía, Shift+Enter salta línea" style={{ "flex": "1", "minWidth": "0", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "10px", "padding": "9px 11px", "fontSize": "14px", "lineHeight": "1.5", "fontFamily": "inherit", "resize": "none", "outline": "none" }}></textarea>
+                <textarea value={(V["chatMsg"] ?? "")} onChange={V["onChatMsg"]} onKeyDown={V["onChatKey"]} rows="2" placeholder="Escribe tu respuesta — Enter envía, Shift+Enter salta línea" style={{ "flex": "1", "minWidth": "0", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "10px", "padding": "9px 11px", "fontSize": "14px", "lineHeight": "1.5", "fontFamily": "inherit", "resize": "none", "outline": "none" }}></textarea>
                 {" "}
                 <button onClick={V["onChatSend"]} aria-label="Enviar respuesta" title="Enviar respuesta" style={{ "background": "var(--n-950)", "color": "var(--n-0)", "border": "none", "borderRadius": "10px", "padding": "10px", "cursor": "pointer", "display": "flex", "alignItems": "center", "flexShrink": "0", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1c scp8">
                   {V["chatIdle"] ? (<>

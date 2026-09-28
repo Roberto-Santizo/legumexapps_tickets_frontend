@@ -254,7 +254,43 @@ En modo demostración siguen visibles, como en el prototipo.
     (`data-brillo-logo`) y crestas de la sierra (`data-brillo-sierra`, recortado con la
     forma de cada cordillera).
   - Todo se apaga con "reducir movimiento" del sistema. Colores en tokens `--sol-*`,
-    `--brillo*`, `--mota-rgb`, `--fugaz`, `--login-cielo-alto`.
+    `--brillo*`, `--mota-rgb`, `--fugaz`, `--login-cielo-alto`, `--login-horizonte`,
+    `--niebla-rgb`/`--niebla-a`.
+  - Montañas con profundidad: degradado de bruma en cada cordillera y neblina
+    (`data-niebla`) entre ellas. En el teléfono la tarjeta es translúcida y el párrafo se
+    oculta para que la escena se vea.
+- **Cielo según la hora** (sección "Cielo según la hora" en `index.css`):
+  - La fase sale de la hora de Guatemala (`FASES_CIELO` en `config/constantes.js`):
+    amanecer 5:30–7:00, día hasta 17:15, atardecer hasta 18:45, noche el resto.
+    `aplicarFase()` (`logic/metodos/interfaz.js`) la marca en `<html data-fase>` al abrir y
+    cada minuto; `index.html` la pone antes de pintar (repite los cortes: mantenerlos
+    iguales).
+  - La hora decide qué hay en el cielo (sol o luna, estrellas, nubes, aves, estrella
+    fugaz); el tema claro/oscuro solo cambia la paleta de cada fase. El saludo
+    (`saludoHora()`) coincide: de noche siempre "Buenas noches".
+  - Adentro del sistema el fondo lleva un tinte suave del cielo de la hora (`body`).
+- **Sistema vivo** (sección "Sistema vivo" en `index.css`):
+  - Cielo dentro de la hoja (`components/layout/CieloApp.jsx`): estrellas y estrella
+    fugaz de noche; mini nubes y una ráfaga de aire (esta pasa por delante, sin tomar
+    clics) de día.
+  - Transiciones con View Transitions (si el navegador no las tiene, se navega igual):
+    entrada al sistema (la sierra se acomoda y el astro baja hasta el saludo:
+    `entrarAlSistema`), abrir un ticket desde la lista (la tarjeta se estira hasta el
+    detalle, `data-vt` → `data-vt-detalle`; volver la encoge) y abrir la ficha de una
+    persona (el avatar viaja al panel). Todo en `logic/metodos/tickets.js` y `pulso.js`.
+  - Luz que sigue al cursor en tarjetas y paneles (`data-luz`, un solo oyente:
+    `escucharLuz`), cifras de Métricas que cuentan (`contarCifras`, `cifra`,
+    `durCuenta`), chip de estado que cambia con pulso y brillo (detalle), estados vacíos
+    ilustrados (`components/comunes/Escena.jsx`), saludo con mini sol o luna y barra de
+    tiempo en los avisos.
+- **Ficha de una persona del área** (Métricas → "Carga por persona", solo
+  administradores): panel a la derecha (hoja en el teléfono,
+  `components/metricas/FichaPersona.jsx`) con un resumen en frases ("En pocas
+  palabras"), cuatro cifras comparadas con el promedio del equipo, cierres por día,
+  categorías y tickets activos. Cálculo en `statsPersona` / `statsEquipo`
+  (`logic/metodos/pulso.js`): cierres por el historial ("Ticket cerrado" con su autor),
+  primera respuesta por sus comentarios, margen por prioridad. No mide horas
+  trabajadas: el backend no registra jornadas.
   - El logo se aclara con un filtro.
 - **Selector de tema**: botón junto al nombre en la tarjeta del usuario; cambia entre
   Claro, Oscuro y Auto (`aplicarTema` / `ciclarTema` en `logic/metodos/interfaz.js`).
@@ -348,6 +384,13 @@ automáticos); en el teléfono la misma interfaz se reacomoda.
 - Variables sin uso heredadas (`roleReset`, `tieneResp`, `act` en `logic/valores`).
 - En escritorio, el menú "Vista y orden" no se cierra tocando la lista, solo tocando el
   encabezado (su fondo queda encerrado por el blur de la barra). En el teléfono no pasa.
+
+## Tono de los textos
+
+- Se trata a la persona de **tú**, con un registro cordial y formal: "Reporta", "Puedes",
+  "Esperan tu respuesta", "Tienes 8 notificaciones". Nada de voseo ("vos", "podés",
+  "Reportá", "Tomalo").
+- Frases cortas y concretas; los mensajes de error dicen qué hacer.
 
 ## Reglas de código del proyecto
 

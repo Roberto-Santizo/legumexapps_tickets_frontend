@@ -60,7 +60,7 @@ export default function Celebracion({ V }) {
               </svg>
               {" "}
               <span style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-900)", "textWrap": "pretty" }}>
-                {"El ticket se creó. Puede que el aviso por correo no haya salido — avisale al área si es urgente."}
+                {"El ticket se creó. Puede que el aviso por correo no haya salido — avísale al área si es urgente."}
               </span>
               {" "}
             </div>

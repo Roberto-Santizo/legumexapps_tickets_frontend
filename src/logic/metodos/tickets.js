@@ -92,7 +92,7 @@ export const metodosTickets = {
   bloqueante(id) {
     this.showMoment({
       kind: 'nudge', code: 'TIC-' + id, titulo: 'Quedó marcado como bloqueante',
-      sub: 'TI lo ve arriba en su bandeja. Si mañana te sigue frenando, podés volver a marcarlo.',
+      sub: 'TI lo ve arriba en su bandeja. Si mañana te sigue frenando, puedes volver a marcarlo.',
       btn: 'Entendido', undo: null, go: null
     }, 2800);
   },
@@ -130,12 +130,12 @@ export const metodosTickets = {
   },
 
   take(t, sure) {
-    if (!sure) { this.confirmOr('take', { title: '¿Tomar TIC-' + t.id + '?', sub: 'Queda asignado a vos' + (t.status === 'open' ? ' y pasa a En progreso.' : '.'), ok: 'Tomar ticket' }, () => this.take(t, true)); return; }
+    if (!sure) { this.confirmOr('take', { title: '¿Tomar TIC-' + t.id + '?', sub: 'Queda asignado a ti' + (t.status === 'open' ? ' y pasa a En progreso.' : '.'), ok: 'Tomar ticket' }, () => this.take(t, true)); return; }
     const me = this.me(), snap = this.snapshot(t.id);
     this.optimistic('take-' + t.id,
       () => this.patch(t.id, { asig: me.id, status: t.status === 'open' ? 'in_progress' : t.status }, 'Asignado a ' + me.nombre + ' (se lo tomó)', 'assign'),
       () => this.restore(t.id, snap),
-      'Tomaste TIC-' + t.id + '. Ya podés cerrarlo cuando termines.',
+      'Tomaste TIC-' + t.id + '. Ya puedes cerrarlo cuando termines.',
       'HTTP 500 · PATCH /api/tickets/' + t.id + '/assign');
   },
 
@@ -189,7 +189,7 @@ export const metodosTickets = {
       return { texto: 'Resuelto · se cerró ' + this.ago(cierre ? cierre.h : this.idle(t)), dot: 'var(--verde)' };
     }
     if (ultimo && ultimo.autor !== t.autor) {
-      return { texto: 'Te están esperando a vos · te preguntaron algo ' + this.ago(ultimo.h), dot: 'var(--azul)' };
+      return { texto: 'Esperan tu respuesta · te preguntaron algo ' + this.ago(ultimo.h), dot: 'var(--azul)' };
     }
     if (t.asig || equipo.length) {
       const who = this.user(t.asig);
@@ -211,10 +211,10 @@ export const metodosTickets = {
     if (e && e.preventDefault) e.preventDefault();
     if (!t || !u || !u.email) return;
     const url = 'https://teams.microsoft.com/l/call/0/0?users=' + u.email;
-    this.confirmOr('call', { title: '¿Llamar por Teams a ' + u.nombre + '?', sub: 'Se abre Microsoft Teams con la llamada a ' + u.email + '. Si el navegador pregunta, elegí abrir la aplicación.', ok: 'Llamar' }, () => this.heavy('Abriendo Teams', 900, () => {
+    this.confirmOr('call', { title: '¿Llamar por Teams a ' + u.nombre + '?', sub: 'Se abre Microsoft Teams con la llamada a ' + u.email + '. Si el navegador pregunta, elige abrir la aplicación.', ok: 'Llamar' }, () => this.heavy('Abriendo Teams', 900, () => {
       let w = null;
       try { w = window.open(url, '_blank'); if (w) w.opener = null; } catch (err) {}
-      if (!w) { this.say('El navegador bloqueó la ventana de Teams. Permití ventanas emergentes para este sitio y volvé a intentar.'); return; }
+      if (!w) { this.say('El navegador bloqueó la ventana de Teams. Permite ventanas emergentes para este sitio y vuelve a intentar.'); return; }
       this.registrarLlamada(t, u.nombre);
     }));
   },
@@ -304,7 +304,7 @@ export const metodosTickets = {
       qaClear: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, null); },
       qaClosed: this.state.qa !== t.id,
       asigTip: t.asig ? ((this.user(t.asig) || {}).nombre || 'Otra persona') + (t.asig === this.me().id ? ' (yo)' : '') : 'Sin asignar',
-      asigTipSub: !t.asig ? 'Click para asignar o tomarlo' : t.asig === this.me().id ? 'Lo tenés vos · click para reasignar' : 'Lo tiene · click para reasignar o tomarlo',
+      asigTipSub: !t.asig ? 'Clic para asignarlo o tomarlo' : t.asig === this.me().id ? 'Lo tienes tú · clic para reasignar' : 'Lo tiene · clic para reasignarlo o tomarlo',
       // Orden: quien lo tiene hoy, después yo ("Tomarlo yo"), después el resto por carga
       qaOpts: this.state.users.filter(u => u.rol === 'admin' && u.activo).sort((a, b) => (b.id === t.asig) - (a.id === t.asig) || (b.id === this.me().id) - (a.id === this.me().id) || this.loadOf(a.id).n - this.loadOf(b.id).n).map(u => Object.assign(this.asigOptLabel(u, t.asig), {
         ini: this.ini(u.nombre), carga: this.loadOf(u.id).n + (this.loadOf(u.id).n === 1 ? ' activo' : ' activos'),
@@ -323,14 +323,14 @@ export const metodosTickets = {
     if (!t) return null;
     const me = this.me(), isAdmin = this.state.role === 'admin';
     if (t.status === 'closed') {
-      if (!isAdmin) return t.autor === me.id ? { msg: 'Este ticket está cerrado. Si el problema volvió, abrí uno nuevo que lo menciona.', take: false, follow: true } : { msg: 'Este ticket está cerrado.', take: false };
+      if (!isAdmin) return t.autor === me.id ? { msg: 'Este ticket está cerrado. Si el problema volvió, abre uno nuevo que lo menciona.', take: false, follow: true } : { msg: 'Este ticket está cerrado.', take: false };
       if (this.othersTicket(t)) return { msg: 'Ticket cerrado de ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Solo lectura.', take: false };
-      return { msg: 'Ticket cerrado. Para seguir la conversación o subir imágenes, reabrilo.', take: false, reopen: true };
+      return { msg: 'Ticket cerrado. Para seguir la conversación o subir imágenes, reábrelo.', take: false, reopen: true };
     }
     if (!isAdmin) return null;
     if (t.asig === me.id) return null;
-    if (!t.asig) return { msg: 'Nadie lo tiene todavía. Tomalo para responder; así el solicitante sabe quién lo atiende.', take: true };
-    return { msg: 'Lo tiene ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Podés leerlo; para escribir, editar o cerrarlo tiene que pasar a vos.', take: true, steal: true };
+    if (!t.asig) return { msg: 'Nadie lo tiene todavía. Tómalo para responder; así el solicitante sabe quién lo atiende.', take: true };
+    return { msg: 'Lo tiene ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Puedes leerlo; para escribir, editarlo o cerrarlo tiene que pasar a ti.', take: true, steal: true };
   },
 
   followUp(t) {
@@ -343,7 +343,7 @@ export const metodosTickets = {
   markResolved(t) {
     if (!t || this.resolvedSent(t)) return;
     const me = this.me();
-    this.confirmOr('resolved', { title: '¿Avisar que TIC-' + t.id + ' ya se resolvió?', sub: 'Se publica "Ya funciona, pueden cerrarlo" y el área lo cierra. Si vuelve a pasar, podés abrir uno nuevo desde el ticket.', ok: 'Avisar al área' }, () => {
+    this.confirmOr('resolved', { title: '¿Avisar que TIC-' + t.id + ' ya se resolvió?', sub: 'Se publica "Ya funciona, pueden cerrarlo" y el área lo cierra. Si vuelve a pasar, puedes abrir uno nuevo desde el ticket.', ok: 'Avisar al área' }, () => {
       if (this.resolvedSent(this.ticket(t.id))) return;
       this.setState(st => ({ tickets: st.tickets.map(x => x.id === t.id ? Object.assign({}, x, {
         comentarios: (x.comentarios || []).concat([{ autor: me.id, texto: 'Ya funciona, gracias. Pueden cerrarlo.', h: 0, at: Date.now() }]),
@@ -366,7 +366,7 @@ export const metodosTickets = {
     if (!sure && !t.asig && id) {
       this.setState({ qa: null });
       const to = (this.user(id) || {}).nombre;
-      this.confirmOr('assign', { title: '¿Asignar TIC-' + t.id + ' a ' + (id === this.me().id ? 'vos' : to) + '?', sub: t.status === 'open' ? 'Pasa a En progreso y aparece en su bandeja.' : 'Aparece en su bandeja.', ok: 'Asignar' }, () => this.quickAssign(t, id, true));
+      this.confirmOr('assign', { title: '¿Asignar TIC-' + t.id + ' a ' + (id === this.me().id ? 'ti' : to) + '?', sub: t.status === 'open' ? 'Pasa a En progreso y aparece en su bandeja.' : 'Aparece en su bandeja.', ok: 'Asignar' }, () => this.quickAssign(t, id, true));
       return;
     }
     if (!sure && t.asig && t.asig !== id) {
@@ -375,7 +375,7 @@ export const metodosTickets = {
       const to = id ? (this.user(id) || {}).nombre : null;
       this.confirmOr(id ? 'reassign' : 'unassign', id
         ? (id === this.me().id
-          ? { title: '¿Tomar TIC-' + t.id + '?', sub: 'Hoy lo tiene ' + prev + '. Pasa a vos y a ' + prev.split(' ')[0] + ' le deja de aparecer en su bandeja.', ok: 'Tomar ticket' }
+          ? { title: '¿Tomar TIC-' + t.id + '?', sub: 'Hoy lo tiene ' + prev + '. Pasa a ti y a ' + prev.split(' ')[0] + ' le deja de aparecer en su bandeja.', ok: 'Tomar ticket' }
           : { title: '¿Reasignar TIC-' + t.id + ' a ' + to + '?', sub: 'Hoy lo tiene ' + prev + '. Le deja de aparecer en su bandeja.', ok: 'Reasignar' })
         : { title: '¿Quitar la asignación de TIC-' + t.id + '?', sub: prev + ' deja de tenerlo y vuelve a la cola sin asignar.', ok: 'Quitar asignación', danger: true },
         () => this.quickAssign(t, id, true));
@@ -403,7 +403,7 @@ export const metodosTickets = {
     if (this.replyLock(this.ticket(this.state.detailId))) return;
     if (alsoClose && (this.ticket(this.state.detailId) || {}).asig !== this.me().id) { this.setState({ commentErr: 'Solo quien tiene asignado el ticket puede cerrarlo.' }); return; }
     const txt = this.state.comment.trim();
-    if (!txt) { this.setState({ commentErr: 'Escribí un comentario antes de publicar.' }); return; }
+    if (!txt) { this.setState({ commentErr: 'Escribe un comentario antes de publicar.' }); return; }
     const me = this.me(), id = this.state.detailId;
     this.saveDraft('t' + id, '');
     const prev = this.ticket(id) || {}, prevStatus = prev.status, prevHist = prev.historial, prevComments = prev.comentarios;

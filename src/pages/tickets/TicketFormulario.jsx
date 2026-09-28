@@ -123,7 +123,7 @@ export default function TicketFormulario({ V }) {
                 </div>
                 {" "}
                 <span style={{ "fontSize": "12px", "color": "var(--n-600)" }}>
-                  {"Si es el mismo problema, sumá un comentario ahí en lugar de abrir otro ticket."}
+                  {"Si es el mismo problema, suma un comentario ahí en lugar de abrir otro ticket."}
                 </span>
                 {" "}
                 {L(V["dupes"]).map((_d_26, $index) => (
@@ -223,7 +223,7 @@ export default function TicketFormulario({ V }) {
                 <select value={(V["fCat"] ?? "")} onChange={V["onFCat"]} style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid " + S(V["errCatBorder"]), "borderRadius": "6px", "padding": "10px 34px 10px 12px", "fontSize": "14px", "outline": "none", "appearance": "none", "WebkitAppearance": "none" }}>
                   {" "}
                   <option value="">
-                    {"Elegí una categoría"}
+                    {"Elige una categoría"}
                   </option>
                   {" "}
                   {L(V["activeCats"]).map((_c_27, $index) => (
@@ -253,7 +253,7 @@ export default function TicketFormulario({ V }) {
                     <path d="M12 17h.01"></path>
                   </svg>
                   <span style={{ "fontSize": "12px", "color": "var(--n-800)" }}>
-                    {"Elegí la categoría que mejor describe el problema."}
+                    {"Elige la categoría que mejor describe el problema."}
                   </span>
                 </div>
                 {" "}
@@ -424,7 +424,7 @@ export default function TicketFormulario({ V }) {
               <div style={{ "minWidth": "0" }}>
                 {" "}
                 <div style={{ "fontSize": "14px", "lineHeight": "1.43", "fontWeight": "500", "color": "var(--n-900)" }}>
-                  {"Los datos vienen cargados: cambiá solo lo que haga falta"}
+                  {"Los datos vienen cargados: cambia solo lo que haga falta"}
                 </div>
                 {" "}
                 <div style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-600)", "marginTop": "2px" }}>

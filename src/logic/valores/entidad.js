@@ -37,13 +37,13 @@ export const valoresEntidad = {
         border: (ent.rol || 'usuario') === r.k ? 'var(--n-950)' : 'var(--n-200)',
         dotBorder: (ent.rol || 'usuario') === r.k ? 'var(--n-950)' : 'var(--n-300)',
         dotBg: (ent.rol || 'usuario') === r.k ? 'var(--n-950)' : 'var(--n-0)',
-        go: () => { if (ent.id === me.id && r.k !== (ent.rol || 'usuario')) { this.setState(st => ({ entity: Object.assign({}, st.entity, { err: 'No podés cambiar tu propio rol: perderías el acceso de admin. Pedíselo a otro admin.' }) })); return; } this.setState(st => ({ entity: Object.assign({}, st.entity, { rol: r.k, err: '' }) })); }
+        go: () => { if (ent.id === me.id && r.k !== (ent.rol || 'usuario')) { this.setState(st => ({ entity: Object.assign({}, st.entity, { err: 'No puedes cambiar tu propio rol: perderías el acceso de admin. Pídeselo a otro admin.' }) })); return; } this.setState(st => ({ entity: Object.assign({}, st.entity, { rol: r.k, err: '' }) })); }
       }));
       const upe = k => e2 => this.setState(st => ({ entity: Object.assign({}, st.entity, { [k]: e2.target.value, err: '' }) }));
       v.onEntName = upe('name'); v.onEntDesc = upe('desc'); v.onEntEmail = upe('email');
       v.entPwdOn = api.USE_API && !isCat; v.entPwd = ent.pwd || ''; v.onEntPwd = upe('pwd');
       v.entPwdLabel = ent.id ? 'Contraseña nueva' : 'Contraseña';
-      v.entPwdHelp = ent.id ? 'La API la pide también para guardar cambios: la que escribas pasa a ser su contraseña.' : 'Con esta inicia sesión. Pasásela por un canal seguro.';
+      v.entPwdHelp = ent.id ? 'La API la pide también para guardar cambios: la que escribas pasa a ser su contraseña.' : 'Con esta inicia sesión. Pásasela por un canal seguro.';
       v.entPwdBorder = ent.err && ent.err.indexOf('contraseña') >= 0 ? 'var(--naranja)' : 'var(--n-200)';
       // Correo de otro dominio: el aviso sale al instante, sin la espera de "Creando el registro"
       v.onEntSave = () => ent.id || (ent.type === 'user' && !this.correoValido(ent.email)) ? this.saveEntity() : this.heavy('Creando el registro', 900, () => this.saveEntity());

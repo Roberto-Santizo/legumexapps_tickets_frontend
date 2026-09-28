@@ -1,5 +1,6 @@
 // Pulso (métricas) y exportación CSV.
 // Se mezclan en Logica.prototype: "this" es la instancia de Logica.
+import { flushSync } from 'react-dom';
 import { ST, PR } from '../../config/constantes.js';
 
 export const metodosPulso = {
@@ -13,11 +14,69 @@ export const metodosPulso = {
     return { list, act, late, firstResp: avg(fr), frCount: fr.length, resolution: avg(rs), rsCount: rs.length, sinAsignar: act.filter(t => !t.asig).length };
   },
 
+  // ── Ficha de una persona del área (Métricas → tocar a alguien en "Carga por persona").
+  // Todo sale de los tickets cargados: quién cerró (historial), sus comentarios y lo que
+  // tiene asignado. No hay horas trabajadas: el sistema no registra jornadas.
+  VENTANA_FICHA: 30 * 24,
+  statsPersona(uid) {
+    const u = this.user(uid) || {}, nombre = u.nombre || '', V = this.VENTANA_FICHA;
+    const tickets = this.state.tickets, metas = this.targets();
+    const cierres = [];
+    tickets.forEach(t => (t.historial || []).forEach(h => {
+      if (h.kind === 'close' && h.autor === nombre && h.h <= V) cierres.push({ t, h: h.h, res: t.h - h.h });
+    }));
+    const reabiertos = cierres.filter(c => (c.t.historial || []).some(h => h.kind === 'reopen' && h.h < c.h)).length;
+    const respuestas = [];
+    tickets.forEach(t => {
+      if (t.autor === uid || t.h > V) return;
+      const mias = (t.comentarios || []).filter(c => c.autor === uid).map(c => c.h);
+      if (mias.length) respuestas.push(t.h - Math.max.apply(null, mias));
+    });
+    const activos = tickets.filter(t => t.status !== 'closed' && t.asig === uid);
+    const atrasados = activos.filter(t => this.sla(t).late);
+    const enMargen = cierres.filter(c => c.res <= (metas[c.t.prio] || Infinity)).length;
+    const comentarios = tickets.reduce((n, t) => n + (t.comentarios || []).filter(c => c.autor === uid && c.h <= V).length, 0);
+    const dias = new Array(14).fill(0);
+    cierres.forEach(c => { const d = Math.floor(c.h / 24); if (d < 14) dias[13 - d]++; });
+    const porCat = {};
+    cierres.map(c => c.t).concat(activos).forEach(t => { porCat[t.cat] = (porCat[t.cat] || 0) + 1; });
+    const prom = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+    return { u, nombre, cierres, reabiertos, respuesta: prom(respuestas), nResp: respuestas.length, resolucion: prom(cierres.map(c => c.res)),
+      activos, atrasados, enMargen, comentarios, dias, porCat };
+  },
+
+  // Promedios del equipo (administradores activos) para comparar sin nombrar a nadie
+  statsEquipo() {
+    const admins = this.state.users.filter(u => u.rol === 'admin' && u.activo !== false);
+    const st = admins.map(a => this.statsPersona(a.id));
+    const prom = a => { const b = a.filter(x => x != null); return b.length ? b.reduce((x, y) => x + y, 0) / b.length : null; };
+    return { n: admins.length, cierres: prom(st.map(x => x.cierres.length)), respuesta: prom(st.map(x => x.respuesta)), resolucion: prom(st.map(x => x.resolucion)),
+      margen: prom(st.filter(x => x.cierres.length).map(x => x.enMargen / x.cierres.length)), activos: prom(st.map(x => x.activos.length)) };
+  },
+
+  // Abrir la ficha: el avatar de la fila viaja hasta la cabecera del panel
+  abrirFicha(uid) {
+    const cambio = () => { this.setState({ fichaId: uid }); this.contarCifras(); };
+    const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const desde = document.querySelector('[data-ficha-avatar="' + uid + '"]');
+    if (!document.startViewTransition || reducido || !desde) { cambio(); return; }
+    desde.style.viewTransitionName = 'ficha-avatar';
+    let hacia = null;
+    const vt = document.startViewTransition(() => {
+      desde.style.viewTransitionName = '';
+      flushSync(cambio);
+      hacia = document.querySelector('[data-ficha-cabecera]');
+      if (hacia) hacia.style.viewTransitionName = 'ficha-avatar';
+    });
+    vt.finished.finally(() => { if (hacia) hacia.style.viewTransitionName = ''; });
+  },
+  cerrarFicha() { this.setState({ fichaId: null }); },
+
   subSolicitante(list) {
     const act = list.filter(t => t.status !== 'closed');
     if (!act.length) return 'Nada pendiente por ahora';
     const esperan = act.filter(t => this.waitingOnRequester(t));
-    if (esperan.length) return esperan.length === 1 ? 'Uno de tus tickets espera algo de vos' : esperan.length + ' de tus tickets esperan algo de vos';
+    if (esperan.length) return esperan.length === 1 ? 'Uno de tus tickets espera algo de ti' : esperan.length + ' de tus tickets esperan algo de ti';
     const viendo = act.filter(t => t.asig);
     if (viendo.length) return viendo.length === 1 ? 'Uno está en manos del área' : viendo.length + ' están en manos del área';
     return act.length === 1 ? 'Aún no lo abren en el área' : 'Aún no los abren en el área';

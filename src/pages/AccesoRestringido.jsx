@@ -18,7 +18,7 @@ export default function AccesoRestringido({ V }) {
         </div>
         {" "}
         <div style={{ "fontSize": "20px", "lineHeight": "1.4", "fontWeight": "600", "color": "var(--n-900)", "marginTop": "8px" }}>
-          {"No tenés permiso para ver esta sección"}
+          {"No tienes permiso para ver esta sección"}
         </div>
         {" "}
         <div style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-500)", "marginTop": "4px", "maxWidth": "420px", "marginLeft": "auto", "marginRight": "auto", "textWrap": "pretty" }}>

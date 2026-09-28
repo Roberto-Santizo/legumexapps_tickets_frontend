@@ -13,6 +13,7 @@ import IndicadorGuardando from '../components/capas/IndicadorGuardando.jsx';
 import Toast from '../components/capas/Toast.jsx';
 import ZonaSoltar from '../components/capas/ZonaSoltar.jsx';
 import Recorrido from '../components/capas/Recorrido.jsx';
+import FichaPersona from '../components/metricas/FichaPersona.jsx';
 import PantallaArranque from '../components/capas/PantallaArranque.jsx';
 import BotonChat from '../components/chat/BotonChat.jsx';
 import ChatFlotante from '../components/chat/ChatFlotante.jsx';
@@ -35,6 +36,7 @@ export function renderInterfaz(V) {
       {V["booting"] ? (<PantallaArranque V={V} />) : null}
       {V["chatFabOn"] ? (<BotonChat V={V} />) : null}
       {V["chatOpen"] ? (<ChatFlotante V={V} />) : null}
+      {V["fichaOn"] ? (<FichaPersona V={V} />) : null}
       {V["recOn"] ? (<Recorrido V={V} />) : null}
     </>
   );

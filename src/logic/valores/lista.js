@@ -76,7 +76,7 @@ export const valoresLista = {
     v.emptyTitle = diaUno ? 'Todavía no hay tickets' : 'Ningún ticket coincide con tu búsqueda';
     v.emptyHelp = diaUno
       ? 'Cuando alguien reporte algo, va a aparecer acá.'
-      : 'Probá con otro texto o quitá los filtros de estado y prioridad.';
+      : 'Prueba con otro texto o quita los filtros de estado y prioridad.';
     const scoped = isAdmin && s.scope === 'mine' ? mine.filter(t => t.asig === me.id) : mine;
     v.lateCount = String(scoped.filter(t => t.status !== 'closed' && this.sla(t).late).length);
     v.hasLate = scoped.some(t => t.status !== 'closed' && this.sla(t).late);
@@ -152,7 +152,7 @@ export const valoresLista = {
       this.descargarCsv(nombre, filas);
       this.say('Descargando ' + nombre);
     };
-    v.inboxHint = s.screen === 'tickets' && s.statusFilter !== 'all' ? 'Tocá de nuevo para ver todos' : 'Tocá un estado para filtrar';
+    v.inboxHint = s.screen === 'tickets' && s.statusFilter !== 'all' ? 'Toca de nuevo para ver todos' : 'Toca un estado para filtrar';
 
     // filtro colapsado: un botón, un panel, y chips de lo que está puesto
     const chips = [];
@@ -185,7 +185,7 @@ export const valoresLista = {
     const sinAsignar = mine.filter(t => t.status === 'open' && !t.asig).length;
     const activos = inbox.open + inbox.prog;
     v.pageSub = s.screen === 'entity' && s.entity ? (s.entity.type === 'cat' ? (s.entity.id ? 'Renombrarla no cambia los tickets que ya la usan.' : 'Aparecerá en el formulario de creación de tickets.') : (s.entity.id ? 'El correo es con el que inicia sesión.' : 'Podrá iniciar sesión en cuanto se cree.'))
-      : s.screen === 'edit' ? 'Los campos vienen cargados — cambiá solo lo que haga falta.'
+      : s.screen === 'edit' ? 'Los campos vienen cargados — cambia solo lo que haga falta.'
       : s.screen === 'create' ? 'Cuanto más contexto, menos ida y vuelta después.'
       : s.screen === 'cats' ? s.cats.filter(c => c.activo).length + ' de ' + s.cats.length + ' activas se ofrecen al crear un ticket'
       : s.screen === 'users' ? s.users.filter(u => u.rol === 'admin').length + ' de ' + s.users.length + ' con rol admin · la carga se calcula sobre los tickets activos'
@@ -220,7 +220,7 @@ export const valoresLista = {
     const colKeys = s.statusFilter === 'all' ? ['open', 'in_progress', 'closed'] : [s.statusFilter];
     v.columnCount = String(colKeys.length);
     const dragT = s.dragId ? this.ticket(s.dragId) : null;
-    v.dragHint = s.dragId ? 'Soltá en otra columna para cambiar el estado' : (isAdmin ? 'Arrastrá una tarjeta de columna a columna para cambiar el estado' : 'Podés arrastrar a Cerrados los tickets que tengas asignados');
+    v.dragHint = s.dragId ? 'Suelta en otra columna para cambiar el estado' : (isAdmin ? 'Arrastra una tarjeta de columna a columna para cambiar el estado' : 'Puedes arrastrar a Cerrados los tickets que tengas asignados');
     v.isDragging = !!s.dragId;
     v.columns = colKeys.map(k => {
       const items = filtered.filter(t => t.status === k);

@@ -423,7 +423,7 @@ export default function Pulso({ V }) {
               </h3>
               {" "}
               <div style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-500)", "marginTop": "2px", "marginBottom": "16px" }}>
-                {"Tickets activos asignados a cada uno, antes de repartir más"}
+                {"Tickets activos de cada uno. Toca a una persona para ver su ficha."}
               </div>
               {" "}
               <div style={{ "display": "flex", "flexDirection": "column", "gap": "14px" }}>
@@ -431,9 +431,9 @@ export default function Pulso({ V }) {
                 {L(V["pLoad"]).map((_p_39, $index) => (
                   <React.Fragment key={$index}>
                     {" "}
-                    <div style={{ "display": "flex", "alignItems": "center", "gap": "12px" }}>
+                    <button data-m="fila-persona" onClick={_p_39?.["abrir"]} aria-label={_p_39?.["aria"]} style={{ "display": "flex", "alignItems": "center", "gap": "12px", "width": "100%", "textAlign": "left", "background": "transparent", "border": "none", "borderRadius": "10px", "padding": "6px 8px", "margin": "-6px -8px", "cursor": "pointer", "font": "inherit", "color": "inherit" }} className="scp4">
                       {" "}
-                      <div style={{ "width": "32px", "height": "32px", "flexShrink": "0", "borderRadius": "9999px", "background": "var(--n-50)", "border": "1px solid " + S(_p_39?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "12px", "fontWeight": "600", "color": "var(--n-900)" }}>
+                      <div data-ficha-avatar={_p_39?.["uid"]} style={{ "width": "32px", "height": "32px", "flexShrink": "0", "borderRadius": "9999px", "background": "var(--n-50)", "border": "1px solid " + S(_p_39?.["ring"]), "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "12px", "fontWeight": "600", "color": "var(--n-900)" }}>
                         {T(_p_39?.["ini"])}
                       </div>
                       {" "}
@@ -463,7 +463,8 @@ export default function Pulso({ V }) {
                         {" "}
                       </div>
                       {" "}
-                    </div>
+                      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-400)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0" }}><path d="m9 18 6-6-6-6"></path></svg>
+                    </button>
                     {" "}
                   </React.Fragment>
                 ))}

@@ -83,7 +83,7 @@ export default function DetalleAdjuntos({ V }) {
                 </span>
                 {" "}
                 <span style={{ "marginLeft": "auto", "fontSize": "12px", "color": "var(--n-500)" }}>
-                  {"Tocá una para verla grande"}
+                  {"Toca una para verla grande"}
                 </span>
                 {" "}
               </div>

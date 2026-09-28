@@ -47,7 +47,7 @@ export const valoresCatalogos = {
       inactive: u.activo === false, nameInk: u.activo === false ? 'var(--n-500)' : 'var(--n-900)',
       track: u.activo !== false ? 'var(--n-950)' : 'var(--n-0)', trackBorder: u.activo !== false ? 'var(--n-950)' : 'var(--n-300)', knob: u.activo !== false ? '18px' : '0px',
       toggleOff: u.id === me.id || api.USE_API, toggleOp: u.id === me.id || api.USE_API ? '0.4' : '1', toggleCur: u.id === me.id || api.USE_API ? 'default' : 'pointer',
-      toggleLabel: api.USE_API ? 'La API todavía no permite activar o desactivar usuarios' : u.id === me.id ? 'No podés desactivarte a vos' : (u.activo !== false ? 'Desactivar a ' : 'Activar a ') + u.nombre,
+      toggleLabel: api.USE_API ? 'La API todavía no permite activar o desactivar usuarios' : u.id === me.id ? 'No puedes desactivarte a ti mismo' : (u.activo !== false ? 'Desactivar a ' : 'Activar a ') + u.nombre,
       toggle: () => this.toggleUser(u),
       carga: String(ld.n),
       cargaNote: ld.n === 0 ? 'Sin tickets activos' : ld.late > 0 ? ld.late + ' sin mover' : 'Al día',

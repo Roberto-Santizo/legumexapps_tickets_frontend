@@ -58,7 +58,7 @@ export const metodosFormulario = {
   },
 
   openEdit(t) {
-    if (!this.canEditT(t)) { this.say(this.othersTicket(t) ? 'Lo tiene ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Para editarlo tiene que pasar a vos.' : 'Este ticket ya no se puede editar.'); return; }
+    if (!this.canEditT(t)) { this.say(this.othersTicket(t) ? 'Lo tiene ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Para editarlo tiene que pasar a ti.' : 'Este ticket ya no se puede editar.'); return; }
     this.setState({
       screen: 'edit', editId: t.id, dir: 'fwd', formErr: null,
       form: { titulo: t.titulo, desc: t.desc, cat: String(t.cat), status: t.status, prio: t.prio }
@@ -91,7 +91,7 @@ export const metodosFormulario = {
     const f = this.state.form;
     const err = {
       titulo: f.titulo.trim().length < 6 ? 'Contanos qué pasa — con una frase alcanza.' : '',
-      desc: f.desc.trim().length < 15 ? 'Agregá algo más de detalle: qué pasa y desde cuándo.' : '',
+      desc: f.desc.trim().length < 15 ? 'Agrega algo más de detalle: qué pasa y desde cuándo.' : '',
       cat: !f.cat ? true : false
     };
     return (err.titulo || err.desc || err.cat) ? err : null;

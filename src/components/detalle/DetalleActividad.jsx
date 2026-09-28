@@ -143,7 +143,7 @@ export default function DetalleActividad({ V }) {
             </div>
             {" "}
             <div style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-500)", "marginTop": "2px" }}>
-              {"Sumá contexto o pedí datos al solicitante para avanzar."}
+              {"Suma contexto o pide datos al solicitante para avanzar."}
             </div>
             {" "}
           </div>
@@ -166,11 +166,11 @@ export default function DetalleActividad({ V }) {
             <span style={{ "minWidth": "0" }}>
               {" "}
               <span style={{ "display": "block", "fontSize": "14px", "lineHeight": "1.43", "fontWeight": "500", "color": "var(--n-900)" }}>
-                {"Te están esperando"}
+                {"Esperan tu respuesta"}
               </span>
               {" "}
               <span style={{ "display": "block", "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-800)", "marginTop": "2px", "textWrap": "pretty" }}>
-                {"Respondé acá abajo para destrabarlo."}
+                {"Responde acá abajo para destrabarlo."}
               </span>
               {" "}
             </span>

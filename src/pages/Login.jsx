@@ -164,7 +164,7 @@ export default function Login({ V }) {
             </h2>
             {" "}
             <p style={{ "fontSize": "16px", "lineHeight": "1.55", "color": "var(--n-700)", "maxWidth": "440px", "margin": "22px 0 0", "textWrap": "pretty", "animation": "dropIn 600ms var(--ease-standard) 1800ms both" }}>
-              {"Reportá lo que te frena y seguilo hasta que quede resuelto. Del campo a la planta, el mismo soporte."}
+              {"Reporta lo que te frena y síguelo hasta que quede resuelto. Del campo a la planta, el mismo soporte."}
             </p>
             {" "}
           </div>
@@ -194,7 +194,7 @@ export default function Login({ V }) {
             </>) : null}
             {" "}
             <p style={{ "fontSize": "16px", "lineHeight": "1.5", "color": "var(--n-600)", "margin": "0 0 clamp(16px,3vh,28px)" }}>
-              {T(V["loginHello"])}{". Entrá con tu correo institucional."}
+              {T(V["loginHello"])}{". Entra con tu correo institucional."}
             </p>
             {" "}
             {V["hasLoginError"] ? (<>

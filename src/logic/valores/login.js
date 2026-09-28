@@ -63,7 +63,7 @@ export const valoresLogin = {
       if (s.loginPhase === 'checking' || s.loginPhase === 'ok') return;
       this.tap('login');
       const fail = msg => { clearTimeout(this._lgE); this.setState({ loginErr: msg, loginPhase: 'err' }); this._lgE = setTimeout(() => this.setState({ loginPhase: '' }), 450); };
-      if (!s.email.trim() || !s.password.trim()) { fail('Completá tu correo y tu contraseña para continuar.'); return; }
+      if (!s.email.trim() || !s.password.trim()) { fail('Completa tu correo y tu contraseña para continuar.'); return; }
       if (!/@/.test(s.email)) { fail('El correo debe tener el formato nombre' + DOMINIO_CORREO + '.'); return; }
       this.setState({ loginPhase: 'checking', loginErr: '' });
       clearTimeout(this._lg); clearTimeout(this._lg2);

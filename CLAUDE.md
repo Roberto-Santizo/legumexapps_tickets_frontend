@@ -50,6 +50,7 @@ y los comentarios en español; mantener ese idioma.
 - Presentar plan y esperar confirmación antes de implementar, salvo instrucción concreta.
 - Tocar solo los archivos estrictamente necesarios; no cambiar el diseño sin pedido.
 - Colores solo con tokens `var(--…)` de `index.css` (hay modo oscuro): nunca un hex suelto.
+- Textos de la interfaz en "tú", cordial y formal ("Reporta", "Puedes"); nada de voseo.
 - Lógica en `logic/`, nunca en los componentes; valores nuevos de V en la sección de
   `logic/valores/` de esa pantalla, respetando el orden de `renderVals()`.
 - No inventar endpoints ni comportamiento del backend; preguntar si no está confirmado.

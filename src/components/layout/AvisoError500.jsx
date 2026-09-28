@@ -21,7 +21,7 @@ export default function AvisoError500({ V }) {
           </div>
           {" "}
           <div style={{ "fontSize": "14px", "lineHeight": "1.43", "color": "var(--n-800)" }}>
-            {"El servidor no respondió. Nada de lo que hiciste se perdió — volvé a intentar en unos segundos."}
+            {"El servidor no respondió. Nada de lo que hiciste se perdió — vuelve a intentar en unos segundos."}
           </div>
           {" "}
           <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "marginTop": "6px", "letterSpacing": "0.02em" }}>

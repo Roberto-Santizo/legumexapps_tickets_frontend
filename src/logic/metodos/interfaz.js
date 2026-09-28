@@ -185,7 +185,8 @@ export const metodosInterfaz = {
         setTimeout(() => {
           const campo = el.querySelector('input:not([type=checkbox]):not([type=radio]), textarea, select');
           const b = botones(), riesgosa = el.getAttribute('data-riesgosa') === 'si';
-          const destino = campo || (riesgosa ? b.find(x => /Cancelar/.test(x.textContent)) : b[b.length - 1]) || b[0];
+          // data-foco-inicial manda (p. ej. la ficha: foco en Cerrar para no bajar el panel)
+          const destino = el.querySelector('[data-foco-inicial]') || campo || (riesgosa ? b.find(x => /Cancelar/.test(x.textContent)) : b[b.length - 1]) || b[0];
           if (destino) destino.focus();
         }, 30);
       } else {

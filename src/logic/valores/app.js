@@ -41,7 +41,7 @@ export const valoresApp = {
     // Tema: el ícono muestra el actual; tocar pasa al siguiente (Claro → Oscuro → Auto)
     const tema = s.tema || 'sistema';
     v.temaClaro = tema === 'claro'; v.temaOscuro = tema === 'oscuro'; v.temaAuto = tema === 'sistema';
-    v.temaLabel = 'Tema: ' + (tema === 'claro' ? 'claro' : tema === 'oscuro' ? 'oscuro' : 'automático (según el equipo)') + '. Tocá para cambiarlo.';
+    v.temaLabel = 'Tema: ' + (tema === 'claro' ? 'claro' : tema === 'oscuro' ? 'oscuro' : 'automático (según el equipo)') + '. Toca para cambiarlo.';
     v.onTema = () => this.ciclarTema();
     v.onAyuda = () => this.iniciarRecorrido();
     const ra = this.seg(isAdmin), ru = this.seg(!isAdmin);
@@ -99,7 +99,7 @@ export const valoresApp = {
         if (this.state.nudgedOnly) this.setState({ nudgedOnly: false });
         if (n.key === 'chat') { this.setState({ chatOpen: false, chatQ: '' }); }
         const from = navDefs.findIndex(x => x.key === activeKey), to = navDefs.findIndex(x => x.key === n.key);
-        this.setState({ screen: n.key, detailId: null, dir: to === from ? 'none' : to > from ? 'up' : 'down' });
+        this.setState({ screen: n.key, detailId: null, fichaId: null, dir: to === from ? 'none' : to > from ? 'up' : 'down' });
         this.load(500);
       }
     }));
@@ -109,11 +109,11 @@ export const valoresApp = {
     v.showForbidden = forced === '401' || natural403;
     v.forbiddenCode = forced === '401' ? 'HTTP 401' : 'HTTP 403';
     v.forbiddenMsg = forced === '401'
-      ? 'Tu sesión caducó o el token ya no es válido. Iniciá sesión otra vez para seguir.'
-      : 'Esta sección es solo para administradores. Si necesitás acceso, pedíselo a un admin del área.';
+      ? 'Tu sesión caducó o el token ya no es válido. Inicia sesión otra vez para seguir.'
+      : 'Esta sección es solo para administradores. Si necesitas acceso, pídeselo a un admin del área.';
     const canSee = id => this.visible().some(t => t.id === id);
     v.showNotFound = forced === '404' || (s.screen === 'detail' && !canSee(s.detailId)) || (s.screen === 'edit' && !canSee(s.editId));
-    v.notFoundMsg = 'El ticket que buscás no existe o fue eliminado. Puede que el enlace esté viejo o que el código tenga un dígito de más.';
+    v.notFoundMsg = 'El ticket que buscas no existe o fue eliminado. Puede que el enlace esté viejo o que el código tenga un dígito de más.';
     v.show500 = s.err500;
     v.err500Line = s.err500Line || 'HTTP 500 · GET /api/tickets';
     v.saving = !!s.saving;
