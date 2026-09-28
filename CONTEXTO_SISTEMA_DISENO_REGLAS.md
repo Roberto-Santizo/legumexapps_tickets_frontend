@@ -339,6 +339,24 @@ En modo demostración siguen visibles, como en el prototipo.
 
 ## Diseño responsivo (teléfonos y tablets)
 
+- **iPhone y iPad (Safari)** — reglas que no se rompen al agregar pantallas:
+  - **Campos a 16 px** en pantallas táctiles y en cualquier iPhone/iPad (regla global al
+    final de `index.css`). Con menos, Safari agranda la página al tocar el campo y la deja
+    agrandada (pasaba en el login, crear ticket, formularios y chat). Un campo nuevo no
+    necesita nada: la regla lo cubre; no ponerle `!important` a su tamaño de letra.
+  - **Teclado de cualquier alto**: iPhone no achica la página al sacar el teclado, lo pone
+    encima. `escucharVisor()` (`logic/metodos/interfaz.js`) publica el alto visible real en
+    `--vv-alto` / `--vv-arriba` y marca `<html data-teclado>`. El chat a pantalla completa y
+    las ventanas con campos (`data-m="velo-modal"`) usan esas variables: nunca medidas fijas
+    de teclado (cada persona puede usar otro teclado, flotante, de terceros o con barra de
+    sugerencias). En Android el alto visible ya es el de la ventana y no cambia nada.
+  - **Teclado adecuado por campo**: correos con `inputMode="email"`, sin mayúscula inicial
+    ni autocorrector; buscadores `type="search"` (tecla "Buscar"); chat con tecla
+    "Enviar" (`enterKeyHint`). Mantenerlo en campos nuevos del mismo tipo.
+  - Desenfoques con `WebkitBackdropFilter` además de `backdropFilter`, y máscaras con
+    `-webkit-mask-image`.
+  - Se revisa con `ios` (auditoría en iPhone, iPhone SE y iPad: campos < 16 px y desborde
+    horizontal) y la simulación de teclados de distintos altos.
 - **Chat en teléfono y tablet**: "Chat" del menú abre el panel flotante a pantalla completa
   (no la página de Chat, que es de escritorio) y el botón de "expandir" no aparece. El
   cuadro de escribir dice solo "Escribe tu respuesta" (sin atajos de teclado).

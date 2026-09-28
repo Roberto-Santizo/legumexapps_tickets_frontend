@@ -250,6 +250,27 @@ export const metodosInterfaz = {
     document.addEventListener('focusin', this._onFoco);
   },
 
+  // Teclado en pantalla de cualquier alto (del sistema, flotante, de terceros, con barra de
+  // sugerencias): iPhone no achica la página al sacar el teclado, lo pone encima. Se publica el
+  // alto visible real (--vv-alto) y su corrimiento (--vv-arriba) para que las capas a pantalla
+  // completa (chat) queden siempre sobre el teclado; <html data-teclado> marca que está abierto.
+  // Con zoom de pellizco no se toca nada (el alto visible cambia por el zoom, no por el teclado).
+  escucharVisor() {
+    const vv = window.visualViewport;
+    if (!vv || this._onVisor) return;
+    const raiz = document.documentElement;
+    this._onVisor = () => {
+      if (vv.scale > 1.05) return;
+      raiz.style.setProperty('--vv-alto', Math.round(vv.height) + 'px');
+      raiz.style.setProperty('--vv-arriba', Math.round(vv.offsetTop) + 'px');
+      const abierto = window.innerHeight - vv.height > 120;
+      if (abierto !== raiz.hasAttribute('data-teclado')) raiz.toggleAttribute('data-teclado', abierto);
+    };
+    vv.addEventListener('resize', this._onVisor);
+    vv.addEventListener('scroll', this._onVisor);
+    this._onVisor();
+  },
+
   escucharLuz() {
     if (this._onLuz || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     this._onLuz = e => {

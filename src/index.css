@@ -389,6 +389,14 @@
   [data-m="paginador"] button{display:inline-flex!important;flex-direction:row!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;min-height:40px}
   /* chat flotante: pantalla completa */
   [data-m="chat-flotante"]{inset:0!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important;border-radius:0!important;padding-top:env(safe-area-inset-top,0px)!important;padding-bottom:env(safe-area-inset-bottom,0px)!important;animation:hojaSube 300ms cubic-bezier(0.22,1,0.36,1) both!important}
+  /* sobre el teclado de cualquier alto: ocupa solo lo visible (ver escucharVisor) */
+  [data-m="chat-flotante"]{top:var(--vv-arriba,0px)!important;bottom:auto!important;height:var(--vv-alto,100dvh)!important}
+  [data-m="chat-flotante"] *{overscroll-behavior:contain}
+  body:has([data-m="chat-flotante"]){overflow:hidden}
+  /* ventanas con campos (nuevo usuario, confirmaciones): quedan sobre el teclado y, si no
+     caben, se desplazan adentro en vez de quedar tapadas */
+  [data-m="velo-modal"]{top:var(--vv-arriba,0px)!important;bottom:auto!important;height:var(--vv-alto,100dvh);overflow-y:auto;align-items:flex-start!important;padding:16px!important;overscroll-behavior:contain}
+  [data-m="velo-modal"]>[role="dialog"]{margin:auto 0}
   /* redactor liviano: respuestas rápidas en una fila que se desliza (se esfuma en el borde),
      caja que crece desde una línea y "Responder y cerrar" compacto a la derecha */
   [data-m="chat-rapidas"]{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-mask-image:linear-gradient(90deg,var(--n-1000) calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,var(--n-1000) calc(100% - 28px),transparent);animation:fadeSwap 200ms var(--ease-standard) both}
@@ -552,7 +560,7 @@
 [data-rafaga="2"]{top:54vh}
 [data-rafaga="2"],[data-rafaga="2"] path{animation-delay:129s}
 [data-rafaga="2"] path:nth-child(2){animation-delay:129.15s}
-@media (max-width:767px){[data-astro-app]{width:60px;top:74px;right:12px}}
+@media (max-width:767px){[data-astro-app]{width:52px;top:62px;right:10px}}
 
 /* (1) Abrir un ticket: la tarjeta se estira hasta volverse el detalle (View Transitions) */
 ::view-transition-group(ticket-abierto){animation-duration:460ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
@@ -698,3 +706,18 @@ body{background-image:radial-gradient(ellipse 60% 38vh at 88% 0,rgba(var(--sol-h
   a[href]:not([style*="position"]){position:relative}
   a[href][aria-label]::before{content:"";position:absolute;inset:-9px}
 }
+
+/* ──────────── iPhone / iPad (y todo lo táctil): sin zoom al escribir ────────────
+   Safari agranda la página al tocar un campo con letra menor a 16 px y la deja agrandada
+   (también después del login). En pantallas táctiles y en cualquier iPhone o iPad (aunque
+   use teclado y trackpad) los campos van a 16 px. El texto no se infla al girar. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select{font-size:16px!important}
+}
+@supports (-webkit-touch-callout:none){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select{font-size:16px!important}
+}
+/* buscadores: type="search" trae el teclado con la tecla "Buscar"; sin el dibujo ni la X propios del navegador */
+input[type=search]{-webkit-appearance:none;appearance:none}
+input[type=search]::-webkit-search-decoration,input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display:none}

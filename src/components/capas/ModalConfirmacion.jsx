@@ -7,7 +7,7 @@ export default function ModalConfirmacion({ V }) {
     <>
       {/* z-index 70: por encima del chat flotante (60), que en el teléfono ocupa toda la
           pantalla y tapaba la confirmación; por debajo de avisos (72) y carga (80). */}
-      <div style={{ "position": "fixed", "inset": "0", "background": "rgba(10,10,10,0.4)", "display": "flex", "alignItems": "center", "justifyContent": "center", "padding": "24px", "zIndex": "70", "animation": S(V["overlayAnim"]) + " both" }}>
+      <div data-m="velo-modal" style={{ "position": "fixed", "inset": "0", "background": "rgba(10,10,10,0.4)", "display": "flex", "alignItems": "center", "justifyContent": "center", "padding": "24px", "zIndex": "70", "animation": S(V["overlayAnim"]) + " both" }}>
         {" "}
         <div ref={V["modalRef"]} role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-detalle" data-riesgosa={V["modalRiesgosa"]} style={{ "width": "100%", "maxWidth": "460px", "background": "var(--n-0)", "borderRadius": "16px", "padding": "24px", "animation": S(V["modalAnim"]) + " both", "boxShadow": "rgba(0,0,0,0.1) 0px 10px 15px -3px, rgba(0,0,0,0.1) 0px 4px 6px -4px" }}>
           {" "}
@@ -55,7 +55,7 @@ export default function ModalConfirmacion({ V }) {
                 {"Correo institucional"}
               </label>
               {" "}
-              <input value={(V["modalEmail"] ?? "")} onChange={V["onModalEmail"]} placeholder="nombre@legumex.net" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-1000)", "borderRadius": "6px", "padding": "10px 12px", "fontSize": "14px", "outline": "none" }} />
+              <input inputMode="email" autoCapitalize="none" autoCorrect="off" spellCheck="false" autoComplete="off" value={(V["modalEmail"] ?? "")} onChange={V["onModalEmail"]} placeholder="nombre@legumex.net" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-1000)", "borderRadius": "6px", "padding": "10px 12px", "fontSize": "14px", "outline": "none" }} />
               {" "}
             </div>
             {V["modalPwdOn"] ? (<>

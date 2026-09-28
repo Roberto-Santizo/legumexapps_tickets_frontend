@@ -231,7 +231,7 @@ export default function Login({ V }) {
                   {"Correo institucional"}
                 </label>
                 {" "}
-                <input type="email" value={(V["email"] ?? "")} onChange={V["onEmail"]} placeholder={V["loginPh"]} style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "transition": "border-color 300ms ease,box-shadow 300ms ease", "boxShadow": S(V["fieldRing"]), "border": "1px solid " + S(V["fieldBorder"]), "borderRadius": "6px", "padding": "10px 12px", "fontSize": "14px", "outline": "none" }} />
+                <input type="email" inputMode="email" autoCapitalize="none" autoCorrect="off" spellCheck="false" autoComplete="username" value={(V["email"] ?? "")} onChange={V["onEmail"]} placeholder={V["loginPh"]} style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "transition": "border-color 300ms ease,box-shadow 300ms ease", "boxShadow": S(V["fieldRing"]), "border": "1px solid " + S(V["fieldBorder"]), "borderRadius": "6px", "padding": "10px 12px", "fontSize": "14px", "outline": "none" }} />
                 {" "}
               </div>
               {" "}
@@ -243,7 +243,7 @@ export default function Login({ V }) {
                 {" "}
                 <div style={{ "position": "relative" }}>
                   {" "}
-                  <input type={V["pwdType"]} value={(V["password"] ?? "")} onChange={V["onPassword"]} onKeyDown={V["onPwdKey"]} placeholder="••••••••" autoComplete="current-password" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "transition": "border-color 300ms ease,box-shadow 300ms ease", "boxShadow": S(V["fieldRing"]), "border": "1px solid " + S(V["fieldBorder"]), "borderRadius": "6px", "padding": "10px 46px 10px 12px", "fontSize": "14px", "outline": "none" }} />
+                  <input type={V["pwdType"]} value={(V["password"] ?? "")} onChange={V["onPassword"]} onKeyDown={V["onPwdKey"]} enterKeyHint="go" placeholder="••••••••" autoComplete="current-password" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "transition": "border-color 300ms ease,box-shadow 300ms ease", "boxShadow": S(V["fieldRing"]), "border": "1px solid " + S(V["fieldBorder"]), "borderRadius": "6px", "padding": "10px 46px 10px 12px", "fontSize": "14px", "outline": "none" }} />
                   {" "}
                   <button type="button" onClick={V["onTogglePwd"]} aria-label={V["pwdLabel"]} aria-pressed={V["pwdShown"]} title={V["pwdLabel"]} style={{ "position": "absolute", "right": "4px", "top": "50%", "transform": "translateY(-50%)", "width": "36px", "height": "36px", "border": "none", "background": "transparent", "borderRadius": "6px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "color": "var(--n-600)", "transition": "background-color 150ms ease,color 150ms ease" }} className="scp0">
                     {" "}

@@ -274,7 +274,7 @@ export default function BarraControles({ V }) {
                 <path d="m21 21-4.3-4.3"></path>
               </svg>
               {" "}
-              <input id="tic-search" value={(V["q"] ?? "")} onChange={V["onQuery"]} onBlur={V["onBlurSearch"]} placeholder="Buscar por título o código" style={{ "width": "100%", "height": "40px", "boxSizing": "border-box", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-1000)", "borderRadius": "8px", "padding": "0 36px 0 36px", "fontSize": "14px", "outline": "none" }} />
+              <input id="tic-search" type="search" inputMode="search" enterKeyHint="search" autoCapitalize="none" autoCorrect="off" value={(V["q"] ?? "")} onChange={V["onQuery"]} onBlur={V["onBlurSearch"]} placeholder="Buscar por título o código" style={{ "width": "100%", "height": "40px", "boxSizing": "border-box", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-1000)", "borderRadius": "8px", "padding": "0 36px 0 36px", "fontSize": "14px", "outline": "none" }} />
               {" "}
               {V["hasQuery"] ? (<>
                 {" "}

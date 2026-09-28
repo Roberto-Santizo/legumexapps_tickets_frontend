@@ -31,7 +31,7 @@ export default function ChatLista({ V }) {
               <path d="m21 21-4.3-4.3"></path>
             </svg>
             {" "}
-            <input value={(V["chatQ"] ?? "")} onChange={V["onChatQ"]} placeholder="Buscar por título o código" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "7px 10px 7px 32px", "fontSize": "14px", "outline": "none" }} />
+            <input type="search" inputMode="search" enterKeyHint="search" autoCapitalize="none" autoCorrect="off" value={(V["chatQ"] ?? "")} onChange={V["onChatQ"]} placeholder="Buscar por título o código" style={{ "width": "100%", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "7px 10px 7px 32px", "fontSize": "14px", "outline": "none" }} />
             {" "}
           </div>
           {" "}

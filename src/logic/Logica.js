@@ -81,6 +81,7 @@ export class Logica extends LogicaBase {
     this.escucharArrastre();
     this.escucharLuz();
     this.escucharTeclado();
+    this.escucharVisor();
     this.aplicarFase(); this._faseIv = setInterval(() => this.aplicarFase(), 60000);
     this.aplicarTema(this.state.tema);
     this.load(650);
@@ -153,6 +154,7 @@ export class Logica extends LogicaBase {
     this.dejarDeEscucharArrastre();
     if (this._onLuz) document.removeEventListener('pointermove', this._onLuz);
     if (this._onFoco) document.removeEventListener('focusin', this._onFoco);
+    if (this._onVisor && window.visualViewport) { window.visualViewport.removeEventListener('resize', this._onVisor); window.visualViewport.removeEventListener('scroll', this._onVisor); }
     clearTimeout(this._focoT);
     clearInterval(this._faseIv);
     if (this._onRecMedir) { window.removeEventListener('resize', this._onRecMedir); window.removeEventListener('scroll', this._onRecMedir, true); }
