@@ -63,7 +63,10 @@
   --niebla-rgb:244,245,241;
   --niebla-a:0.6;
   /* Sistema: nubes y ráfaga de día, luz que sigue al cursor */
-  --nube:#dfeae4;
+  --nube:#ffffff;
+  /* cielo dentro del sistema: celeste de día (el login conserva el suyo); luna de noche */
+  --cielo-app:#b4d3ea;
+  --luna:#fbf8ec;
   /* Selección: opción elegida en selectores (Todos/Míos…) y fila elegida en listas.
      En claro es blanco/gris como siempre; en oscuro tiene que despegarse de la tarjeta. */
   --sel-bg:#ffffff;
@@ -95,9 +98,10 @@
     --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
     --login-linea:#9aae9f; --login-hoja:#8fc46a;
     --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
-    --nube:#1c241f; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
+    --nube:#223033; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
     --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
     --sel-bg:#394139; --sel-borde:#4d564d; --sel-sutil:#2b322b; --seg-on:#3d463d; --seg-borde:#5e685e;
+    --cielo-app:#132530; --luna:#f1edd8; --sol-tinte:0.07;
     color-scheme:dark;
   }
   :root:not([data-tema="claro"]) img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -117,9 +121,10 @@
     --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
     --login-linea:#9aae9f; --login-hoja:#8fc46a;
     --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
-    --nube:#1c241f; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
+    --nube:#223033; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
     --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
     --sel-bg:#394139; --sel-borde:#4d564d; --sel-sutil:#2b322b; --seg-on:#3d463d; --seg-borde:#5e685e;
+    --cielo-app:#132530; --luna:#f1edd8; --sol-tinte:0.07;
     color-scheme:dark;
 }
 :root[data-tema="oscuro"] img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -384,6 +389,26 @@
   [data-m="paginador"] button{display:inline-flex!important;flex-direction:row!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;min-height:40px}
   /* chat flotante: pantalla completa */
   [data-m="chat-flotante"]{inset:0!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important;border-radius:0!important;padding-top:env(safe-area-inset-top,0px)!important;padding-bottom:env(safe-area-inset-bottom,0px)!important;animation:hojaSube 300ms cubic-bezier(0.22,1,0.36,1) both!important}
+  /* redactor liviano: respuestas rápidas en una fila que se desliza (se esfuma en el borde),
+     caja que crece desde una línea y "Responder y cerrar" compacto a la derecha */
+  [data-m="chat-rapidas"]{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-mask-image:linear-gradient(90deg,var(--n-1000) calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,var(--n-1000) calc(100% - 28px),transparent);animation:fadeSwap 200ms var(--ease-standard) both}
+  [data-m="chat-rapidas"]::-webkit-scrollbar{display:none}
+  [data-m="chat-rapidas"] button{padding:7px 12px!important;font-size:13px!important}
+  [data-m="chat-caja"]{max-height:132px;transition:height var(--duration-fast) var(--ease-standard)}
+  [data-m="chat-cerrar"]{align-self:flex-end!important;width:auto!important;animation:dropIn 220ms var(--ease-standard) both}
+  /* aviso "Tómalo para responder": el texto a lo ancho y el botón debajo, a todo el ancho */
+  [data-m="chat-candado"]{flex-wrap:wrap!important}
+  [data-m="chat-candado"]>span{flex-basis:calc(100% - 26px)!important}
+  [data-m="chat-candado"]>button{flex:1 1 100%!important;min-height:42px}
+  /* menú lateral: el cielo de la hora arriba y la sierra al pie (dos cordilleras que suben
+     al abrirlo), como el fondo del sistema en la computadora */
+  [data-m="menu"]{background:var(--menu-astro),linear-gradient(180deg,color-mix(in srgb,var(--cielo-app) 70%,var(--fondo)) 0,var(--fondo) 48%)!important;--menu-astro:radial-gradient(circle at calc(100% - 42px) calc(52px + env(safe-area-inset-top,0px)),var(--sol-1) 0,var(--sol-2) 12px,rgba(var(--sol-halo-rgb),0.32) 14px,transparent 44px)}
+  :root[data-fase="noche"] [data-m="menu"]{--menu-astro:radial-gradient(circle at calc(100% - 42px) calc(52px + env(safe-area-inset-top,0px)),var(--luna) 0 10px,color-mix(in srgb,var(--luna) 22%,transparent) 12px,transparent 36px)}
+  [data-m="menu"]::before,[data-m="menu"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:230px;z-index:-1;pointer-events:none;background:var(--sierra)}
+  [data-m="menu"]::before{opacity:0.1;clip-path:polygon(0 100%,0 34%,13% 20%,27% 31%,44% 9%,61% 27%,78% 13%,100% 28%,100% 100%)}
+  [data-m="menu"]::after{opacity:0.24;clip-path:polygon(0 100%,0 64%,17% 50%,34% 62%,55% 43%,74% 58%,89% 49%,100% 55%,100% 100%)}
+  [data-m="menu"][data-abierto]::before{animation:menuSierra 700ms cubic-bezier(0.22,1,0.36,1) 60ms both}
+  [data-m="menu"][data-abierto]::after{animation:menuSierra 700ms cubic-bezier(0.22,1,0.36,1) 140ms both}
 }
 /* teléfono en horizontal: hay ancho para dos columnas de tarjetas */
 @media (max-height:500px) and (pointer:coarse) and (min-width:640px){
@@ -483,11 +508,13 @@
   [data-detail-grid]{grid-template-columns:minmax(0,1.7fr) minmax(260px,320px)!important}
 }
 @keyframes hojaSube{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes menuSierra{from{transform:translateY(48px)}to{transform:none}}
 /* capa de arrastrar y soltar: el ícono flota suave mientras el archivo está encima */
 @keyframes soltarFlota{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){[data-m="zona-soltar"] *{animation:none!important}}
 @media (prefers-reduced-motion:reduce){
   [data-m="menu"],[data-m="menu"][data-abierto]{transition:none!important}
+  [data-m="menu"]::before,[data-m="menu"]::after{animation:none!important}
   [data-m="hoja"],[data-m="chat-flotante"],[data-m="notificaciones"],[data-m="velo-hoja"]{animation:none!important}
 }
 
@@ -512,6 +539,20 @@
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) [data-nubes],:root:not([data-tema="claro"]) [data-rafaga]{display:none}}
 :root[data-tema="oscuro"] [data-nubes],:root[data-tema="oscuro"] [data-rafaga]{display:none}
 @media (prefers-reduced-motion:reduce){[data-cielo-app] *{animation:none!important}[data-rafaga]{display:none}}
+
+/* ──────────── Día con vida (sistema) ────────────
+   Arriba a la derecha el sol con halo (de noche la luna), nubes en dos capas que viajan a
+   distinta velocidad, motas de luz que suben (las "estrellas" del día), una bandada de vez
+   en cuando y dos ráfagas. Qué se ve en cada hora lo decide "Cielo según la hora". */
+[data-astro-app]{position:absolute;right:max(4%,20px);top:calc(8vh + 12px);width:88px;aspect-ratio:1;animation:sunBreath 9s ease-in-out infinite}
+[data-astro-app] svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+[data-cielo-app] [data-motas]{height:62vh;opacity:0.55}
+[data-nubes] [data-nube-lejos]{opacity:0.5}
+[data-cielo-app] [data-aves]{top:21vh;animation-duration:170s;animation-delay:24s}
+[data-rafaga="2"]{top:54vh}
+[data-rafaga="2"],[data-rafaga="2"] path{animation-delay:129s}
+[data-rafaga="2"] path:nth-child(2){animation-delay:129.15s}
+@media (max-width:767px){[data-astro-app]{width:60px;top:74px;right:12px}}
 
 /* (1) Abrir un ticket: la tarjeta se estira hasta volverse el detalle (View Transitions) */
 ::view-transition-group(ticket-abierto){animation-duration:460ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
@@ -614,7 +655,10 @@
 :root[data-vt="entrada"]::view-transition-new(root){animation:vtEntra 620ms var(--ease-standard) 260ms both}
 /* El cielo de la hora sigue adentro del sistema: un tinte suave arriba del fondo
    (celeste de día, cálido al atardecer, lila de noche en tema claro) */
-body{background-image:linear-gradient(180deg,color-mix(in srgb,var(--login-cielo-alto) 60%,var(--fondo)) 0,var(--fondo) 60vh);background-attachment:fixed}
+/* amanecer, atardecer y noche usan el mismo tono que el login; el día tiene su celeste */
+:root[data-fase="amanecer"],:root[data-fase="atardecer"],:root[data-fase="noche"]{--cielo-app:var(--login-cielo-alto)}
+body{background-image:radial-gradient(ellipse 60% 38vh at 88% 0,rgba(var(--sol-halo-rgb),var(--sol-tinte,0.16)),transparent 70%),linear-gradient(180deg,color-mix(in srgb,var(--cielo-app) 74%,var(--fondo)) 0,var(--fondo) 66vh);background-attachment:fixed}
+:root[data-fase="noche"]{--sol-tinte:0}
 
 /* ──────────── Ficha de una persona (Métricas) ──────────── */
 @keyframes fichaEntra{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:none}}

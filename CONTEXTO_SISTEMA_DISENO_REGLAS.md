@@ -274,11 +274,23 @@ En modo demostración siguen visibles, como en el prototipo.
   - La hora decide qué hay en el cielo (sol o luna, estrellas, nubes, aves, estrella
     fugaz); el tema claro/oscuro solo cambia la paleta de cada fase. El saludo
     (`saludoHora()`) coincide: de noche siempre "Buenas noches".
-  - Adentro del sistema el fondo lleva un tinte suave del cielo de la hora (`body`).
+  - Adentro del sistema el fondo lleva un tinte del cielo de la hora (`body`, token
+    `--cielo-app`): celeste de día (propio del sistema; el login conserva el suyo), rosado
+    al amanecer, cálido al atardecer y lila de noche en tema claro, con un brillo cálido
+    arriba a la derecha donde está el sol.
 - **Sistema vivo** (sección "Sistema vivo" en `index.css`):
-  - Cielo dentro de la hoja (`components/layout/CieloApp.jsx`): estrellas y estrella
-    fugaz de noche; mini nubes y una ráfaga de aire (esta pasa por delante, sin tomar
-    clics) de día.
+  - Cielo dentro de la hoja (`components/layout/CieloApp.jsx`, sección "Día con vida"):
+    arriba a la derecha el sol con halo y rayos (de noche la luna, token `--luna`); de noche
+    estrellas y estrella fugaz; de día nubes en dos capas (lejos y cerca, a distinta
+    velocidad), motas de luz que suben, una bandada de vez en cuando y dos ráfagas de aire
+    (estas pasan por delante, sin tomar clics). Se ve en los espacios libres, nunca encima
+    del contenido, y se apaga con "reducir movimiento".
+  - Menú lateral del teléfono: el mismo cielo de la hora arriba, sol o luna junto al logo
+    y la sierra al pie (dos cordilleras que suben al abrirlo).
+  - Chat en el teléfono (redactor liviano, `valores/chat.js`): respuestas rápidas en una
+    fila deslizable que se oculta al escribir (`chatRapidasOn`), caja que empieza en una
+    línea y crece hasta cinco (`chatFilas`) y "Responder y cerrar" compacto solo cuando ya
+    hay texto (`chatCerrarOn`). El aviso "Tómalo para responder" apila texto y botón.
   - Transiciones con View Transitions (si el navegador no las tiene, se navega igual):
     entrada al sistema (la sierra se acomoda y el astro baja hasta el saludo:
     `entrarAlSistema`), abrir un ticket desde la lista (la tarjeta se estira hasta el

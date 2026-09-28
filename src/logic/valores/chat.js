@@ -191,6 +191,13 @@ export const valoresChat = {
       const cHueco = 'Se resolvió: ______. Si vuelve a pasar, responde este correo y lo reabrimos.';
       const cMacros = (isAdmin ? MACROS : MACROS_USER).concat(v.chatCanClose ? [{ label: 'Cerrar con resumen', text: cHueco }] : []);
       v.chatMacros = cMacros.map(m => ({ label: m.label, text: m.text, use: () => this.setState({ chatMsg: m.text, chatErr: '' }) }));
+      // Teléfono: el redactor se aligera para dejar lugar a la conversación. Las respuestas
+      // rápidas van en una fila deslizable y se ocultan al escribir; la caja empieza en una
+      // línea y crece; "Responder y cerrar" aparece cuando ya hay algo escrito.
+      const cTexto = !!(s.chatMsg || '').trim();
+      v.chatRapidasOn = !s.movil || !cTexto;
+      v.chatCerrarOn = v.chatCanClose && (!s.movil || cTexto);
+      v.chatFilas = s.movil ? String(Math.min(5, (s.chatMsg || '').split('\n').reduce((n, l) => n + Math.max(1, Math.ceil(l.length / 30)), 0))) : '2';
       v.onChatOpenTicket = () => { this.setState({ chatOpen: false }); this.openTicket(ct.id); };
       v.chatCanEdit = (isAdmin && !this.othersTicket(ct)) || (!isAdmin && ct.autor === me.id && ct.status !== 'closed');
       v.onChatEdit = () => { this.setState({ chatOpen: false }); this.openEdit(ct); };
