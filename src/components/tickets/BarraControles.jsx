@@ -53,7 +53,7 @@ export default function BarraControles({ V }) {
                 {L(V["scopeOpts"]).map((_o_7, $index) => (
                   <React.Fragment key={$index}>
                     {" "}
-                    <button onClick={_o_7?.["go"]} aria-pressed={_o_7?.["pressed"]} style={{ "display": "inline-flex", "alignItems": "center", "gap": "6px", "padding": "0 12px", "border": "none", "borderRadius": "5px", "background": S(_o_7?.["barBg"]), "fontSize": "14px", "fontWeight": S(_o_7?.["weight"]), "color": "var(--n-900)", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scpb">
+                    <button onClick={_o_7?.["go"]} aria-pressed={_o_7?.["pressed"]} style={{ "display": "inline-flex", "alignItems": "center", "gap": "6px", "padding": "0 12px", "border": "none", "borderRadius": "5px", "background": S(_o_7?.["barBg"]), "boxShadow": S(_o_7?.["barShadow"]), "fontSize": "14px", "fontWeight": S(_o_7?.["weight"]), "color": "var(--n-900)", "cursor": "pointer", "whiteSpace": "nowrap", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scpb">
                       {T(_o_7?.["label"])}
                       <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)" }}>
                         {T(_o_7?.["count"])}

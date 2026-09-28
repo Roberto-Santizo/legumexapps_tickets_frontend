@@ -160,7 +160,10 @@ export const metodosInterfaz = {
     if (!antes || !s.authed) return;
     const hoja = document.querySelector('[data-sheet]');
     const poner = y => { if (hoja) hoja.scrollTop = y; if (window.scrollY) window.scrollTo(0, y); };
-    const cambio = antes.screen !== s.screen || antes.detailId !== s.detailId || antes.editId !== s.editId || antes.entity !== s.entity;
+    // el formulario de categoría/usuario se renueva con cada tecla: se compara QUÉ se edita
+    // (tipo e id), no el objeto; si no, escribir mandaba la página arriba
+    const cual = e => e ? (e.type || e.kind || '') + ':' + (e.id != null ? e.id : 'nuevo') : '';
+    const cambio = antes.screen !== s.screen || antes.detailId !== s.detailId || antes.editId !== s.editId || cual(antes.entity) !== cual(s.entity);
     if (cambio) {
       const volverALista = s.screen === 'tickets' && (antes.screen === 'detail' || antes.screen === 'edit');
       this._restaurar = volverALista ? (this._scrollLista || 0) : 0;
@@ -286,7 +289,8 @@ export const metodosInterfaz = {
     return this.saludoHora() + ', ' + n;
   },
 
-  seg(active) { return active ? { bg: 'var(--n-0)', border: '1px solid var(--n-200)' } : { bg: 'transparent', border: '1px solid transparent' }; },
+  // opción elegida de un selector: con tokens de selección (en oscuro se despega de la tarjeta)
+  seg(active) { return active ? { bg: 'var(--sel-bg)', border: '1px solid var(--sel-borde)' } : { bg: 'transparent', border: '1px solid transparent' }; },
 
   openModal(m) { clearTimeout(this._modal); this.setState({ modal: m, modalClosing: false }); },
 

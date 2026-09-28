@@ -298,7 +298,7 @@ export const metodosTickets = {
       asigTitle: t.asig ? 'Asignado a ' + ((this.user(t.asig) || {}).nombre || '') + ' · cambiar' : 'Asignar sin abrir el ticket',
       asigBorder: t.asig ? 'solid var(--n-200)' : 'dashed var(--n-400)',
       qaOpen: this.state.qa === t.id,
-      qaBg: this.state.qa === t.id ? 'var(--n-50)' : 'var(--n-0)',
+      qaBg: this.state.qa === t.id ? 'var(--sel-sutil)' : 'var(--n-0)',
       stop: e => { if (e && e.stopPropagation) e.stopPropagation(); },
       qaToggle: e => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(st => ({ qa: st.qa === t.id ? null : t.id })); },
       qaClear: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, null); },
@@ -308,7 +308,7 @@ export const metodosTickets = {
       // Orden: quien lo tiene hoy, después yo ("Tomarlo yo"), después el resto por carga
       qaOpts: this.state.users.filter(u => u.rol === 'admin' && u.activo).sort((a, b) => (b.id === t.asig) - (a.id === t.asig) || (b.id === this.me().id) - (a.id === this.me().id) || this.loadOf(a.id).n - this.loadOf(b.id).n).map(u => Object.assign(this.asigOptLabel(u, t.asig), {
         ini: this.ini(u.nombre), carga: this.loadOf(u.id).n + (this.loadOf(u.id).n === 1 ? ' activo' : ' activos'),
-        bg: t.asig === u.id ? 'var(--n-50)' : 'transparent',
+        bg: t.asig === u.id ? 'var(--sel-sutil)' : 'transparent',
         go: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, u.id); }
       })),
       edit: e => { if (e && e.stopPropagation) { e.stopPropagation(); e.preventDefault(); } this.openEdit(t); }

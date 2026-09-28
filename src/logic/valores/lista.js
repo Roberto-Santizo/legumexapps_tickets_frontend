@@ -19,7 +19,7 @@ export const valoresLista = {
     v.statusFilters = filters.map(f => {
       const sg = this.seg(s.dStatus === f[0]);
       return {
-        label: f[1], bg: s.dStatus === f[0] ? 'var(--n-50)' : 'transparent', border: sg.border, on: s.dStatus === f[0], off: s.dStatus !== f[0],
+        label: f[1], bg: s.dStatus === f[0] ? 'var(--sel-sutil)' : 'transparent', border: sg.border, on: s.dStatus === f[0], off: s.dStatus !== f[0],
         hasDot: f[0] !== 'all', dot: f[0] === 'all' ? 'var(--n-500)' : ST[f[0]].dot,
         count: String(f[0] === 'all' ? mine.length : mine.filter(t => t.status === f[0]).length),
         go: () => this.setState({ dStatus: f[0] })
@@ -29,7 +29,7 @@ export const valoresLista = {
     v.prioFilters = prios.map(p => {
       const sg = this.seg(s.dPrio === p[0]);
       return {
-        label: p[1], bg: s.dPrio === p[0] ? 'var(--n-50)' : 'transparent', border: sg.border, hasDot: !!p[2], dot: p[2] || 'var(--n-500)',
+        label: p[1], bg: s.dPrio === p[0] ? 'var(--sel-sutil)' : 'transparent', border: sg.border, hasDot: !!p[2], dot: p[2] || 'var(--n-500)',
         on: s.dPrio === p[0], off: s.dPrio !== p[0],
         count: String(p[0] === 'all' ? mine.length : mine.filter(t => t.prio === p[0]).length),
         go: () => this.setState({ dPrio: p[0] })
@@ -124,8 +124,8 @@ export const valoresLista = {
     v.onClearNudged = () => this.setState({ nudgedOnly: false });
     const nMine = mine.filter(t => t.asig === me.id).length;
     v.scopeOpts = [['all', 'Todos', String(mine.length)], ['mine', 'Míos', String(nMine)]].map(o => ({
-      label: o[1], count: o[2], bg: (s.scope || 'all') === o[0] ? 'var(--n-0)' : 'transparent', barBg: (s.scope || 'all') === o[0] ? 'var(--fondo-2)' : 'transparent', weight: (s.scope || 'all') === o[0] ? '600' : '500',
-      shadow: (s.scope || 'all') === o[0] ? 'rgba(0,0,0,0.06) 0px 1px 2px 0px' : 'none', pressed: (s.scope || 'all') === o[0] ? 'true' : 'false',
+      label: o[1], count: o[2], bg: (s.scope || 'all') === o[0] ? 'var(--sel-bg)' : 'transparent', barBg: (s.scope || 'all') === o[0] ? 'var(--seg-on)' : 'transparent', barShadow: (s.scope || 'all') === o[0] ? 'inset 0 0 0 1px var(--seg-borde)' : 'none', weight: (s.scope || 'all') === o[0] ? '600' : '500',
+      shadow: (s.scope || 'all') === o[0] ? 'inset 0 0 0 1px var(--seg-borde), rgba(0,0,0,0.08) 0px 1px 2px 0px' : 'none', pressed: (s.scope || 'all') === o[0] ? 'true' : 'false',
       go: () => this.setState(st => ({ scope: o[0], swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     }));
     v.onlyNudged = () => this.setState(st => ({ nudgedOnly: true, screen: 'tickets', detailId: null, dir: 'none', statusFilter: 'all', prioFilter: 'all', dStatus: 'all', dPrio: 'all', q: '', sort: 'urgencia', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }));
@@ -137,11 +137,11 @@ export const valoresLista = {
     v.greetAnim = s.greetOut ? 'toastOut 300ms var(--ease-standard) both' : 'dropIn 420ms var(--ease-standard) both';
     v.periodLabel = { hoy: 'hoy', '7': '7 días', '30': '30 días', todo: 'todo el historial' }[per];
     v.periodOpts = [['hoy', 'Hoy'], ['7', 'Últimos 7 días'], ['30', 'Últimos 30 días'], ['todo', 'Todo el historial']].map(o => ({
-      label: o[1], on: per === o[0], bg: per === o[0] ? 'var(--n-50)' : 'transparent',
+      label: o[1], on: per === o[0], bg: per === o[0] ? 'var(--sel-sutil)' : 'transparent',
       go: () => this.setState(st => ({ period: o[0], periodOpen: false, swap: st.swap + 1 }))
     }));
     v.periodOpen = !!s.periodOpen; v.viewOpen = !!s.viewOpen;
-    v.viewBtnBg = s.viewOpen ? 'var(--n-50)' : 'transparent';
+    v.viewBtnBg = s.viewOpen ? 'var(--sel-sutil)' : 'transparent';
     v.onTogglePeriod = () => this.setState(st => ({ periodOpen: !st.periodOpen, viewOpen: false, filterOpen: false }));
     v.onToggleView = () => this.setState(st => ({ viewOpen: !st.viewOpen, periodOpen: false, filterOpen: false }));
     v.onDismissPop = () => this.setState({ viewOpen: false, periodOpen: false });
@@ -174,7 +174,7 @@ export const valoresLista = {
     v.filterCount = String(fcount);
     v.hasFilterCount = fcount > 0;
     v.filterOpen = !!s.filterOpen;
-    v.filterBg = s.filterOpen || fcount > 0 ? 'var(--n-50)' : 'var(--n-0)';
+    v.filterBg = s.filterOpen || fcount > 0 ? 'var(--sel-sutil)' : 'var(--n-0)';
     v.onToggleFilter = () => this.setState(st => st.filterOpen ? { filterOpen: false } : { filterOpen: true, dStatus: st.statusFilter, dPrio: st.prioFilter });
     v.onDismissFilter = () => this.setState({ filterOpen: false });
     v.onClearDraft = () => this.setState({ dStatus: 'all', dPrio: 'all' });

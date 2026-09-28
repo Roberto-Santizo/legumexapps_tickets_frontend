@@ -24,7 +24,7 @@ export const valoresApp = {
     v.notifOpen = !!s.notifOpen; v.hasUnread = nUnread > 0; v.unreadLabel = nUnread > 9 ? '9+' : String(nUnread);
     v.unreadNote = nUnread ? nUnread + ' SIN LEER' : 'AL DÍA';
     v.bellAria = nUnread ? 'Notificaciones, ' + nUnread + ' sin leer' : 'Notificaciones';
-    v.bellBg = s.notifOpen ? 'var(--n-0)' : 'transparent';
+    v.bellBg = s.notifOpen ? 'var(--sel-bg)' : 'transparent';
     v.bellShadow = s.notifOpen ? '0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200)' : 'none';
     v.bellPolling = !!s.notifPolling; v.bellSvgDisplay = s.notifPolling ? 'none' : 'block';
     v.bellAnim = s.notifPing ? 'iconBurst 640ms cubic-bezier(0.34,1.56,0.64,1) both' : 'none';

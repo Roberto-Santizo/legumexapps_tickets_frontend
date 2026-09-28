@@ -64,6 +64,13 @@
   --niebla-a:0.6;
   /* Sistema: nubes y ráfaga de día, luz que sigue al cursor */
   --nube:#dfeae4;
+  /* Selección: opción elegida en selectores (Todos/Míos…) y fila elegida en listas.
+     En claro es blanco/gris como siempre; en oscuro tiene que despegarse de la tarjeta. */
+  --sel-bg:#ffffff;
+  --sel-borde:#e5e5e5;
+  --sel-sutil:#f5f5f5;
+  --seg-on:#e1e5dc;
+  --seg-borde:#c6ccc0;
   --viento:rgba(11,42,30,0.32);
   --luz-rgb:77,124,42;
   --luz-a:0.09;
@@ -90,6 +97,7 @@
     --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
     --nube:#1c241f; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
     --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
+    --sel-bg:#394139; --sel-borde:#4d564d; --sel-sutil:#2b322b; --seg-on:#3d463d; --seg-borde:#5e685e;
     color-scheme:dark;
   }
   :root:not([data-tema="claro"]) img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -111,6 +119,7 @@
     --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
     --nube:#1c241f; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
     --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
+    --sel-bg:#394139; --sel-borde:#4d564d; --sel-sutil:#2b322b; --seg-on:#3d463d; --seg-borde:#5e685e;
     color-scheme:dark;
 }
 :root[data-tema="oscuro"] img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}

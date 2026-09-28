@@ -73,12 +73,12 @@ export const valoresChat = {
     const chatSt = (!s.chatStatus || s.chatStatus === 'mine') ? 'all' : s.chatStatus;
     const cMine = mine.filter(t => t.asig === me.id).length, cScope = s.chatScope || 'all';
     v.chatScopeOpts = [['all', 'Todos', String(mine.length)], ['mine', 'Míos', String(cMine)]].map(o => ({
-      label: o[1], count: o[2], bg: cScope === o[0] ? 'var(--n-0)' : 'transparent', weight: cScope === o[0] ? '600' : '500',
-      shadow: cScope === o[0] ? 'rgba(0,0,0,0.06) 0px 1px 2px 0px' : 'none', pressed: cScope === o[0] ? 'true' : 'false',
+      label: o[1], count: o[2], bg: cScope === o[0] ? 'var(--sel-bg)' : 'transparent', weight: cScope === o[0] ? '600' : '500',
+      shadow: cScope === o[0] ? 'inset 0 0 0 1px var(--seg-borde), rgba(0,0,0,0.08) 0px 1px 2px 0px' : 'none', pressed: cScope === o[0] ? 'true' : 'false',
       go: () => this.setState({ chatScope: o[0] })
     }));
     v.chatFilters = chatF.map(f => ({
-      label: f[1], bg: chatSt === f[0] ? 'var(--n-0)' : 'transparent',
+      label: f[1], bg: chatSt === f[0] ? 'var(--sel-bg)' : 'transparent',
       go: () => this.setState({ chatStatus: f[0] })
     }));
     const cq = (s.chatQ || '').trim().toLowerCase();
@@ -94,7 +94,7 @@ export const valoresChat = {
       const au = this.user(otherId) || { nombre: 'Tickets TIC' };
       return {
         code: 'TIC-' + t.id, titulo: t.titulo, ini: this.ini(au.nombre), ring: this.ring(otherId),
-        dot: ST[t.status].dot, bg: s.chatId === t.id ? 'var(--n-50)' : 'transparent',
+        dot: ST[t.status].dot, bg: s.chatId === t.id ? 'var(--sel-sutil)' : 'transparent',
         blobRef: el => { if (el) el.src = this.blobUrl(otherId, 60); }, hasBlob: !!otherId, noBlob: !otherId,
         last: last ? ((last.autor === me.id ? 'Tú: ' : '') + last.texto) : 'Sin respuestas todavía',
         lastInk: last ? 'var(--n-600)' : 'var(--n-500)',

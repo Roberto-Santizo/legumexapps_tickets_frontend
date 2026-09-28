@@ -239,6 +239,12 @@ En modo demostración siguen visibles, como en el prototipo.
   - Transparencias sobre superficie o fondo: `rgba(var(--sf-rgb),x)` y
     `rgba(var(--fondo-rgb),x)`.
   - Colores de estado y prioridad en `config/constantes.js` (`ST`, `PR`), ya como tokens.
+  - **Lo elegido** (opción activa de un selector, pestaña, fila marcada) usa los tokens de
+    selección, nunca `--fondo-2`, `--n-0` o `--n-50`, que en modo oscuro quedan casi
+    iguales al fondo: `--sel-bg` / `--sel-borde` (botón elegido sobre una pista gris),
+    `--sel-sutil` (resalte suave de menús y filtros) y, en los selectores segmentados
+    (Todos / Míos) sobre pista blanca, `--seg-on` con el anillo
+    `inset 0 0 0 1px var(--seg-borde)`. El elegido debe distinguirse en claro y en oscuro.
 - **Modo oscuro "de noche"**: los mismos tokens con valores oscuros (bloque siguiente en
   `index.css`).
   - Se aplica con `data-tema="oscuro"` en `<html>` o, en "Auto", cuando el equipo está en
@@ -421,6 +427,10 @@ automáticos); en el teléfono la misma interfaz se reacomoda.
 - **La interfaz no tiene lógica**: los componentes solo pintan `V`. Una regla nueva va en
   `logic/metodos/`, un valor nuevo para la pantalla en su archivo de `logic/valores/`.
 - Respetar el orden de secciones de `renderVals()` (ver comentario en `Logica.js`).
+- **Comparar identidad, no objetos**: el estado se recrea en cada tecla (por ejemplo,
+  `s.entity` del formulario de edición). Para saber si "cambió la pantalla" se compara
+  tipo e id (`acomodarScroll`), nunca el objeto; si no, escribir en un campo cuenta como
+  cambio de pantalla y la vista salta arriba.
 - Constantes y textos editables en `src/config/`, no sueltos en el código.
 - **Colores solo con tokens** (`var(--…)` de `index.css`): así funcionan el modo oscuro y
   cualquier ajuste de paleta en un solo lugar. Un color nuevo se agrega como token en
