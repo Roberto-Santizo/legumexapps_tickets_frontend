@@ -245,6 +245,16 @@ En modo demostración siguen visibles, como en el prototipo.
     oscuro.
   - En el inicio de sesión, el sol pasa a ser una luna creciente (`data-luna`) y hay
     estrellas (`data-estrellas`); en el sistema, estrellas tenues detrás de la sierra.
+- **Login vivo, de día y de noche al mismo nivel** (sección "Login vivo" en `index.css`):
+  - El astro (sol `data-sol` o luna) va arriba, en el mismo lugar en ambos modos.
+  - De día: cielo (`data-cielo`), motas de luz (`data-motas`) y una bandada (`data-aves`)
+    que cruza cada 5 min. De noche: estrella fugaz (`data-fugaz`) cada 5 min. Las dos
+    primeras aparecen a los pocos segundos de abrir.
+  - Brillo metálico de izquierda a derecha cada 9 s: título (`data-brillo`), logo
+    (`data-brillo-logo`) y crestas de la sierra (`data-brillo-sierra`, recortado con la
+    forma de cada cordillera).
+  - Todo se apaga con "reducir movimiento" del sistema. Colores en tokens `--sol-*`,
+    `--brillo*`, `--mota-rgb`, `--fugaz`, `--login-cielo-alto`.
   - El logo se aclara con un filtro.
 - **Selector de tema**: botón junto al nombre en la tarjeta del usuario; cambia entre
   Claro, Oscuro y Auto (`aplicarTema` / `ciclarTema` en `logic/metodos/interfaz.js`).

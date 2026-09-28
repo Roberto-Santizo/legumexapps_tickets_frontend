@@ -49,6 +49,16 @@
   --login-cielo-2:#e6ecd2;
   --login-linea:#cfd8cc;
   --login-hoja:#4d7c2a;
+  /* Login de día: sol, cielo, brillo metálico, motas de luz y aves */
+  --sol-1:#fff4c7;
+  --sol-2:#f8cd5c;
+  --sol-rayo:#f3c14e;
+  --sol-halo-rgb:248,205,92;
+  --login-cielo-alto:#dbe8e2;
+  --brillo:rgba(255,255,255,0.75);
+  --brillo-sierra:rgba(255,255,255,0.34);
+  --mota-rgb:246,196,82;
+  --fugaz:#ffffff;
   color-scheme:light;
 }
 /* Modo oscuro: los mismos tokens con valores oscuros (un leve verde, como la marca).
@@ -68,6 +78,7 @@
     --aviso-no-leido:#1c211c; --borde-suave:#383e37; --linea-kpi:#3a4039;
     --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
     --login-linea:#9aae9f; --login-hoja:#8fc46a;
+    --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
     color-scheme:dark;
   }
   :root:not([data-tema="claro"]) img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -86,6 +97,7 @@
     --aviso-no-leido:#1c211c; --borde-suave:#383e37; --linea-kpi:#3a4039;
     --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
     --login-linea:#9aae9f; --login-hoja:#8fc46a;
+    --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
     color-scheme:dark;
 }
 :root[data-tema="oscuro"] img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -367,12 +379,47 @@
 @media (prefers-reduced-motion:reduce){[data-estrellas]::before,[data-estrellas]::after{animation:none}}
 @media (prefers-color-scheme:dark){
   :root:not([data-tema="claro"]) [data-estrellas],:root:not([data-tema="claro"]) [data-luna]{display:block!important}
-  :root:not([data-tema="claro"]) [data-astro]{right:44%!important;bottom:auto!important;top:7vh;width:clamp(110px,10vw,150px)!important;background:none!important}
-  @media (max-width:767px){:root:not([data-tema="claro"]) [data-astro]{right:8%!important;top:4vh}}
 }
 :root[data-tema="oscuro"] [data-estrellas],:root[data-tema="oscuro"] [data-luna]{display:block!important}
-:root[data-tema="oscuro"] [data-astro]{right:44%!important;bottom:auto!important;top:7vh;width:clamp(110px,10vw,150px)!important;background:none!important}
-@media (max-width:767px){:root[data-tema="oscuro"] [data-astro]{right:8%!important;top:4vh}}
+/* ──────────── Login vivo: de día y de noche con el mismo nivel ────────────
+   Astro (sol o luna) arriba, en el mismo lugar; brillo metálico que cruza de izquierda a
+   derecha (título, logo y crestas de las montañas); de día cielo, motas de luz y una
+   bandada cada 5 min; de noche estrellas y una estrella fugaz cada 5 min. */
+[data-astro]{position:absolute;right:44%;top:7vh;width:clamp(110px,10vw,150px);aspect-ratio:1}
+@media (max-width:767px){[data-astro]{right:8%;top:4vh;width:96px}}
+[data-sol]{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+[data-sol-rayos]{transform-origin:50px 50px;animation:solGira 90s linear infinite}
+@keyframes solGira{to{transform:rotate(360deg)}}
+[data-cielo]{position:absolute;left:0;right:0;top:0;height:75vh;background:linear-gradient(180deg,var(--login-cielo-alto),rgba(var(--fondo-rgb),0))}
+/* motas de luz de día (las "estrellas" del día): puntos cálidos que suben y brillan */
+[data-motas]{position:absolute;left:0;right:0;top:0;height:70vh;pointer-events:none;-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
+[data-motas]::before,[data-motas]::after{content:"";position:absolute;inset:0;filter:drop-shadow(0 0 3px rgba(var(--mota-rgb),0.9));background-image:radial-gradient(4.5px 4.5px at 14% 22%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 31% 64%,rgba(var(--mota-rgb),1),transparent),radial-gradient(5.0px 5.0px at 58% 16%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 73% 48%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 88% 30%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.0px 4.0px at 44% 38%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 6% 50%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 95% 62%,rgba(var(--mota-rgb),1),transparent);animation:motas 14s ease-in-out infinite}
+[data-motas]::after{background-image:radial-gradient(4.0px 4.0px at 22% 40%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 49% 70%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 66% 28%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 81% 66%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 37% 12%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 10% 80%,rgba(var(--mota-rgb),1),transparent);animation-duration:19s;animation-delay:-7s}
+@keyframes motas{0%{transform:translateY(12px);opacity:0.15}50%{opacity:1}100%{transform:translateY(-28px);opacity:0.15}}
+/* bandada: cruza el cielo de izquierda a derecha cada 5 min (la primera a los 7 s) */
+[data-aves]{position:absolute;left:0;top:15vh;width:120px;height:44px;opacity:0;animation:aves 300s linear 7s infinite}
+[data-aves] path{fill:none;stroke:var(--sierra);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.55;transform-box:fill-box;transform-origin:center;animation:aleteo 700ms ease-in-out infinite alternate}
+[data-aves] path:nth-child(2){animation-delay:-250ms}[data-aves] path:nth-child(3){animation-delay:-480ms}[data-aves] path:nth-child(4){animation-delay:-120ms}
+@keyframes aves{0%{opacity:0;transform:translate(-140px,24px)}0.4%{opacity:1}5.6%{opacity:1}6%{opacity:0;transform:translate(calc(100vw + 20px),-40px)}100%{opacity:0;transform:translate(calc(100vw + 20px),-40px)}}
+@keyframes aleteo{from{transform:scaleY(1)}to{transform:scaleY(0.35)}}
+/* estrella fugaz: solo de noche, cada 5 min (la primera a los 6 s) */
+[data-fugaz]{display:none;position:absolute;left:12%;top:6vh;width:0;height:0;transform:rotate(24deg)}
+[data-fugaz]::before{content:"";position:absolute;left:0;top:0;width:160px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),var(--fugaz));opacity:0;animation:fugaz 300s cubic-bezier(0.3,0,0.7,1) 6s infinite}
+@keyframes fugaz{0%{opacity:0;transform:translateX(0) scaleX(0.3)}0.15%{opacity:1;transform:translateX(12vw) scaleX(1)}0.6%{opacity:0;transform:translateX(52vw) scaleX(0.6)}100%{opacity:0;transform:translateX(52vw)}}
+/* brillo metálico en el título y el logo */
+[data-brillo]{background-image:linear-gradient(105deg,var(--c) 44%,var(--brillo) 50%,var(--c) 56%);background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 9s cubic-bezier(0.45,0,0.2,1) 3.3s infinite}
+[data-brillo-logo]{position:absolute;inset:0;-webkit-mask:var(--logo) center/100% 100% no-repeat;mask:var(--logo) center/100% 100% no-repeat;background-image:linear-gradient(105deg,transparent 44%,var(--brillo) 50%,transparent 56%);background-size:300% 100%;background-position:100% 0;animation:brillo 9s cubic-bezier(0.45,0,0.2,1) 3.1s infinite;pointer-events:none}
+@keyframes brillo{0%{background-position:100% 0}22%,100%{background-position:0 0}}
+/* brillo en las crestas: una franja de luz recortada con la forma de cada cordillera */
+[data-brillo-sierra]{animation:brilloSierra 9s cubic-bezier(0.45,0,0.2,1) 3.6s infinite}
+@keyframes brilloSierra{0%{transform:translateX(-900px) skewX(-18deg)}40%,100%{transform:translateX(2700px) skewX(-18deg)}}
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]) [data-sol],:root:not([data-tema="claro"]) [data-motas],:root:not([data-tema="claro"]) [data-aves]{display:none}
+  :root:not([data-tema="claro"]) [data-fugaz]{display:block}
+}
+:root[data-tema="oscuro"] [data-sol],:root[data-tema="oscuro"] [data-motas],:root[data-tema="oscuro"] [data-aves]{display:none}
+:root[data-tema="oscuro"] [data-fugaz]{display:block}
+@media (prefers-reduced-motion:reduce){[data-brillo],[data-brillo-logo],[data-motas]::before,[data-motas]::after{animation:none!important}[data-aves],[data-fugaz]{display:none!important}}
 /* ──────────── Tablets (táctil, 768–1366 px, alto > 500 px) ────────────
    Mismo diseño que el teléfono, pero con aire y columnas que crecen con la pantalla. */
 @media screen and (pointer:coarse) and (hover:none) and (min-width:768px) and (max-width:1366px) and (min-height:501px){

@@ -6,7 +6,7 @@ import { T, S, L } from '../utils/runtime.js';
 export default function Login({ V }) {
   return (
     <>
-      <div data-login="" onMouseMove={V["onLoginMove"]} onMouseLeave={V["onLoginLeave"]} style={{ "position": "relative", "minHeight": "100vh", "display": "flex", "flexWrap": "wrap", "alignItems": "center", "background": "var(--fondo)", "overflow": "hidden", "paddingBottom": "clamp(96px,22vh,220px)" }}>
+      <div data-login="" onMouseMove={V["onLoginMove"]} onMouseLeave={V["onLoginLeave"]} style={{ "position": "relative", "minHeight": "100vh", "display": "flex", "flexWrap": "wrap", "alignItems": "center", "background": "var(--fondo)", "overflow": "hidden", "paddingBottom": "clamp(110px,26vh,260px)" }}>
         {" "}
         <div aria-hidden="true" data-curtain="" style={{ "position": "fixed", "inset": "0", "zIndex": "6", "pointerEvents": "none", "animation": "curtainDown 1500ms cubic-bezier(0.76,0,0.24,1) 1000ms both" }}>
           {" "}
@@ -30,11 +30,36 @@ export default function Login({ V }) {
         {" "}
         <div aria-hidden="true" data-sierra="" style={{ "position": "fixed", "inset": "0", "pointerEvents": "none", "overflow": "hidden" }}>
           {" "}
-          {/* Cielo de noche (solo en modo oscuro): estrellas que titilan */}
+          {/* Cielo: de día un celeste suave con motas de luz; de noche estrellas que titilan */}
+          <div data-cielo=""></div>
           <div data-estrellas="login"></div>
+          <div data-motas=""></div>
+          {/* Cada 5 minutos: de día cruza una bandada, de noche una estrella fugaz */}
+          <svg data-aves="" viewBox="0 0 120 44" aria-hidden="true">
+            <path d="M8 22q6-7 12 0q6-7 12 0"></path>
+            <path d="M40 10q5-6 10 0q5-6 10 0"></path>
+            <path d="M44 34q4-5 8 0q4-5 8 0"></path>
+            <path d="M72 18q5-6 10 0q5-6 10 0"></path>
+          </svg>
+          <div data-fugaz=""></div>
           {" "}
-          {/* De día es el sol; en modo oscuro, index.css lo convierte en luna */}
-          <div data-astro="" style={{ "position": "absolute", "right": "18%", "bottom": "calc(clamp(140px,30vh,280px) - 70px)", "width": "clamp(180px,22vw,300px)", "aspectRatio": "1", "borderRadius": "9999px", "translate": "calc(var(--mx,0) * -6px) calc(var(--my,0) * -6px)", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "background": "radial-gradient(circle at 50% 50%,var(--login-cielo-1) 0%,var(--login-cielo-2) 55%,rgba(var(--cielo-2-rgb),0) 72%)", "animation": "sunRise 2400ms cubic-bezier(0.22,1,0.36,1) 1700ms both,sunBreath 9s ease-in-out 4200ms infinite" }}>
+          {/* Astro arriba, en el mismo lugar de día y de noche (posición en index.css): el sol
+              con rayos que giran lento; en modo oscuro se oculta y aparece la luna */}
+          <div data-astro="" style={{ "translate": "calc(var(--mx,0) * -6px) calc(var(--my,0) * -6px)", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "animation": "sunRise 2400ms cubic-bezier(0.22,1,0.36,1) 1700ms both,sunBreath 9s ease-in-out 4200ms infinite" }}>
+            <svg data-sol="" viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <radialGradient id="sol-halo"><stop offset="0.3" style={{ "stopColor": "var(--sol-2)", "stopOpacity": "0.42" }}></stop><stop offset="1" style={{ "stopColor": "var(--sol-2)", "stopOpacity": "0" }}></stop></radialGradient>
+                <radialGradient id="sol-disco" cx="0.4" cy="0.38"><stop offset="0" style={{ "stopColor": "var(--sol-1)" }}></stop><stop offset="1" style={{ "stopColor": "var(--sol-2)" }}></stop></radialGradient>
+              </defs>
+              <radialGradient id="sol-luz"><stop offset="0" style={{ "stopColor": "var(--sol-2)", "stopOpacity": "0.22" }}></stop><stop offset="1" style={{ "stopColor": "var(--sol-2)", "stopOpacity": "0" }}></stop></radialGradient>
+              {/* luz cálida amplia alrededor del sol (como el halo de la luna, pero de día) */}
+              <circle cx="50" cy="50" r="190" fill="url(#sol-luz)"></circle>
+              <circle cx="50" cy="50" r="50" fill="url(#sol-halo)"></circle>
+              <g data-sol-rayos="" style={{ "stroke": "var(--sol-rayo)", "strokeWidth": "1.6", "strokeLinecap": "round", "opacity": "0.7" }}>
+                <line x1="79.0" y1="50.0" x2="86.0" y2="50.0"></line><line x1="76.8" y1="61.1" x2="83.3" y2="63.8"></line><line x1="70.5" y1="70.5" x2="75.5" y2="75.5"></line><line x1="61.1" y1="76.8" x2="63.8" y2="83.3"></line><line x1="50.0" y1="79.0" x2="50.0" y2="86.0"></line><line x1="38.9" y1="76.8" x2="36.2" y2="83.3"></line><line x1="29.5" y1="70.5" x2="24.5" y2="75.5"></line><line x1="23.2" y1="61.1" x2="16.7" y2="63.8"></line><line x1="21.0" y1="50.0" x2="14.0" y2="50.0"></line><line x1="23.2" y1="38.9" x2="16.7" y2="36.2"></line><line x1="29.5" y1="29.5" x2="24.5" y2="24.5"></line><line x1="38.9" y1="23.2" x2="36.2" y2="16.7"></line><line x1="50.0" y1="21.0" x2="50.0" y2="14.0"></line><line x1="61.1" y1="23.2" x2="63.8" y2="16.7"></line><line x1="70.5" y1="29.5" x2="75.5" y2="24.5"></line><line x1="76.8" y1="38.9" x2="83.3" y2="36.2"></line>
+              </g>
+              <circle cx="50" cy="50" r="22" fill="url(#sol-disco)"></circle>
+            </svg>
             {/* Luna creciente (solo en modo oscuro): halo detrás y el creciente recortado encima */}
             <svg data-luna="" viewBox="0 0 100 100" aria-hidden="true" style={{ "position": "absolute", "inset": "0", "width": "100%", "height": "100%", "display": "none", "overflow": "visible" }}>
               <defs>
@@ -46,13 +71,13 @@ export default function Login({ V }) {
             </svg>
           </div>
           {" "}
-          <div style={{ "position": "absolute", "left": "0", "bottom": "calc(clamp(140px,30vh,280px) - 40px)", "width": "200%", "height": "90px", "background": "radial-gradient(ellipse 18% 50% at 20% 50%,rgba(var(--sf-rgb),0.75),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 22% 45% at 65% 55%,rgba(var(--sf-rgb),0.6),rgba(var(--sf-rgb),0) 70%)", "animation": "sierraDrift 70s linear infinite", "zIndex": "1" }}></div>
+          <div style={{ "position": "absolute", "left": "0", "bottom": "calc(clamp(170px,38vh,360px) - 40px)", "width": "200%", "height": "90px", "background": "radial-gradient(ellipse 18% 50% at 20% 50%,rgba(var(--sf-rgb),0.75),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 22% 45% at 65% 55%,rgba(var(--sf-rgb),0.6),rgba(var(--sf-rgb),0) 70%)", "animation": "sierraDrift 70s linear infinite", "zIndex": "1" }}></div>
           {" "}
           <div style={{ "position": "absolute", "left": "0", "top": "8%", "width": "200%", "height": "38%", "translate": "calc(var(--mx,0) * -10px) 0", "transition": "translate 1200ms cubic-bezier(0.22,1,0.36,1)", "background": "radial-gradient(ellipse 9% 22% at 12% 40%,rgba(var(--sf-rgb),0.9),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 13% 18% at 38% 62%,rgba(var(--sf-rgb),0.7),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 8% 20% at 71% 30%,rgba(var(--sf-rgb),0.85),rgba(var(--sf-rgb),0) 70%),radial-gradient(ellipse 11% 16% at 90% 58%,rgba(var(--sf-rgb),0.65),rgba(var(--sf-rgb),0) 70%)", "animation": "chartFade 1600ms var(--ease-standard) 1700ms both,sierraDrift 140s linear 1700ms infinite" }}></div>
           {" "}
         </div>
         {" "}
-        <div aria-hidden="true" data-sierra="" style={{ "position": "fixed", "left": "0", "right": "0", "bottom": "0", "height": "clamp(140px,30vh,280px)", "pointerEvents": "none" }}>
+        <div aria-hidden="true" data-sierra="" style={{ "position": "fixed", "left": "0", "right": "0", "bottom": "0", "height": "clamp(170px,38vh,360px)", "pointerEvents": "none" }}>
           {" "}
           <div style={{ "position": "absolute", "inset": "-34% -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -4px) calc(var(--my,0) * -1px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1400ms cubic-bezier(0.22,1,0.36,1) 1500ms both" }}>
             {" "}
@@ -66,6 +91,8 @@ export default function Login({ V }) {
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 120s linear infinite" }}>
               <polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240" fill="var(--sierra)" fillOpacity="0.10"></polygon>
+              <clipPath id="crestas-2"><polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240"></polygon></clipPath>
+              <linearGradient id="luz-crestas-2"><stop offset="0" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop><stop offset="0.4" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="0.5" style={{ "stopColor": "var(--brillo-sierra)" }}></stop><stop offset="0.6" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="1" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop></linearGradient><g clipPath="url(#crestas-2)"><rect data-brillo-sierra="" x="0" y="0" width="220" height="240" fill="url(#luz-crestas-2)" style={{ "animationDelay": "3.9s" }}></rect></g>
             </svg>
             {" "}
           </div>
@@ -74,6 +101,8 @@ export default function Login({ V }) {
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 80s linear infinite reverse" }}>
               <polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240" fill="var(--sierra)" fillOpacity="0.35"></polygon>
+              <clipPath id="crestas-3"><polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240"></polygon></clipPath>
+              <linearGradient id="luz-crestas-3"><stop offset="0" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop><stop offset="0.4" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="0.5" style={{ "stopColor": "var(--brillo-sierra)" }}></stop><stop offset="0.6" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="1" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop></linearGradient><g clipPath="url(#crestas-3)"><rect data-brillo-sierra="" x="0" y="0" width="220" height="240" fill="url(#luz-crestas-3)" style={{ "animationDelay": "3.75s" }}></rect></g>
             </svg>
             {" "}
           </div>
@@ -82,6 +111,8 @@ export default function Login({ V }) {
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 52s linear infinite" }}>
               <polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240" fill="var(--marca-fondo)" fillOpacity="1"></polygon>
+              <clipPath id="crestas-4"><polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240"></polygon></clipPath>
+              <linearGradient id="luz-crestas-4"><stop offset="0" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop><stop offset="0.4" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="0.5" style={{ "stopColor": "var(--brillo-sierra)" }}></stop><stop offset="0.6" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="1" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop></linearGradient><g clipPath="url(#crestas-4)"><rect data-brillo-sierra="" x="0" y="0" width="220" height="240" fill="url(#luz-crestas-4)" style={{ "animationDelay": "3.6s" }}></rect></g>
             </svg>
             {" "}
           </div>
@@ -98,7 +129,10 @@ export default function Login({ V }) {
         {" "}
         <div data-login-copy="" style={{ "position": "relative", "zIndex": "2", "flex": "1 1 480px", "padding": "clamp(20px,5vh,48px) clamp(24px,5vw,72px)", "display": "flex", "flexDirection": "column" }}>
           {" "}
-          <img src="/marca/legumex-logo.png" alt="Agroindustria Legumex" style={{ "height": "clamp(44px,8vh,72px)", "width": "auto", "alignSelf": "flex-start", "animation": "chartFade 600ms var(--ease-standard) 1500ms both" }} />
+          <span style={{ "position": "relative", "alignSelf": "flex-start", "display": "inline-block", "lineHeight": "0", "animation": "chartFade 600ms var(--ease-standard) 1500ms both" }}>
+            <img src="/marca/legumex-logo.png" alt="Agroindustria Legumex" style={{ "height": "clamp(44px,8vh,72px)", "width": "auto" }} />
+            <span aria-hidden="true" data-brillo-logo="" style={{ "--logo": "url(/marca/legumex-logo.png)" }}></span>
+          </span>
           {" "}
           <div style={{ "paddingTop": "clamp(20px,7vh,64px)" }}>
             {" "}
@@ -111,13 +145,13 @@ export default function Login({ V }) {
               {" "}
               <span style={{ "display": "block", "overflow": "hidden", "paddingBottom": "0.06em" }}>
                 <span style={{ "display": "block", "animation": "lineUp 900ms cubic-bezier(0.22,1,0.36,1) 1720ms both" }}>
-                  {"Tickets"}
+                  <span data-brillo="" style={{ "--c": "var(--marca)" }}>{"Tickets"}</span>
                 </span>
               </span>
               {" "}
               <span style={{ "display": "block", "overflow": "hidden", "paddingBottom": "0.06em" }}>
                 <span style={{ "display": "block", "color": "var(--login-hoja)", "animation": "lineUp 900ms cubic-bezier(0.22,1,0.36,1) 1840ms both" }}>
-                  {"TIC"}
+                  <span data-brillo="" style={{ "--c": "var(--login-hoja)", "animationDelay": "3.45s" }}>{"TIC"}</span>
                 </span>
               </span>
               {" "}
