@@ -24,25 +24,80 @@ export const valoresCapas = {
     v.lbTrans = s.lbDrag ? 'none' : 'transform 220ms cubic-bezier(0.22,1,0.36,1)';
     v.lbCursor = s.lbDrag ? 'grabbing' : lz.z > 1 ? 'grab' : 'zoom-in';
     v.lbZoomLabel = Math.round(lz.z * 100) + '%';
-    v.lbHint = lz.z > 1 ? 'ARRASTRÁ PARA MOVERTE · DOBLE CLICK O 0 PARA AJUSTAR' : 'CLICK O RUEDA PARA ACERCAR · + / −';
+    // Instrucciones según el dispositivo: gestos en pantallas táctiles, mouse y teclado en computadora
+    v.lbHint = s.movil
+      ? (lz.z > 1 ? 'ARRASTRA PARA MOVERTE · TOCA DOS VECES PARA AJUSTAR' : v.lbMulti ? 'PELLIZCA PARA ACERCAR · DESLIZA PARA CAMBIAR' : 'PELLIZCA O TOCA DOS VECES PARA ACERCAR')
+      : (lz.z > 1 ? 'ARRASTRA PARA MOVERTE · DOBLE CLIC O 0 PARA AJUSTAR' : 'CLIC O RUEDA PARA ACERCAR · + / −');
     const rel = (e, el) => { const r = el.getBoundingClientRect(); return [e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2)]; };
     v.onLbWheel = e => { const fr = e.currentTarget; this._lbFrame = fr; const p = rel(e, fr); this.lbZoomAt(lz.z * (e.deltaY < 0 ? 1.25 : 0.8), p[0], p[1]); };
     v.onLbIn = () => this.lbZoomAt(lz.z * 1.5, 0, 0);
     v.onLbOut = () => this.lbZoomAt(lz.z / 1.5, 0, 0);
     v.onLbFit = () => this.setState({ lbZ: { z: 1, x: 0, y: 0 } });
-    v.onLbDbl = () => this.setState({ lbZ: { z: 1, x: 0, y: 0 } });
-    v.onLbDown = e => { const fr = e.currentTarget.parentElement; this._lbFrame = fr; this._lbP = { sx: e.clientX, sy: e.clientY, x: lz.x, y: lz.y, moved: false, p: rel(e, fr) }; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} };
+    // doble clic del mouse (en pantallas táctiles el doble toque lo maneja onLbUp)
+    v.onLbDbl = () => { if (this._lbTipo !== 'touch') this.setState({ lbZ: { z: 1, x: 0, y: 0 } }); };
+    // Gestos: un dedo arrastra (o desliza para cambiar/cerrar); dos dedos pellizcan para el zoom
+    const pts = this._lbPts || (this._lbPts = new Map());
+    const par = () => { const [a, b] = Array.from(pts.values()); return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 }; };
+    v.onLbDown = e => {
+      const fr = e.currentTarget.parentElement; this._lbFrame = fr; this._lbTipo = e.pointerType;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {}
+      const cur = this.state.lbZ || { z: 1, x: 0, y: 0 };
+      if (pts.size === 1) this._lbP = { sx: e.clientX, sy: e.clientY, x: cur.x, y: cur.y, moved: false, p: rel(e, fr) };
+      if (pts.size === 2) {
+        const q = par(), r = fr.getBoundingClientRect();
+        const c = [q.cx - (r.left + r.width / 2), q.cy - (r.top + r.height / 2)];
+        this._lbPinch = { d0: q.d, z0: cur.z, qx: (c[0] - cur.x) / cur.z, qy: (c[1] - cur.y) / cur.z };
+        if (this._lbP) this._lbP.moved = true;
+      }
+    };
     v.onLbMove = e => {
+      if (!pts.has(e.pointerId)) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const pi = this._lbPinch;
+      if (pi && pts.size >= 2) {
+        const q = par(), fr = this._lbFrame, r = fr.getBoundingClientRect();
+        const cx = q.cx - (r.left + r.width / 2), cy = q.cy - (r.top + r.height / 2);
+        const z = Math.min(6, Math.max(1, pi.z0 * q.d / pi.d0));
+        this.setState({ lbDrag: true, lbZ: z === 1 ? { z: 1, x: 0, y: 0 } : this.lbClamp({ z, x: cx - z * pi.qx, y: cy - z * pi.qy }) });
+        return;
+      }
       const d = this._lbP; if (!d) return;
       const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
       if (!d.moved && Math.abs(dx) + Math.abs(dy) < 5) return;
       d.moved = true;
       if ((this.state.lbZ || {}).z > 1) this.setState({ lbDrag: true, lbZ: this.lbClamp({ z: this.state.lbZ.z, x: d.x + dx, y: d.y + dy }) });
     };
-    v.onLbUp = () => {
+    v.onLbUp = e => {
+      pts.delete(e.pointerId);
+      if (this._lbPinch) {
+        if (pts.size < 2) {
+          this._lbPinch = null;
+          // si queda un dedo apoyado, sigue arrastrando desde donde está (sin saltos)
+          const resto = Array.from(pts.values())[0], cur = this.state.lbZ || { z: 1, x: 0, y: 0 };
+          this._lbP = resto ? { sx: resto.x, sy: resto.y, x: cur.x, y: cur.y, moved: true } : null;
+          if (this.state.lbDrag) this.setState({ lbDrag: false });
+        }
+        return;
+      }
       const d = this._lbP; this._lbP = null;
       if (this.state.lbDrag) this.setState({ lbDrag: false });
-      if (d && !d.moved && (this.state.lbZ || {}).z === 1) this.lbZoomAt(2.5, d.p[0], d.p[1]);
+      if (!d) return;
+      const z = (this.state.lbZ || {}).z || 1, tactil = e.pointerType === 'touch';
+      if (!d.moved) {
+        if (!tactil) { if (z === 1) this.lbZoomAt(2.5, d.p[0], d.p[1]); return; }
+        // doble toque: acerca donde tocaste o vuelve a ajustar
+        const ahora = Date.now();
+        if (ahora - (this._lbToque || 0) < 320) { this._lbToque = 0; if (z > 1) this.setState({ lbZ: { z: 1, x: 0, y: 0 } }); else this.lbZoomAt(2.5, d.p[0], d.p[1]); }
+        else this._lbToque = ahora;
+        return;
+      }
+      // sin zoom: deslizar de lado cambia de imagen y hacia abajo cierra
+      if (tactil && z === 1) {
+        const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) && lb && lb.list.length > 1) this.lbStep(dx < 0 ? 1 : -1);
+        else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) this.setState({ lightbox: null });
+      }
     };
     v.onLbClose = () => this.setState({ lightbox: null }); v.onLbPrev = () => this.lbStep(-1); v.onLbNext = () => this.lbStep(1);
     v.momentCode = mo ? mo.code : '';
@@ -120,17 +175,59 @@ export const valoresCapas = {
       this._fillRaf = requestAnimationFrame(step);
     };
     v.hasToast = !!s.toast; v.toast = s.toast; v.toastAviso = !!s.toastAviso; v.toastOk = !s.toastAviso;
+    // barra que se vacía en el tiempo que el aviso queda a la vista (y se puede deshacer)
+    v.toastBarraKey = 'tb' + (s.toastN || 0); v.toastBarraStyle = { animationDuration: (s.toastMs || 2800) + 'ms' };
     v.hasUndo = !!s.undo;
     v.onUndo = () => { const fn = s.undo; if (fn) fn(); };
+    // Recorrido guiado: paso actual, recuadro iluminado y dónde va la tarjeta (sin tapar lo que se explica)
+    const rec = s.recorrido;
+    v.recOn = !!(rec && s.authed);
+    if (v.recOn) {
+      const pasos = this.pasosRecorrido(), i = Math.min(rec.i, pasos.length - 1), paso = pasos[i];
+      const R = s.recRect, W = window.innerWidth, H = window.innerHeight, pad = 8, gap = 16, CW = Math.min(360, W - 32);
+      v.recTitulo = paso.titulo; v.recTexto = paso.texto; v.recKey = 'rec' + i;
+      v.recPaso = 'PASO ' + (i + 1) + ' DE ' + pasos.length;
+      v.recHayAnterior = i > 0;
+      v.recSiguiente = i === pasos.length - 1 ? 'Terminar' : i === 0 ? 'Empezar' : 'Siguiente';
+      v.recPuntos = pasos.map((_, k) => ({ key: 'p' + k, bg: k === i ? 'var(--n-900)' : 'var(--n-300)', w: k === i ? '14px' : '5px' }));
+      v.recFoco = !!R; v.recSinFoco = !R;
+      // el recuadro no se sale de la pantalla (p. ej. la campana pegada al borde de arriba)
+      const fx = Math.max(2, R ? R.x - pad : 0), fy = Math.max(2, R ? R.y - pad : 0);
+      const fr = R ? Math.min(W - 2, R.x + R.w + pad) : 0, fb = R ? Math.min(H - 2, R.y + R.h + pad) : 0;
+      v.recFocoStyle = R ? { left: fx + 'px', top: fy + 'px', width: (fr - fx) + 'px', height: (fb - fy) + 'px', borderRadius: (R.r + pad) + 'px' } : {};
+      const px = n => Math.round(n) + 'px', entre = (n, a, b) => Math.max(a, Math.min(b, n));
+      let pos;
+      if (s.movil) {
+        // teléfono y tablet: hoja abajo; si lo iluminado está en la mitad de abajo, la hoja va arriba
+        const arriba = R && R.y + R.h / 2 > H / 2;
+        pos = arriba ? { left: '12px', right: '12px', top: '12px', margin: '0 auto', maxWidth: '560px', borderRadius: '16px' }
+          : { left: '12px', right: '12px', bottom: '12px', margin: '0 auto', maxWidth: '560px', borderRadius: '16px' };
+      } else if (!R) {
+        pos = { left: px((W - CW) / 2), top: px(H * 0.3), width: px(CW) };
+      } else if (R.x + R.w + pad + gap + CW <= W - 16) {
+        pos = { left: px(R.x + R.w + pad + gap), top: px(entre(R.y - pad, 16, H - 300)), width: px(CW) };
+      } else if (R.y + R.h + pad + gap + 240 <= H) {
+        pos = { left: px(entre(R.x, 16, W - CW - 16)), top: px(R.y + R.h + pad + gap), width: px(CW) };
+      } else if (R.y - pad - gap - 200 >= 0) {
+        pos = { left: px(entre(R.x, 16, W - CW - 16)), bottom: px(H - (R.y - pad - gap)), width: px(CW) };
+      } else {
+        pos = { left: px(entre(R.x - pad - gap - CW, 16, W - CW - 16)), top: px(entre(R.y, 16, H - 300)), width: px(CW) };
+      }
+      v.recTarjetaStyle = pos;
+      v.recRef = this.refDialogo();
+      v.onRecSiguiente = () => this.pasoRecorrido(1);
+      v.onRecAnterior = () => this.pasoRecorrido(-1);
+      v.onRecSalir = () => this.salirRecorrido();
+    }
     // Arrastrar y soltar: qué dice la capa según dónde caería el archivo
     v.arrastreOn = !!(s.arrastre && s.authed);
     if (v.arrastreOn) {
       const at = this.ticket(this.destinoArrastre());
       const puede = this.puedeAdjuntar(at), lk = at && !puede ? this.replyLock(at) : null;
       v.arrastreOk = puede; v.arrastreNo = !puede;
-      v.arrastreTitulo = puede ? 'Soltá para adjuntar a TIC-' + at.id
-        : !at ? (s.chatOpen || s.screen === 'chat' ? 'Abrí una conversación para adjuntar' : 'Abrí un ticket para adjuntar')
-        : 'En este ticket no podés adjuntar';
+      v.arrastreTitulo = puede ? 'Suelta para adjuntar a TIC-' + at.id
+        : !at ? (s.chatOpen || s.screen === 'chat' ? 'Abre una conversación para adjuntar' : 'Abre un ticket para adjuntar')
+        : 'En este ticket no puedes adjuntar';
       v.arrastreSub = puede ? 'JPG, PNG o WEBP · hasta 5 MB · se sube al soltar'
         : !at ? 'Las imágenes se adjuntan al ticket o a la conversación que tengas abierta.'
         : (lk ? lk.msg : 'Está cerrado.');

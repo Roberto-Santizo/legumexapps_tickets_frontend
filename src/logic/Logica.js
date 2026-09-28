@@ -16,6 +16,7 @@ import { metodosChat } from './metodos/chat.js';
 import { metodosPulso } from './metodos/pulso.js';
 import { metodosCatalogos } from './metodos/catalogos.js';
 import { metodosNotificaciones } from './metodos/notificaciones.js';
+import { metodosRecorrido } from './metodos/recorrido.js';
 import { valoresLogin } from './valores/login.js';
 import { valoresApp } from './valores/app.js';
 import { valoresPulso } from './valores/pulso.js';
@@ -47,12 +48,13 @@ export class Logica extends LogicaBase {
     forced: this.props.estadoError || 'ninguno',
     page: { tickets: 0, cats: 0, users: 0 },
     loading: true, swap: 0, busy: '', modalClosing: false, toastOut: false,
-    heavyMsg: '', moment: null, qa: null, staged: [], lightbox: null, viewOpen: false, periodOpen: false, period: '30',
+    heavyMsg: '', moment: null, qa: null, staged: [], lightbox: null, viewOpen: false, periodOpen: false, period: '30', fichaId: null,
     uploads: [], saving: '', err500Line: 'HTTP 500 · GET /api/tickets', draftFound: false, sessionOk: true, sessionMsg: '',
-    dragId: null, dragOver: null, landed: null, asigOpen: false, arrastre: false,
+    dragId: null, dragOver: null, landed: null, asigOpen: false, arrastre: false, recorrido: null, recRect: null,
     // Diseño móvil: se calcula al arrancar para no pintar primero el de escritorio
     movil: typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(MQ_MOVIL).matches,
     menuMovil: false,
+    tema: (() => { try { return localStorage.getItem('mt-tema') || 'sistema'; } catch (e) { return 'sistema'; } })(),
     // Sin datos de arranque: llegan de la API. En modo demostración los manda main.jsx
     // desde src/mocks/datosDemo.js (prop datosDemo).
     users: (this.props.datosDemo || {}).users || [],
@@ -62,7 +64,7 @@ export class Logica extends LogicaBase {
 
   componentDidMount() {
     if (api.USE_API) sync.silent(() => this.setState({ tickets: [], cats: [] }));
-    api.onUnauthorized(() => { if (this.state.authed) { clearInterval(this._pollIv); this.setState({ session: null, authed: false, screen: 'tickets', detailId: null, loginPhase: '', loginErr: 'Tu sesión expiró. Volvé a entrar.' }); } });
+    api.onUnauthorized(() => { if (this.state.authed) { clearInterval(this._pollIv); this.setState({ session: null, authed: false, screen: 'tickets', detailId: null, loginPhase: '', loginErr: 'Tu sesión expiró. Vuelve a entrar.' }); } });
     if (api.USE_API && api.getToken()) api.checkStatus().then(d => this.applySession(d)).catch(() => {});
     this._boot = setTimeout(() => {
       this.setState({ bootFading: true });
@@ -77,6 +79,11 @@ export class Logica extends LogicaBase {
     window.addEventListener('scroll', this._onScroll, true);
     this.escucharMovil();
     this.escucharArrastre();
+    this.escucharLuz();
+    this.escucharTeclado();
+    this.escucharVisor();
+    this.aplicarFase(); this._faseIv = setInterval(() => this.aplicarFase(), 60000);
+    this.aplicarTema(this.state.tema);
     this.load(650);
     this._vis = () => {
       if (document.visibilityState !== 'visible' || !this.state.authed) return;
@@ -96,6 +103,14 @@ export class Logica extends LogicaBase {
     this._keys = e => {
       const s = this.state;
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''));
+      // Recorrido guiado abierto: Escape sale y las flechas pasan de paso (solo mientras está abierto)
+      if (s.fichaId && e.key === 'Escape') { this.cerrarFicha(); return; }
+      if (s.recorrido) {
+        if (e.key === 'Escape') this.salirRecorrido();
+        else if (e.key === 'ArrowRight') this.pasoRecorrido(1);
+        else if (e.key === 'ArrowLeft') this.pasoRecorrido(-1);
+        return;
+      }
       if (s.lightbox) {
         if (e.key === 'Escape') this.setState({ lightbox: null });
         else if (e.key === '+' || e.key === '=') this.lbZoomAt(((s.lbZ || {}).z || 1) * 1.5, 0, 0);
@@ -107,6 +122,7 @@ export class Logica extends LogicaBase {
       }
       if (e.key === 'Escape' && s.menuMovil) { this.setState({ menuMovil: false }); return; }
       if (e.key === 'Escape' && s.qa) { this.setState({ qa: null }); return; }
+      if (e.key === 'Escape' && s.notifOpen) { this.setState({ notifOpen: false }); return; }
       if (e.key === 'Escape' && (s.viewOpen || s.periodOpen)) { this.setState({ viewOpen: false, periodOpen: false }); return; }
       if (e.key === 'Escape') {
         if (s.asigOpen) { this.setState({ asigOpen: false }); return; }
@@ -136,12 +152,22 @@ export class Logica extends LogicaBase {
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll, true);
     if (this._mqMovil) this._mqMovil.removeEventListener('change', this._onMq);
     this.dejarDeEscucharArrastre();
+    if (this._onLuz) document.removeEventListener('pointermove', this._onLuz);
+    if (this._onFoco) document.removeEventListener('focusin', this._onFoco);
+    if (this._onVisor && window.visualViewport) { window.visualViewport.removeEventListener('resize', this._onVisor); window.visualViewport.removeEventListener('scroll', this._onVisor); }
+    clearTimeout(this._focoT);
+    clearInterval(this._faseIv);
+    if (this._onRecMedir) { window.removeEventListener('resize', this._onRecMedir); window.removeEventListener('scroll', this._onRecMedir, true); }
+    clearInterval(this._recT); cancelAnimationFrame(this._recRaf); cancelAnimationFrame(this._cuentaRaf);
     clearTimeout(this._boot); clearTimeout(this._bootOut);
     cancelAnimationFrame(this._fillRaf);
     clearTimeout(this._fabT);
   }
 
   componentDidUpdate(prev) {
+    // App.jsx no pasa el estado anterior de la lógica: se guarda acá el último que se pintó
+    this.acomodarScroll(this._estadoPintado);
+    this._estadoPintado = this.state;
     if (prev.estadoError !== this.props.estadoError) {
       const v = this.props.estadoError || 'ninguno';
       this.setState({ forced: v, err500: v === '500', err500Line: 'HTTP 500 · GET /api/tickets' });
@@ -183,6 +209,7 @@ Object.assign(Logica.prototype,
   metodosPulso,
   metodosCatalogos,
   metodosNotificaciones,
+  metodosRecorrido,
   valoresLogin,
   valoresApp,
   valoresPulso,

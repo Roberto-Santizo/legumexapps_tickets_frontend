@@ -6,6 +6,8 @@ import { MACROS, MACROS_USER } from '../../config/textos.js';
 export const valoresChat = {
   valoresChat(v, ctx) {
     const { s, me, isAdmin, mine, det } = ctx;
+    // en pantallas táctiles no hay Shift+Enter: el cuadro solo invita a escribir
+    v.chatPh = s.movil ? 'Escribe tu respuesta' : 'Escribe tu respuesta — Enter envía, Shift+Enter salta línea';
     // --- conversaciones (dock, solo admin) ---
     // Admin: espera si el último comentario es del solicitante. Usuario: si el último es de alguien del área.
     const waits = t => {
@@ -27,6 +29,9 @@ export const valoresChat = {
     v.chatOpen = !!s.chatOpen;
     v.onOpenChat = () => this.setState({ chatOpen: true, chatId: null, chatMsg: '', chatErr: '', chatQ: '' });
     v.onCloseChat = () => this.setState({ chatOpen: false });
+    // en el teléfono el panel ya ocupa toda la pantalla: no hay a dónde "expandir"
+    v.chatExpandOn = !s.movil;
+    v.chatVolverOn = !!s.movil;
     v.onChatExpand = () => { const already = s.screen === 'chat'; this.setState({ chatOpen: false, screen: 'chat', detailId: null, dir: already ? 'none' : 'up' }); if (!already) this.load(420); };
     v.onChatBack = () => this.setState({ chatId: null, chatMsg: '', chatErr: '' });
     v.canChatDetail = !!det;
@@ -44,7 +49,7 @@ export const valoresChat = {
     const wide = s.chatWide !== false;
     v.chatCols = wide ? 'minmax(260px,340px) minmax(0,1fr)' : 'minmax(0,1fr)';
     v.chatShowList = wide || !ct; v.chatShowRight = wide || !!ct;
-    v.chatListBorder = wide ? '1px solid #e5e5e5' : 'none';
+    v.chatListBorder = wide ? '1px solid var(--n-200)' : 'none';
     // Ref estable: si cambiara en cada render, React desconectaría el observer antes de su primer aviso
     this._chatPageRef = this._chatPageRef || (el => {
       if (this._chatEl === el) return;
@@ -58,7 +63,7 @@ export const valoresChat = {
       this._chatRO.observe(el);
     });
     v.chatPageRef = this._chatPageRef;
-    v.chatPageHint = nWait > 0 ? 'Arriba de la lista están las ' + nWait + ' que esperan tu respuesta. Enter envía, Shift+Enter salta línea.' : 'Nadie espera respuesta ahora. Lo que escribas acá se publica como comentario del ticket.';
+    v.chatPageHint = nWait > 0 ? 'Arriba de la lista están las ' + nWait + ' que esperan tu respuesta.' + (s.movil ? '' : ' Enter envía, Shift+Enter salta línea.') : 'Nadie espera respuesta ahora. Lo que escribas acá se publica como comentario del ticket.';
     v.chatSub = !isAdmin
       ? (nWait > 0 ? 'El área te escribió en ' + nWait + (nWait === 1 ? ' ticket' : ' tickets') : 'Tus conversaciones con el área')
       : (nWait > 0 ? (() => { const nm = mine.filter(t => waits(t) && t.asig === me.id).length; return 'Esperan respuesta: ' + nm + (nm === 1 ? ' tuyo' : ' tuyos') + ' · ' + (nWait - nm) + ' del equipo'; })() : 'Nadie espera respuesta');
@@ -68,12 +73,12 @@ export const valoresChat = {
     const chatSt = (!s.chatStatus || s.chatStatus === 'mine') ? 'all' : s.chatStatus;
     const cMine = mine.filter(t => t.asig === me.id).length, cScope = s.chatScope || 'all';
     v.chatScopeOpts = [['all', 'Todos', String(mine.length)], ['mine', 'Míos', String(cMine)]].map(o => ({
-      label: o[1], count: o[2], bg: cScope === o[0] ? '#ffffff' : 'transparent', weight: cScope === o[0] ? '600' : '500',
-      shadow: cScope === o[0] ? 'rgba(0,0,0,0.06) 0px 1px 2px 0px' : 'none', pressed: cScope === o[0] ? 'true' : 'false',
+      label: o[1], count: o[2], bg: cScope === o[0] ? 'var(--sel-bg)' : 'transparent', weight: cScope === o[0] ? '600' : '500',
+      shadow: cScope === o[0] ? 'inset 0 0 0 1px var(--seg-borde), rgba(0,0,0,0.08) 0px 1px 2px 0px' : 'none', pressed: cScope === o[0] ? 'true' : 'false',
       go: () => this.setState({ chatScope: o[0] })
     }));
     v.chatFilters = chatF.map(f => ({
-      label: f[1], bg: chatSt === f[0] ? '#ffffff' : 'transparent',
+      label: f[1], bg: chatSt === f[0] ? 'var(--sel-bg)' : 'transparent',
       go: () => this.setState({ chatStatus: f[0] })
     }));
     const cq = (s.chatQ || '').trim().toLowerCase();
@@ -89,15 +94,15 @@ export const valoresChat = {
       const au = this.user(otherId) || { nombre: 'Tickets TIC' };
       return {
         code: 'TIC-' + t.id, titulo: t.titulo, ini: this.ini(au.nombre), ring: this.ring(otherId),
-        dot: ST[t.status].dot, bg: s.chatId === t.id ? '#f5f5f5' : 'transparent',
+        dot: ST[t.status].dot, bg: s.chatId === t.id ? 'var(--sel-sutil)' : 'transparent',
         blobRef: el => { if (el) el.src = this.blobUrl(otherId, 60); }, hasBlob: !!otherId, noBlob: !otherId,
-        last: last ? ((last.autor === me.id ? 'Vos: ' : '') + last.texto) : 'Sin respuestas todavía',
-        lastInk: last ? '#525252' : '#a3a3a3',
+        last: last ? ((last.autor === me.id ? 'Tú: ' : '') + last.texto) : 'Sin respuestas todavía',
+        lastInk: last ? 'var(--n-600)' : 'var(--n-500)',
         when: this.ago(this.lastAt(t)).replace('hace ', ''),
         waiting: waits(t), asigId: t.asig || null,
         waitLabel: !isAdmin || t.asig === me.id ? 'Espera tu respuesta' : t.asig ? 'Espera a ' + ((this.user(t.asig) || {}).nombre || 'el equipo').split(' ')[0] : 'Espera que alguien lo tome',
-        waitDot: !isAdmin || t.asig === me.id ? '#2563eb' : '#737373',
-        waitBg: !isAdmin || t.asig === me.id ? '#dbeaff' : '#f5f5f5',
+        waitDot: !isAdmin || t.asig === me.id ? 'var(--azul)' : 'var(--n-500)',
+        waitBg: !isAdmin || t.asig === me.id ? 'var(--azul-tinte)' : 'var(--n-50)',
         go: () => this.setState({ chatId: t.id, chatMsg: '', chatErr: '' })
       };
     });
@@ -109,7 +114,7 @@ export const valoresChat = {
       const mineW = x.asigId === me.id, ow = this.user(x.asigId);
       return Object.assign({}, x, { delay: (i * 60) + 'ms', ownOn: isAdmin,
         own: mineW ? 'TUYO' : ow ? 'EQUIPO · ' + ow.nombre.split(' ')[0].toUpperCase() : 'SIN ASIGNAR',
-        ownInk: mineW ? '#2563eb' : '#525252', ownBorder: mineW ? '#2563eb' : '#d4d4d4' });
+        ownInk: mineW ? 'var(--azul)' : 'var(--n-600)', ownBorder: mineW ? 'var(--azul)' : 'var(--n-300)' });
     });
     v.chatHasWait = wl.length > 0;
     const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
@@ -120,7 +125,7 @@ export const valoresChat = {
       : !isAdmin
       ? (wl.length ? 'El área te escribió en ' + (wl.length === 1 ? '1 ticket' : wl.length + ' tickets') : 'Estás al día con el área')
       : (wl.length ? (wl.length === 1 ? '1 persona espera tu respuesta' : wl.length + ' personas esperan tu respuesta') : 'Nadie espera respuesta');
-    v.chatPageHint = wl.length ? 'Empezá por la más vieja. Enter envía, Shift+Enter salta línea.' : 'Elegí cualquier conversación de la lista; lo que escribas se publica como comentario del ticket.';
+    v.chatPageHint = wl.length ? 'Empieza por la más vieja.' + (s.movil ? '' : ' Enter envía, Shift+Enter salta línea.') : 'Elige cualquier conversación de la lista; lo que escribas se publica como comentario del ticket.';
     v.chatFabOn = !!v.chatFab && s.screen !== 'chat';
     this._chatEls = this._chatEls || new Set();
     v.chatRef = this._chatRefFn || (this._chatRefFn = el => { if (el) { this._chatEls.add(el); el.scrollTop = el.scrollHeight; } });
@@ -150,10 +155,10 @@ export const valoresChat = {
           open: x.file ? () => this.openLb(cLb, i) : null,
           key: (x.file ? 'f' : 'm') + i + '-' + c.h, texto: x.file ? '' : c.texto,
           theirs: !isMine, just: isMine ? 'flex-end' : 'flex-start', align: isMine ? 'flex-end' : 'flex-start',
-          bg: isMine ? '#0a0a0a' : '#ffffff', ink: isMine ? '#ffffff' : '#171717',
-          border: isMine ? 'none' : '1px solid #e5e5e5',
+          bg: isMine ? 'var(--n-950)' : 'var(--n-0)', ink: isMine ? 'var(--n-0)' : 'var(--n-900)',
+          border: isMine ? 'none' : '1px solid var(--n-200)',
           ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 52); }, hasBlob: true, noBlob: false,
-          head: (isMine ? 'Vos' : (u.nombre || '—')) + ' · ' + this.ago(c.h)
+          head: (isMine ? 'Tú' : (u.nombre || '—')) + ' · ' + this.ago(c.h)
         };
       });
       v.chatNoMsgs = tl.length === 0;
@@ -176,16 +181,23 @@ export const valoresChat = {
       v.chatSending = !!s.chatSending; v.chatIdle = !s.chatSending;
       v.onChatSend = () => {
         if (s.chatSending) return;
-        if (!(s.chatMsg || '').trim() && !s.staged.some(x => x.tid === ct.id)) { this.setState({ chatErr: 'Escribí una respuesta o adjuntá una imagen antes de enviar.' }); return; }
+        if (!(s.chatMsg || '').trim() && !s.staged.some(x => x.tid === ct.id)) { this.setState({ chatErr: 'Escribe una respuesta o adjunta una imagen antes de enviar.' }); return; }
         this.setState({ chatSending: true });
         clearTimeout(this._cs); this._cs = setTimeout(() => { this.chatSend(false); this.setState({ chatSending: false }); }, 450);
       };
-      v.onChatSendClose = () => (s.chatMsg || '').indexOf('______') >= 0 ? this.setState({ chatErr: 'Completá el resumen donde dice ______ antes de cerrar.' }) : !(s.chatMsg || '').trim() ? this.setState({ chatErr: 'Escribí la respuesta con la que querés cerrar el ticket.' }) : this.confirmOr('close', { title: '¿Enviar y cerrar TIC-' + ct.id + '?', sub: 'La respuesta se envía y el ticket pasa a Cerrado.', ok: 'Enviar y cerrar', danger: true }, () => this.heavy('Publicando y cerrando', 900, () => this.chatSend(true)));
+      v.onChatSendClose = () => (s.chatMsg || '').indexOf('______') >= 0 ? this.setState({ chatErr: 'Completa el resumen donde dice ______ antes de cerrar.' }) : !(s.chatMsg || '').trim() ? this.setState({ chatErr: 'Escribe la respuesta con la que quieres cerrar el ticket.' }) : this.confirmOr('close', { title: '¿Enviar y cerrar TIC-' + ct.id + '?', sub: 'La respuesta se envía y el ticket pasa a Cerrado.', ok: 'Enviar y cerrar', danger: true }, () => this.heavy('Publicando y cerrando', 900, () => this.chatSend(true)));
       v.onChatKey = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); v.onChatSend(); } };
       v.chatCanClose = ct.status !== 'closed' && ct.asig === me.id;
-      const cHueco = 'Se resolvió: ______. Si vuelve a pasar, respondé este correo y lo reabrimos.';
+      const cHueco = 'Se resolvió: ______. Si vuelve a pasar, responde este correo y lo reabrimos.';
       const cMacros = (isAdmin ? MACROS : MACROS_USER).concat(v.chatCanClose ? [{ label: 'Cerrar con resumen', text: cHueco }] : []);
       v.chatMacros = cMacros.map(m => ({ label: m.label, text: m.text, use: () => this.setState({ chatMsg: m.text, chatErr: '' }) }));
+      // Teléfono: el redactor se aligera para dejar lugar a la conversación. Las respuestas
+      // rápidas van en una fila deslizable y se ocultan al escribir; la caja empieza en una
+      // línea y crece; "Responder y cerrar" aparece cuando ya hay algo escrito.
+      const cTexto = !!(s.chatMsg || '').trim();
+      v.chatRapidasOn = !s.movil || !cTexto;
+      v.chatCerrarOn = v.chatCanClose && (!s.movil || cTexto);
+      v.chatFilas = s.movil ? String(Math.min(5, (s.chatMsg || '').split('\n').reduce((n, l) => n + Math.max(1, Math.ceil(l.length / 30)), 0))) : '2';
       v.onChatOpenTicket = () => { this.setState({ chatOpen: false }); this.openTicket(ct.id); };
       v.chatCanEdit = (isAdmin && !this.othersTicket(ct)) || (!isAdmin && ct.autor === me.id && ct.status !== 'closed');
       v.onChatEdit = () => { this.setState({ chatOpen: false }); this.openEdit(ct); };

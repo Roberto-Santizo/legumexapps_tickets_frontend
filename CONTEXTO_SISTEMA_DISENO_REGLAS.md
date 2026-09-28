@@ -229,14 +229,159 @@ En modo demostración siguen visibles, como en el prototipo.
 - Viene del prototipo aprobado y **no se cambia sin pedido explícito**. Estilos en línea
   por elemento; lo global en `src/index.css` (variables `--duration-*` y
   `--ease-standard`, todas las animaciones `@keyframes`, foco visible).
-- Fondo `#f4f5f1`, texto `#171717`, verde oscuro de marca `#0b2a1e` / `#14402c`, sierra
-  animada en el fondo y logo de Legumex (`public/marca/`).
-- Colores de estado y prioridad en `config/constantes.js` (`ST`, `PR`); colores de avatar
-  (`RING`) y de cada sección del menú (`NAV_INK`) también ahí.
+- **Colores como tokens** (sistema de diseño): toda la paleta vive en el bloque `:root`
+  del principio de `src/index.css` y el código usa `var(--…)`, nunca un color suelto.
+  - Neutros `--n-0` (blanco / superficie) a `--n-1000` (negro); texto principal
+    `--n-900`, secundario `--n-600`, terciario `--n-500` (cumple contraste AA).
+  - Fondo `--fondo` (`#f4f5f1`), marca `--marca` (`#0b2a1e`) y `--marca-2`, sierra
+    `--sierra`, y los de estado: `--azul`, `--naranja`, `--verde`, `--rojo`, `--violeta`,
+    `--ambar` con sus `-tinte`.
+  - Transparencias sobre superficie o fondo: `rgba(var(--sf-rgb),x)` y
+    `rgba(var(--fondo-rgb),x)`.
+  - Colores de estado y prioridad en `config/constantes.js` (`ST`, `PR`), ya como tokens.
+  - **Lo elegido** (opción activa de un selector, pestaña, fila marcada) usa los tokens de
+    selección, nunca `--fondo-2`, `--n-0` o `--n-50`, que en modo oscuro quedan casi
+    iguales al fondo: `--sel-bg` / `--sel-borde` (botón elegido sobre una pista gris),
+    `--sel-sutil` (resalte suave de menús y filtros) y, en los selectores segmentados
+    (Todos / Míos) sobre pista blanca, `--seg-on` con el anillo
+    `inset 0 0 0 1px var(--seg-borde)`. El elegido debe distinguirse en claro y en oscuro.
+- **Modo oscuro "de noche"**: los mismos tokens con valores oscuros (bloque siguiente en
+  `index.css`).
+  - Se aplica con `data-tema="oscuro"` en `<html>` o, en "Auto", cuando el equipo está en
+    oscuro.
+  - En el inicio de sesión, el sol pasa a ser una luna creciente (`data-luna`) y hay
+    estrellas (`data-estrellas`); en el sistema, estrellas tenues detrás de la sierra.
+- **Login vivo, de día y de noche al mismo nivel** (sección "Login vivo" en `index.css`):
+  - El astro (sol `data-sol` o luna) va arriba, en el mismo lugar en ambos modos.
+  - De día: cielo (`data-cielo`), motas de luz (`data-motas`) y una bandada (`data-aves`)
+    que cruza cada 5 min. De noche: estrella fugaz (`data-fugaz`) cada 5 min. Las dos
+    primeras aparecen a los pocos segundos de abrir.
+  - Brillo metálico de izquierda a derecha cada 9 s: título (`data-brillo`), logo
+    (`data-brillo-logo`) y crestas de la sierra (`data-brillo-sierra`, recortado con la
+    forma de cada cordillera).
+  - Todo se apaga con "reducir movimiento" del sistema. Colores en tokens `--sol-*`,
+    `--brillo*`, `--mota-rgb`, `--fugaz`, `--login-cielo-alto`, `--login-horizonte`,
+    `--niebla-rgb`/`--niebla-a`.
+  - Montañas con profundidad: degradado de bruma en cada cordillera y neblina
+    (`data-niebla`) entre ellas. En el teléfono la tarjeta es translúcida y el párrafo se
+    oculta para que la escena se vea.
+- **Cielo según la hora** (sección "Cielo según la hora" en `index.css`):
+  - La fase sale de la hora de Guatemala (`FASES_CIELO` en `config/constantes.js`):
+    amanecer 5:30–7:00, día hasta 17:15, atardecer hasta 18:45, noche el resto.
+    `aplicarFase()` (`logic/metodos/interfaz.js`) la marca en `<html data-fase>` al abrir y
+    cada minuto; `index.html` la pone antes de pintar (repite los cortes: mantenerlos
+    iguales).
+  - La hora decide qué hay en el cielo (sol o luna, estrellas, nubes, aves, estrella
+    fugaz); el tema claro/oscuro solo cambia la paleta de cada fase. El saludo
+    (`saludoHora()`) coincide: de noche siempre "Buenas noches".
+  - Adentro del sistema el fondo lleva un tinte del cielo de la hora (`body`, token
+    `--cielo-app`): celeste de día (propio del sistema; el login conserva el suyo), rosado
+    al amanecer, cálido al atardecer y lila de noche en tema claro, con un brillo cálido
+    arriba a la derecha donde está el sol.
+- **Sistema vivo** (sección "Sistema vivo" en `index.css`):
+  - Cielo dentro de la hoja (`components/layout/CieloApp.jsx`, sección "Día con vida"):
+    arriba a la derecha el sol con halo y rayos (de noche la luna, token `--luna`); de noche
+    estrellas y estrella fugaz; de día nubes en dos capas (lejos y cerca, a distinta
+    velocidad), motas de luz que suben, una bandada de vez en cuando y dos ráfagas de aire
+    (estas pasan por delante, sin tomar clics). Se ve en los espacios libres, nunca encima
+    del contenido, y se apaga con "reducir movimiento".
+  - Menú lateral del teléfono: el mismo cielo de la hora arriba, sol o luna junto al logo
+    y la sierra al pie (dos cordilleras que suben al abrirlo).
+  - Chat en el teléfono (redactor liviano, `valores/chat.js`): respuestas rápidas en una
+    fila deslizable que se oculta al escribir (`chatRapidasOn`), caja que empieza en una
+    línea y crece hasta cinco (`chatFilas`) y "Responder y cerrar" compacto solo cuando ya
+    hay texto (`chatCerrarOn`). El aviso "Tómalo para responder" apila texto y botón.
+  - Transiciones con View Transitions (si el navegador no las tiene, se navega igual):
+    entrada al sistema (la sierra se acomoda y el astro baja hasta el saludo:
+    `entrarAlSistema`), abrir un ticket desde la lista (la tarjeta se estira hasta el
+    detalle, `data-vt` → `data-vt-detalle`; volver la encoge) y abrir la ficha de una
+    persona (el avatar viaja al panel). Todo en `logic/metodos/tickets.js` y `pulso.js`.
+  - Luz que sigue al cursor en tarjetas y paneles (`data-luz`, un solo oyente:
+    `escucharLuz`), cifras de Métricas que cuentan (`contarCifras`, `cifra`,
+    `durCuenta`), chip de estado que cambia con pulso y brillo (detalle), estados vacíos
+    ilustrados (`components/comunes/Escena.jsx`), saludo con mini sol o luna y barra de
+    tiempo en los avisos.
+- **Ficha de una persona del área** (Métricas → "Carga por persona", solo
+  administradores): panel a la derecha (hoja en el teléfono,
+  `components/metricas/FichaPersona.jsx`) con un resumen en frases ("En pocas
+  palabras"), cuatro cifras comparadas con el promedio del equipo, cierres por día,
+  categorías y tickets activos. Cálculo en `statsPersona` / `statsEquipo`
+  (`logic/metodos/pulso.js`): cierres por el historial ("Ticket cerrado" con su autor),
+  primera respuesta por sus comentarios, margen por prioridad. No hay horas trabajadas
+  (el backend no registra jornadas); la ficha no lo menciona.
+  - El logo se aclara con un filtro.
+- **Selector de tema**: botón junto al nombre en la tarjeta del usuario; cambia entre
+  Claro, Oscuro y Auto (`aplicarTema` / `ciclarTema` en `logic/metodos/interfaz.js`).
+  - Se guarda en `localStorage` (`mt-tema`).
+  - `index.html` lo aplica antes de pintar, para que no parpadee.
+- **Escala tipográfica**: 11 · 12 · 14 · 16 px para texto y 20 · 24 · 28 · 32 · 40 para
+  títulos y cifras. No agregar tamaños intermedios.
+- **Avatares propios**: SVG con iniciales y un tono fijo por persona (`blobUrl` en
+  `logic/metodos/interfaz.js`), sin servicio externo.
+- **Tarjetas de ticket**: solo el estado lleva chip con fondo. La prioridad y "esperando al
+  solicitante" van como texto con punto o ícono; "pasó su margen" conserva el borde
+  naranja porque es una alerta.
+- **Ventanas de confirmación accesibles** (`refDialogo`): `role="dialog"`, foco adentro al
+  abrir ("Cancelar" si la acción es riesgosa), Tab no se escapa y al cerrar el foco
+  vuelve al botón que la abrió.
+- **Recorrido guiado** ("¿Cómo funciona?"): botón **?** junto al del tema, abajo del
+  menú. Oscurece la pantalla, ilumina cada elemento y explica qué hace; pasos por rol en
+  `config/textos.js` (`RECORRIDO_ADMIN` / `RECORRIDO_USUARIO`, cada uno con los selectores
+  `donde`), reglas en `logic/metodos/recorrido.js`, posición de la tarjeta en
+  `logic/valores/capas.js` y capa en `components/capas/Recorrido.jsx` (z-index 90).
+  Los elementos se marcan con `data-recorrido="…"`; si se renombra o quita uno, actualizar
+  el paso. En teléfono y tablet la tarjeta es una hoja arriba o abajo, y los pasos marcados
+  `enMenu` (navegación, bandeja, tema) abren el menú solos para señalar lo real. Teclado: ← → y Esc.
+  Solo lectura: no llama a la API.
+- Sierra animada en el fondo y logo de Legumex (`public/marca/`).
 - Tickets en tres vistas en escritorio: tarjetas, tabla y kanban (arrastrar entre
   columnas). En el teléfono, una sola: tarjetas (ver abajo).
 
 ## Diseño responsivo (teléfonos y tablets)
+
+- **iPhone y iPad (Safari)** — reglas que no se rompen al agregar pantallas:
+  - **Campos a 16 px** en pantallas táctiles y en cualquier iPhone/iPad (regla global al
+    final de `index.css`). Con menos, Safari agranda la página al tocar el campo y la deja
+    agrandada (pasaba en el login, crear ticket, formularios y chat). Un campo nuevo no
+    necesita nada: la regla lo cubre; no ponerle `!important` a su tamaño de letra.
+  - **Teclado de cualquier alto**: iPhone no achica la página al sacar el teclado, lo pone
+    encima. `escucharVisor()` (`logic/metodos/interfaz.js`) publica el alto visible real en
+    `--vv-alto` / `--vv-arriba` y marca `<html data-teclado>`. El chat a pantalla completa y
+    las ventanas con campos (`data-m="velo-modal"`) usan esas variables: nunca medidas fijas
+    de teclado (cada persona puede usar otro teclado, flotante, de terceros o con barra de
+    sugerencias). En Android el alto visible ya es el de la ventana y no cambia nada.
+  - **Teclado adecuado por campo**: correos con `inputMode="email"`, sin mayúscula inicial
+    ni autocorrector; buscadores `type="search"` (tecla "Buscar"); chat con tecla
+    "Enviar" (`enterKeyHint`). Mantenerlo en campos nuevos del mismo tipo.
+  - **La página no se corre hacia los lados**: `html` recorta lo que sobresale a lo ancho
+    (`overflow-x: clip`, que no rompe el encabezado sticky), sin rebote lateral, y el doble
+    toque no agranda (`touch-action: manipulation`; el pellizco sí). Con el chat a pantalla
+    completa el fondo no se desplaza (`html:has(...)`).
+  - Desenfoques con `WebkitBackdropFilter` además de `backdropFilter`, y máscaras con
+    `-webkit-mask-image`.
+  - Se revisa con `ios` (auditoría en iPhone, iPhone SE y iPad: campos < 16 px y desborde
+    horizontal) y la simulación de teclados de distintos altos.
+- **Chat en teléfono y tablet**: "Chat" del menú abre el panel flotante a pantalla completa
+  (no la página de Chat, que es de escritorio) y el botón de "expandir" no aparece. El
+  cuadro de escribir dice solo "Escribe tu respuesta" (sin atajos de teclado).
+- **Teclado del teléfono**: `interactive-widget=resizes-content` en el viewport de
+  `index.html` hace que el teclado achique la pantalla y el cuadro de escribir quede a la vista.
+- **Usuarios en el teléfono**: la lista no tiene scroll propio; se desplaza la página.
+- **Pantallas táctiles** (sección al final de `index.css`): sin tooltips de mouse
+  (`[role="tooltip"]` se oculta: quedaban pegados tras tocar) y áreas de toque de al menos
+  40 px con un `::before` invisible en botones y enlaces con ícono. Al enfocar un campo, se
+  centra cuando abre el teclado (`escucharTeclado`).
+- **Visor de imágenes en el táctil**: pellizco para el zoom, un dedo para moverse, doble
+  toque para acercar o ajustar, deslizar de lado para cambiar de imagen y hacia abajo para
+  cerrar (`logic/valores/capas.js`); fondo negro y sin botones de zoom.
+- **Al cambiar de pantalla** se empieza arriba y al volver de un ticket la lista sigue donde
+  iba (`acomodarScroll`). El recorrido desplaza el menú del teléfono hasta mostrar entero lo
+  que explica.
+- **Chat en el teléfono**: flecha ← para volver en la lista de conversaciones.
+- **Reglas para no repetir errores en el táctil**: nada de textos con clic, rueda, Enter o
+  arrastrar en pantallas táctiles; nada de listas con scroll propio dentro de la página;
+  nada que dependa del hover; paneles con botón para cerrar; capas fijas fuera de la hoja
+  (su desenfoque atrapa a los `position: fixed`).
 
 Un solo código para PC y teléfono: **no hay una versión móvil aparte**. En escritorio nada
 cambia (se verificó comparando el DOM contra la versión anterior en recorridos
@@ -303,13 +448,27 @@ automáticos); en el teléfono la misma interfaz se reacomoda.
 - En escritorio, el menú "Vista y orden" no se cierra tocando la lista, solo tocando el
   encabezado (su fondo queda encerrado por el blur de la barra). En el teléfono no pasa.
 
+## Tono de los textos
+
+- Se trata a la persona de **tú**, con un registro cordial y formal: "Reporta", "Puedes",
+  "Esperan tu respuesta", "Tienes 8 notificaciones". Nada de voseo ("vos", "podés",
+  "Reportá", "Tomalo").
+- Frases cortas y concretas; los mensajes de error dicen qué hacer.
+
 ## Reglas de código del proyecto
 
 - **Un solo archivo de API**: todo lo que llama al backend va en `src/services/api.js`.
 - **La interfaz no tiene lógica**: los componentes solo pintan `V`. Una regla nueva va en
   `logic/metodos/`, un valor nuevo para la pantalla en su archivo de `logic/valores/`.
 - Respetar el orden de secciones de `renderVals()` (ver comentario en `Logica.js`).
+- **Comparar identidad, no objetos**: el estado se recrea en cada tecla (por ejemplo,
+  `s.entity` del formulario de edición). Para saber si "cambió la pantalla" se compara
+  tipo e id (`acomodarScroll`), nunca el objeto; si no, escribir en un campo cuenta como
+  cambio de pantalla y la vista salta arriba.
 - Constantes y textos editables en `src/config/`, no sueltos en el código.
+- **Colores solo con tokens** (`var(--…)` de `index.css`): así funcionan el modo oscuro y
+  cualquier ajuste de paleta en un solo lugar. Un color nuevo se agrega como token en
+  los dos bloques (claro y oscuro).
 - **Nada de datos de prueba fuera de `src/mocks/`.**
 - No inventar endpoints ni comportamiento del backend; preguntar si no está confirmado.
 - No crear componentes compartidos nuevos ni cambiar el estilo (por ejemplo, pasar a

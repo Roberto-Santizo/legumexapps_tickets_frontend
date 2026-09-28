@@ -2,6 +2,7 @@
 // V: valores de la lógica (src/logic/valores).
 import { S } from '../utils/runtime.js';
 import FondoSierra from '../components/layout/FondoSierra.jsx';
+import CieloApp from '../components/layout/CieloApp.jsx';
 import BarraLateral from '../components/layout/BarraLateral.jsx';
 import BarraMovil from '../components/layout/BarraMovil.jsx';
 import PanelNotificaciones from '../components/layout/PanelNotificaciones.jsx';
@@ -31,6 +32,7 @@ export default function AppLayout({ V }) {
         {V["notifOpen"] ? (<PanelNotificaciones V={V} />) : null}
         {" "}
         <main data-sheet="" onScroll={V["onSheetScroll"]} style={{ "flex": "1", "minWidth": "0", "display": "flex", "flexDirection": "column", "background": S(V["sheetBg"]), "backdropFilter": S(V["sheetBlur"]), "WebkitBackdropFilter": S(V["sheetBlur"]), "transition": "background-color var(--duration-page) var(--ease-standard),box-shadow var(--duration-page) var(--ease-standard)", "borderRadius": "16px", "margin": "16px 16px 0 4px", "height": "calc(100vh - 32px)", "overflowY": S(V["sheetOverflow"]), "overscrollBehavior": "contain", "scrollbarGutter": "stable", "WebkitMaskImage": S(V["sheetMask"]), "maskImage": S(V["sheetMask"]), "boxShadow": S(V["sheetShadow"]) }}>
+          <CieloApp />
           {" "}
           {V["notList"] ? (<Encabezado V={V} />) : null}
           {" "}

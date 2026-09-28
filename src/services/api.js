@@ -21,7 +21,7 @@ async function request(method, path, body) {
   try {
     res = await fetch(BASE + path, { method, headers, body: body === undefined ? undefined : (isForm ? body : JSON.stringify(body)) });
   } catch (e) {
-    throw new Error('No se pudo conectar con el servidor. Revisá la red o la dirección de la API.');
+    throw new Error('No se pudo conectar con el servidor. Revisa la red o la dirección de la API.');
   }
   let json = null;
   try { json = await res.json(); } catch (e) {}

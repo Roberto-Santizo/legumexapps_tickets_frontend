@@ -8,7 +8,7 @@ export default function Chat({ V }) {
   return (
     <>
       {" "}
-      <div ref={V["chatPageRef"]} style={{ "display": "grid", "gridTemplateColumns": S(V["chatCols"]), "height": "calc(100vh - 204px)", "minHeight": "460px", "background": "#ffffff", "border": "1px solid #e5e5e5", "borderRadius": "16px", "overflow": "hidden" }}>
+      <div ref={V["chatPageRef"]} style={{ "display": "grid", "gridTemplateColumns": S(V["chatCols"]), "height": "calc(100vh - 204px)", "minHeight": "460px", "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "16px", "overflow": "hidden" }}>
         {" "}
         {V["chatShowList"] ? (<ChatLista V={V} />) : null}
         {" "}

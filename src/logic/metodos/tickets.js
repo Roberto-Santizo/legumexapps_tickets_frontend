@@ -1,12 +1,64 @@
 // Tickets: búsqueda, permisos y acciones (tomar, mover, cerrar, reabrir, comentar).
 // Se mezclan en Logica.prototype: "this" es la instancia de Logica.
+import { flushSync } from 'react-dom';
 import * as api from '../../services/api.js';
 import { ST, PR, MOSTRAR_SIN_ABRIR, PCODE } from '../../config/constantes.js';
 
 export const metodosTickets = {
   openTicket(id, dir) {
+    // (1) Desde la lista, la tarjeta se estira hasta volverse el detalle (sin la carga simulada:
+    // el detalle llega ya pintado). Si el navegador no puede, se entra como siempre.
+    const conTransicion = this.transicionTicket('[data-vt="' + id + '"]', '[data-vt-detalle]',
+      () => this.setState({ screen: 'detail', detailId: id, comment: this.readDraft('t' + id), commentErr: '', dir: 'vt', formErr: null, loading: false }));
+    if (conTransicion) return;
     this.setState({ screen: 'detail', detailId: id, comment: this.readDraft('t' + id), commentErr: '', dir: dir || 'fwd', formErr: null });
     this.load(500);
+  },
+
+  // Volver al listado: el detalle se encoge hasta su tarjeta
+  volverAlListado() {
+    const id = this.state.detailId;
+    const conTransicion = this.transicionTicket('[data-vt-detalle]', '[data-vt="' + id + '"]',
+      () => this.setState({ screen: 'tickets', detailId: null, dir: 'vt', loading: false }));
+    if (conTransicion) return;
+    this.setState({ screen: 'tickets', detailId: null, dir: 'back' }); this.load(450);
+  },
+
+  // Entrada al sistema sin corte: la sierra del login se acomoda en la del sistema y el sol
+  // (o la luna) baja hasta el saludo. Sin View Transitions se entra como siempre.
+  entrarAlSistema(cambio) {
+    const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reducido) { cambio(false); return; }
+    const raiz = document.documentElement;
+    const nombrar = (sel, n) => { const el = document.querySelector(sel); if (el) el.style.viewTransitionName = n; return el; };
+    const viejos = [nombrar('[data-login-sierra]', 'sierra'), nombrar('[data-astro]', 'astro')];
+    let nuevos = [];
+    raiz.setAttribute('data-vt', 'entrada');
+    const vt = document.startViewTransition(() => {
+      viejos.forEach(el => { if (el) el.style.viewTransitionName = ''; });
+      flushSync(() => cambio(true));
+      nuevos = [nombrar('[data-app-sierra]', 'sierra'), nombrar('[data-saludo-escena]', 'astro')];
+    });
+    vt.finished.finally(() => { nuevos.forEach(el => { if (el) el.style.viewTransitionName = ''; }); raiz.removeAttribute('data-vt'); });
+  },
+
+  // View Transitions: el elemento de origen y el de destino comparten nombre, y el navegador
+  // anima el cambio de uno al otro. Devuelve false si no se puede (se navega sin animación).
+  transicionTicket(desdeSel, haciaSel, cambio) {
+    const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const desde = document.querySelector(desdeSel);
+    if (!document.startViewTransition || reducido || !desde) return false;
+    clearTimeout(this._load);
+    desde.style.viewTransitionName = 'ticket-abierto';
+    let hacia = null;
+    const vt = document.startViewTransition(() => {
+      desde.style.viewTransitionName = '';
+      flushSync(cambio);
+      hacia = document.querySelector(haciaSel);
+      if (hacia) hacia.style.viewTransitionName = 'ticket-abierto';
+    });
+    vt.finished.finally(() => { if (hacia) hacia.style.viewTransitionName = ''; });
+    return true;
   },
 
   // El cierre es el final del trabajo: merece el mismo peso que la creación
@@ -40,7 +92,7 @@ export const metodosTickets = {
   bloqueante(id) {
     this.showMoment({
       kind: 'nudge', code: 'TIC-' + id, titulo: 'Quedó marcado como bloqueante',
-      sub: 'TI lo ve arriba en su bandeja. Si mañana te sigue frenando, podés volver a marcarlo.',
+      sub: 'TI lo ve arriba en su bandeja. Si mañana te sigue frenando, puedes volver a marcarlo.',
       btn: 'Entendido', undo: null, go: null
     }, 2800);
   },
@@ -78,12 +130,12 @@ export const metodosTickets = {
   },
 
   take(t, sure) {
-    if (!sure) { this.confirmOr('take', { title: '¿Tomar TIC-' + t.id + '?', sub: 'Queda asignado a vos' + (t.status === 'open' ? ' y pasa a En progreso.' : '.'), ok: 'Tomar ticket' }, () => this.take(t, true)); return; }
+    if (!sure) { this.confirmOr('take', { title: '¿Tomar TIC-' + t.id + '?', sub: 'Queda asignado a ti' + (t.status === 'open' ? ' y pasa a En progreso.' : '.'), ok: 'Tomar ticket' }, () => this.take(t, true)); return; }
     const me = this.me(), snap = this.snapshot(t.id);
     this.optimistic('take-' + t.id,
       () => this.patch(t.id, { asig: me.id, status: t.status === 'open' ? 'in_progress' : t.status }, 'Asignado a ' + me.nombre + ' (se lo tomó)', 'assign'),
       () => this.restore(t.id, snap),
-      'Tomaste TIC-' + t.id + '. Ya podés cerrarlo cuando termines.',
+      'Tomaste TIC-' + t.id + '. Ya puedes cerrarlo cuando termines.',
       'HTTP 500 · PATCH /api/tickets/' + t.id + '/assign');
   },
 
@@ -134,22 +186,22 @@ export const metodosTickets = {
     const equipo = c.filter(x => x.autor !== t.autor);
     if (t.status === 'closed') {
       const cierre = (t.historial || []).filter(h => h.kind === 'close')[0];
-      return { texto: 'Resuelto · se cerró ' + this.ago(cierre ? cierre.h : this.idle(t)), dot: '#16a34a' };
+      return { texto: 'Resuelto · se cerró ' + this.ago(cierre ? cierre.h : this.idle(t)), dot: 'var(--verde)' };
     }
     if (ultimo && ultimo.autor !== t.autor) {
-      return { texto: 'Te están esperando a vos · te preguntaron algo ' + this.ago(ultimo.h), dot: '#2563eb' };
+      return { texto: 'Esperan tu respuesta · te preguntaron algo ' + this.ago(ultimo.h), dot: 'var(--azul)' };
     }
     if (t.asig || equipo.length) {
       const who = this.user(t.asig);
       const resp = equipo[equipo.length - 1];
       return {
         texto: (who ? who.nombre + ' lo está viendo' : 'El área lo está viendo') + (resp ? ' · te respondió ' + this.ago(resp.h) : ''),
-        dot: '#16a34a'
+        dot: 'var(--verde)'
       };
     }
     if (!MOSTRAR_SIN_ABRIR) return null;
     const n = this.state.users.filter(u => u.rol === 'admin').length;
-    return { texto: 'Aún no lo abren · lo recibieron ' + n + ' personas del área', dot: '#ea580c' };
+    return { texto: 'Aún no lo abren · lo recibieron ' + n + ' personas del área', dot: 'var(--naranja)' };
   },
 
   // Llamar por Teams: confirma, muestra "Abriendo Teams…" y abre el enlace de llamada al
@@ -159,10 +211,10 @@ export const metodosTickets = {
     if (e && e.preventDefault) e.preventDefault();
     if (!t || !u || !u.email) return;
     const url = 'https://teams.microsoft.com/l/call/0/0?users=' + u.email;
-    this.confirmOr('call', { title: '¿Llamar por Teams a ' + u.nombre + '?', sub: 'Se abre Microsoft Teams con la llamada a ' + u.email + '. Si el navegador pregunta, elegí abrir la aplicación.', ok: 'Llamar' }, () => this.heavy('Abriendo Teams', 900, () => {
+    this.confirmOr('call', { title: '¿Llamar por Teams a ' + u.nombre + '?', sub: 'Se abre Microsoft Teams con la llamada a ' + u.email + '. Si el navegador pregunta, elige abrir la aplicación.', ok: 'Llamar' }, () => this.heavy('Abriendo Teams', 900, () => {
       let w = null;
       try { w = window.open(url, '_blank'); if (w) w.opener = null; } catch (err) {}
-      if (!w) { this.say('El navegador bloqueó la ventana de Teams. Permití ventanas emergentes para este sitio y volvé a intentar.'); return; }
+      if (!w) { this.say('El navegador bloqueó la ventana de Teams. Permite ventanas emergentes para este sitio y vuelve a intentar.'); return; }
       this.registrarLlamada(t, u.nombre);
     }));
   },
@@ -193,7 +245,7 @@ export const metodosTickets = {
     const sla = this.sla(t), idleTxt = this.ago(this.idle(t));
     const sit = this.state.role === 'admin' ? null : this.situacion(t);
     return {
-      sitShow: !!sit, sitText: sit ? sit.texto : '', sitDot: sit ? sit.dot : '#a3a3a3',
+      sitShow: !!sit, sitText: sit ? sit.texto : '', sitDot: sit ? sit.dot : 'var(--n-400)',
       excerpt: this.excerpt(t.desc),
       tituloParts: this.hl(t.titulo, this.state.q.trim()),
       excerptParts: this.hl(this.excerpt(t.desc), this.state.q.trim()),
@@ -219,8 +271,8 @@ export const metodosTickets = {
       autor: (this.user(t.autor) || {}).nombre || '—', updated: idleTxt,
       slaShow: this.state.role === 'admin' ? (sla.late || sla.watch || sla.waiting) : !!sla.waiting, slaLate: sla.late, slaWatch: sla.watch, slaWaiting: !!sla.waiting,
       slaLabel: sla.label, slaTitle: sla.full || sla.label,
-      slaBg: sla.late ? '#ffffff' : 'transparent', slaBorder: sla.late ? '1px solid #ea580c' : sla.waiting ? '1px solid #d4d4d4' : '1px solid transparent',
-      slaInk: sla.late ? '#171717' : sla.waiting ? '#404040' : '#525252',
+      slaBg: sla.late ? 'var(--n-0)' : 'transparent', slaBorder: sla.late ? '1px solid var(--naranja)' : '1px solid transparent',
+      slaInk: sla.late ? 'var(--n-900)' : sla.waiting ? 'var(--n-700)' : 'var(--n-600)',
       canTake: this.state.role === 'admin' && !t.asig && t.status !== 'closed',
       takeLabel: 'Tomar TIC-' + t.id,
       take: e => { if (e && e.stopPropagation) { e.stopPropagation(); e.preventDefault(); } this.tap('take-' + t.id, () => this.take(t)); },
@@ -230,6 +282,7 @@ export const metodosTickets = {
       hasFiles: t.adjuntos.length > 0, fileCount: String(t.adjuntos.length),
       hasComments: t.comentarios.length > 0, commentCount: String(t.comentarios.length),
       open: () => this.openTicket(t.id),
+      vtId: String(t.id),
       key: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.openTicket(t.id); } },
       canEdit: (this.state.role === 'admin' && !this.othersTicket(t)) || (this.state.role !== 'admin' && t.autor === this.me().id && t.status !== 'closed'),
       editLabel: 'Editar TIC-' + t.id,
@@ -243,19 +296,19 @@ export const metodosTickets = {
       asigIni: t.asig ? this.ini((this.user(t.asig) || {}).nombre || '') : '',
       asigFirst: t.asig ? ((this.user(t.asig) || {}).nombre || '').split(' ')[0] : '',
       asigTitle: t.asig ? 'Asignado a ' + ((this.user(t.asig) || {}).nombre || '') + ' · cambiar' : 'Asignar sin abrir el ticket',
-      asigBorder: t.asig ? 'solid #e5e5e5' : 'dashed #a3a3a3',
+      asigBorder: t.asig ? 'solid var(--n-200)' : 'dashed var(--n-400)',
       qaOpen: this.state.qa === t.id,
-      qaBg: this.state.qa === t.id ? '#f5f5f5' : '#ffffff',
+      qaBg: this.state.qa === t.id ? 'var(--sel-sutil)' : 'var(--n-0)',
       stop: e => { if (e && e.stopPropagation) e.stopPropagation(); },
       qaToggle: e => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(st => ({ qa: st.qa === t.id ? null : t.id })); },
       qaClear: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, null); },
       qaClosed: this.state.qa !== t.id,
       asigTip: t.asig ? ((this.user(t.asig) || {}).nombre || 'Otra persona') + (t.asig === this.me().id ? ' (yo)' : '') : 'Sin asignar',
-      asigTipSub: !t.asig ? 'Click para asignar o tomarlo' : t.asig === this.me().id ? 'Lo tenés vos · click para reasignar' : 'Lo tiene · click para reasignar o tomarlo',
+      asigTipSub: !t.asig ? 'Clic para asignarlo o tomarlo' : t.asig === this.me().id ? 'Lo tienes tú · clic para reasignar' : 'Lo tiene · clic para reasignarlo o tomarlo',
       // Orden: quien lo tiene hoy, después yo ("Tomarlo yo"), después el resto por carga
       qaOpts: this.state.users.filter(u => u.rol === 'admin' && u.activo).sort((a, b) => (b.id === t.asig) - (a.id === t.asig) || (b.id === this.me().id) - (a.id === this.me().id) || this.loadOf(a.id).n - this.loadOf(b.id).n).map(u => Object.assign(this.asigOptLabel(u, t.asig), {
         ini: this.ini(u.nombre), carga: this.loadOf(u.id).n + (this.loadOf(u.id).n === 1 ? ' activo' : ' activos'),
-        bg: t.asig === u.id ? '#f5f5f5' : 'transparent',
+        bg: t.asig === u.id ? 'var(--sel-sutil)' : 'transparent',
         go: e => { if (e && e.stopPropagation) e.stopPropagation(); this.quickAssign(t, u.id); }
       })),
       edit: e => { if (e && e.stopPropagation) { e.stopPropagation(); e.preventDefault(); } this.openEdit(t); }
@@ -270,14 +323,14 @@ export const metodosTickets = {
     if (!t) return null;
     const me = this.me(), isAdmin = this.state.role === 'admin';
     if (t.status === 'closed') {
-      if (!isAdmin) return t.autor === me.id ? { msg: 'Este ticket está cerrado. Si el problema volvió, abrí uno nuevo que lo menciona.', take: false, follow: true } : { msg: 'Este ticket está cerrado.', take: false };
+      if (!isAdmin) return t.autor === me.id ? { msg: 'Este ticket está cerrado. Si el problema volvió, abre uno nuevo que lo menciona.', take: false, follow: true } : { msg: 'Este ticket está cerrado.', take: false };
       if (this.othersTicket(t)) return { msg: 'Ticket cerrado de ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Solo lectura.', take: false };
-      return { msg: 'Ticket cerrado. Para seguir la conversación o subir imágenes, reabrilo.', take: false, reopen: true };
+      return { msg: 'Ticket cerrado. Para seguir la conversación o subir imágenes, reábrelo.', take: false, reopen: true };
     }
     if (!isAdmin) return null;
     if (t.asig === me.id) return null;
-    if (!t.asig) return { msg: 'Nadie lo tiene todavía. Tomalo para responder; así el solicitante sabe quién lo atiende.', take: true };
-    return { msg: 'Lo tiene ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Podés leerlo; para escribir, editar o cerrarlo tiene que pasar a vos.', take: true, steal: true };
+    if (!t.asig) return { msg: 'Nadie lo tiene todavía. Tómalo para responder; así el solicitante sabe quién lo atiende.', take: true };
+    return { msg: 'Lo tiene ' + ((this.user(t.asig) || {}).nombre || 'otra persona') + '. Puedes leerlo; para escribir, editarlo o cerrarlo tiene que pasar a ti.', take: true, steal: true };
   },
 
   followUp(t) {
@@ -290,7 +343,7 @@ export const metodosTickets = {
   markResolved(t) {
     if (!t || this.resolvedSent(t)) return;
     const me = this.me();
-    this.confirmOr('resolved', { title: '¿Avisar que TIC-' + t.id + ' ya se resolvió?', sub: 'Se publica "Ya funciona, pueden cerrarlo" y el área lo cierra. Si vuelve a pasar, podés abrir uno nuevo desde el ticket.', ok: 'Avisar al área' }, () => {
+    this.confirmOr('resolved', { title: '¿Avisar que TIC-' + t.id + ' ya se resolvió?', sub: 'Se publica "Ya funciona, pueden cerrarlo" y el área lo cierra. Si vuelve a pasar, puedes abrir uno nuevo desde el ticket.', ok: 'Avisar al área' }, () => {
       if (this.resolvedSent(this.ticket(t.id))) return;
       this.setState(st => ({ tickets: st.tickets.map(x => x.id === t.id ? Object.assign({}, x, {
         comentarios: (x.comentarios || []).concat([{ autor: me.id, texto: 'Ya funciona, gracias. Pueden cerrarlo.', h: 0, at: Date.now() }]),
@@ -305,7 +358,7 @@ export const metodosTickets = {
   asigOptLabel(u, cur) {
     const mine = u.id === this.me().id, isCur = cur === u.id, take = mine && !isCur;
     return { nombre: take ? 'Tomarlo yo' : u.nombre, full: mine ? u.nombre + ' (yo)' : u.nombre, weight: take ? '600' : '400',
-      hasTag: isCur || mine, tag: isCur ? (mine ? 'YO · ACTUAL' : 'ACTUAL') : 'YO', tagBg: isCur ? '#dcfce7' : '#f5f5f5' };
+      hasTag: isCur || mine, tag: isCur ? (mine ? 'YO · ACTUAL' : 'ACTUAL') : 'YO', tagBg: isCur ? 'var(--verde-tinte)' : 'var(--n-50)' };
   },
 
   // Asignar desde afuera: mismo PATCH que el detalle, sin abrir el ticket
@@ -313,7 +366,7 @@ export const metodosTickets = {
     if (!sure && !t.asig && id) {
       this.setState({ qa: null });
       const to = (this.user(id) || {}).nombre;
-      this.confirmOr('assign', { title: '¿Asignar TIC-' + t.id + ' a ' + (id === this.me().id ? 'vos' : to) + '?', sub: t.status === 'open' ? 'Pasa a En progreso y aparece en su bandeja.' : 'Aparece en su bandeja.', ok: 'Asignar' }, () => this.quickAssign(t, id, true));
+      this.confirmOr('assign', { title: '¿Asignar TIC-' + t.id + ' a ' + (id === this.me().id ? 'ti' : to) + '?', sub: t.status === 'open' ? 'Pasa a En progreso y aparece en su bandeja.' : 'Aparece en su bandeja.', ok: 'Asignar' }, () => this.quickAssign(t, id, true));
       return;
     }
     if (!sure && t.asig && t.asig !== id) {
@@ -322,7 +375,7 @@ export const metodosTickets = {
       const to = id ? (this.user(id) || {}).nombre : null;
       this.confirmOr(id ? 'reassign' : 'unassign', id
         ? (id === this.me().id
-          ? { title: '¿Tomar TIC-' + t.id + '?', sub: 'Hoy lo tiene ' + prev + '. Pasa a vos y a ' + prev.split(' ')[0] + ' le deja de aparecer en su bandeja.', ok: 'Tomar ticket' }
+          ? { title: '¿Tomar TIC-' + t.id + '?', sub: 'Hoy lo tiene ' + prev + '. Pasa a ti y a ' + prev.split(' ')[0] + ' le deja de aparecer en su bandeja.', ok: 'Tomar ticket' }
           : { title: '¿Reasignar TIC-' + t.id + ' a ' + to + '?', sub: 'Hoy lo tiene ' + prev + '. Le deja de aparecer en su bandeja.', ok: 'Reasignar' })
         : { title: '¿Quitar la asignación de TIC-' + t.id + '?', sub: prev + ' deja de tenerlo y vuelve a la cola sin asignar.', ok: 'Quitar asignación', danger: true },
         () => this.quickAssign(t, id, true));
@@ -350,7 +403,7 @@ export const metodosTickets = {
     if (this.replyLock(this.ticket(this.state.detailId))) return;
     if (alsoClose && (this.ticket(this.state.detailId) || {}).asig !== this.me().id) { this.setState({ commentErr: 'Solo quien tiene asignado el ticket puede cerrarlo.' }); return; }
     const txt = this.state.comment.trim();
-    if (!txt) { this.setState({ commentErr: 'Escribí un comentario antes de publicar.' }); return; }
+    if (!txt) { this.setState({ commentErr: 'Escribe un comentario antes de publicar.' }); return; }
     const me = this.me(), id = this.state.detailId;
     this.saveDraft('t' + id, '');
     const prev = this.ticket(id) || {}, prevStatus = prev.status, prevHist = prev.historial, prevComments = prev.comentarios;

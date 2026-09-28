@@ -98,10 +98,10 @@ export const metodosAdjuntos = {
     const files = Array.prototype.slice.call(list || []);
     if (!files.length) return;
     const tid = this.destinoArrastre(), t = this.ticket(tid);
-    if (!t) { this.say('Para adjuntar una imagen, abrí el ticket o su conversación y soltala ahí.', null, true); return; }
+    if (!t) { this.say('Para adjuntar una imagen, abre el ticket o su conversación y suéltala ahí.', null, true); return; }
     if (!this.puedeAdjuntar(t)) {
       const lk = this.replyLock(t);
-      this.say((lk ? lk.msg : 'En este ticket no podés adjuntar.') + ' La imagen no se subió.', null, true);
+      this.say((lk ? lk.msg : 'En este ticket no puedes adjuntar.') + ' La imagen no se subió.', null, true);
       return;
     }
     const malas = [];

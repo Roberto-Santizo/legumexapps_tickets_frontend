@@ -19,8 +19,8 @@ export const valoresLista = {
     v.statusFilters = filters.map(f => {
       const sg = this.seg(s.dStatus === f[0]);
       return {
-        label: f[1], bg: s.dStatus === f[0] ? '#f5f5f5' : 'transparent', border: sg.border, on: s.dStatus === f[0], off: s.dStatus !== f[0],
-        hasDot: f[0] !== 'all', dot: f[0] === 'all' ? '#737373' : ST[f[0]].dot,
+        label: f[1], bg: s.dStatus === f[0] ? 'var(--sel-sutil)' : 'transparent', border: sg.border, on: s.dStatus === f[0], off: s.dStatus !== f[0],
+        hasDot: f[0] !== 'all', dot: f[0] === 'all' ? 'var(--n-500)' : ST[f[0]].dot,
         count: String(f[0] === 'all' ? mine.length : mine.filter(t => t.status === f[0]).length),
         go: () => this.setState({ dStatus: f[0] })
       };
@@ -29,7 +29,7 @@ export const valoresLista = {
     v.prioFilters = prios.map(p => {
       const sg = this.seg(s.dPrio === p[0]);
       return {
-        label: p[1], bg: s.dPrio === p[0] ? '#f5f5f5' : 'transparent', border: sg.border, hasDot: !!p[2], dot: p[2] || '#737373',
+        label: p[1], bg: s.dPrio === p[0] ? 'var(--sel-sutil)' : 'transparent', border: sg.border, hasDot: !!p[2], dot: p[2] || 'var(--n-500)',
         on: s.dPrio === p[0], off: s.dPrio !== p[0],
         count: String(p[0] === 'all' ? mine.length : mine.filter(t => t.prio === p[0]).length),
         go: () => this.setState({ dPrio: p[0] })
@@ -65,7 +65,7 @@ export const valoresLista = {
     const cur = Math.min(s.cursor, pageRows.length - 1);
     v.rows = pageRows.map((t, i) => {
       const r = this.rowFor(t);
-      r.focusBorder = i === cur ? '#171717' : '#e5e5e5';
+      r.focusBorder = i === cur ? 'var(--n-900)' : 'var(--n-200)';
       r.focusShadow = i === cur ? 'rgba(0,0,0,0.05) 0px 1px 2px 0px' : 'none';
       return r;
     });
@@ -76,7 +76,7 @@ export const valoresLista = {
     v.emptyTitle = diaUno ? 'Todavía no hay tickets' : 'Ningún ticket coincide con tu búsqueda';
     v.emptyHelp = diaUno
       ? 'Cuando alguien reporte algo, va a aparecer acá.'
-      : 'Probá con otro texto o quitá los filtros de estado y prioridad.';
+      : 'Prueba con otro texto o quita los filtros de estado y prioridad.';
     const scoped = isAdmin && s.scope === 'mine' ? mine.filter(t => t.asig === me.id) : mine;
     v.lateCount = String(scoped.filter(t => t.status !== 'closed' && this.sla(t).late).length);
     v.hasLate = scoped.some(t => t.status !== 'closed' && this.sla(t).late);
@@ -102,8 +102,8 @@ export const valoresLista = {
       const on = s.screen === 'tickets' && s.statusFilter === k[0];
       return {
         label: k[1], count: String(k[2]), dot: ST[k[0]].dot,
-        bg: on ? '#f4f5f1' : 'transparent', border: on ? '1px solid #dcdfd6' : '1px solid transparent',
-        weight: on ? '500' : '400', countColor: on ? '#171717' : '#525252',
+        bg: on ? 'var(--fondo)' : 'transparent', border: on ? '1px solid var(--borde-suave)' : '1px solid transparent',
+        weight: on ? '500' : '400', countColor: on ? 'var(--n-900)' : 'var(--n-600)',
         aria: on ? 'Quitar el filtro ' + k[1] : 'Ver solo ' + k[1].toLowerCase(),
         go: () => this.setState(st => ({
           screen: 'tickets', detailId: null, dir: 'none', swap: st.swap + 1, nudgedOnly: false,
@@ -124,22 +124,24 @@ export const valoresLista = {
     v.onClearNudged = () => this.setState({ nudgedOnly: false });
     const nMine = mine.filter(t => t.asig === me.id).length;
     v.scopeOpts = [['all', 'Todos', String(mine.length)], ['mine', 'Míos', String(nMine)]].map(o => ({
-      label: o[1], count: o[2], bg: (s.scope || 'all') === o[0] ? '#ffffff' : 'transparent', barBg: (s.scope || 'all') === o[0] ? '#ebede7' : 'transparent', weight: (s.scope || 'all') === o[0] ? '600' : '500',
-      shadow: (s.scope || 'all') === o[0] ? 'rgba(0,0,0,0.06) 0px 1px 2px 0px' : 'none', pressed: (s.scope || 'all') === o[0] ? 'true' : 'false',
+      label: o[1], count: o[2], bg: (s.scope || 'all') === o[0] ? 'var(--sel-bg)' : 'transparent', barBg: (s.scope || 'all') === o[0] ? 'var(--seg-on)' : 'transparent', barShadow: (s.scope || 'all') === o[0] ? 'inset 0 0 0 1px var(--seg-borde)' : 'none', weight: (s.scope || 'all') === o[0] ? '600' : '500',
+      shadow: (s.scope || 'all') === o[0] ? 'inset 0 0 0 1px var(--seg-borde), rgba(0,0,0,0.08) 0px 1px 2px 0px' : 'none', pressed: (s.scope || 'all') === o[0] ? 'true' : 'false',
       go: () => this.setState(st => ({ scope: o[0], swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     }));
     v.onlyNudged = () => this.setState(st => ({ nudgedOnly: true, screen: 'tickets', detailId: null, dir: 'none', statusFilter: 'all', prioFilter: 'all', dStatus: 'all', dPrio: 'all', q: '', sort: 'urgencia', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }));
     const per = s.period || '30';
     v.saludo = this.saludo();
+    // mini escena junto al saludo: la luna de noche, el sol el resto (la misma fase que el cielo)
+    v.saludoNoche = this.faseCielo() === 'noche'; v.saludoDia = !v.saludoNoche;
     v.showGreet = !!s.greet && s.screen === 'tickets';
     v.greetAnim = s.greetOut ? 'toastOut 300ms var(--ease-standard) both' : 'dropIn 420ms var(--ease-standard) both';
     v.periodLabel = { hoy: 'hoy', '7': '7 días', '30': '30 días', todo: 'todo el historial' }[per];
     v.periodOpts = [['hoy', 'Hoy'], ['7', 'Últimos 7 días'], ['30', 'Últimos 30 días'], ['todo', 'Todo el historial']].map(o => ({
-      label: o[1], on: per === o[0], bg: per === o[0] ? '#f5f5f5' : 'transparent',
+      label: o[1], on: per === o[0], bg: per === o[0] ? 'var(--sel-sutil)' : 'transparent',
       go: () => this.setState(st => ({ period: o[0], periodOpen: false, swap: st.swap + 1 }))
     }));
     v.periodOpen = !!s.periodOpen; v.viewOpen = !!s.viewOpen;
-    v.viewBtnBg = s.viewOpen ? '#f5f5f5' : 'transparent';
+    v.viewBtnBg = s.viewOpen ? 'var(--sel-sutil)' : 'transparent';
     v.onTogglePeriod = () => this.setState(st => ({ periodOpen: !st.periodOpen, viewOpen: false, filterOpen: false }));
     v.onToggleView = () => this.setState(st => ({ viewOpen: !st.viewOpen, periodOpen: false, filterOpen: false }));
     v.onDismissPop = () => this.setState({ viewOpen: false, periodOpen: false });
@@ -150,7 +152,7 @@ export const valoresLista = {
       this.descargarCsv(nombre, filas);
       this.say('Descargando ' + nombre);
     };
-    v.inboxHint = s.screen === 'tickets' && s.statusFilter !== 'all' ? 'Tocá de nuevo para ver todos' : 'Tocá un estado para filtrar';
+    v.inboxHint = s.screen === 'tickets' && s.statusFilter !== 'all' ? 'Toca de nuevo para ver todos' : 'Toca un estado para filtrar';
 
     // filtro colapsado: un botón, un panel, y chips de lo que está puesto
     const chips = [];
@@ -163,7 +165,7 @@ export const valoresLista = {
       clear: () => this.setState(st => ({ prioFilter: 'all', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     });
     if (s.q.trim()) chips.push({
-      label: '"' + s.q.trim() + '"', dot: '#737373', hasDot: false,
+      label: '"' + s.q.trim() + '"', dot: 'var(--n-500)', hasDot: false,
       clear: () => this.setState(st => ({ q: '', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }))
     });
     v.chips = chips;
@@ -172,7 +174,7 @@ export const valoresLista = {
     v.filterCount = String(fcount);
     v.hasFilterCount = fcount > 0;
     v.filterOpen = !!s.filterOpen;
-    v.filterBg = s.filterOpen || fcount > 0 ? '#f5f5f5' : '#ffffff';
+    v.filterBg = s.filterOpen || fcount > 0 ? 'var(--sel-sutil)' : 'var(--n-0)';
     v.onToggleFilter = () => this.setState(st => st.filterOpen ? { filterOpen: false } : { filterOpen: true, dStatus: st.statusFilter, dPrio: st.prioFilter });
     v.onDismissFilter = () => this.setState({ filterOpen: false });
     v.onClearDraft = () => this.setState({ dStatus: 'all', dPrio: 'all' });
@@ -183,7 +185,7 @@ export const valoresLista = {
     const sinAsignar = mine.filter(t => t.status === 'open' && !t.asig).length;
     const activos = inbox.open + inbox.prog;
     v.pageSub = s.screen === 'entity' && s.entity ? (s.entity.type === 'cat' ? (s.entity.id ? 'Renombrarla no cambia los tickets que ya la usan.' : 'Aparecerá en el formulario de creación de tickets.') : (s.entity.id ? 'El correo es con el que inicia sesión.' : 'Podrá iniciar sesión en cuanto se cree.'))
-      : s.screen === 'edit' ? 'Los campos vienen cargados — cambiá solo lo que haga falta.'
+      : s.screen === 'edit' ? 'Los campos vienen cargados — cambia solo lo que haga falta.'
       : s.screen === 'create' ? 'Cuanto más contexto, menos ida y vuelta después.'
       : s.screen === 'cats' ? s.cats.filter(c => c.activo).length + ' de ' + s.cats.length + ' activas se ofrecen al crear un ticket'
       : s.screen === 'users' ? s.users.filter(u => u.rol === 'admin').length + ' de ' + s.users.length + ' con rol admin · la carga se calcula sobre los tickets activos'
@@ -206,8 +208,8 @@ export const valoresLista = {
     const subSh = 'rgba(0,0,0,0.05) 0px 1px 2px 0px';
     v.cardsShadow = v.isCards ? subSh : 'none';
     v.tableShadow = v.isTable ? subSh : 'none'; v.kanbanShadow = v.isKanban ? subSh : 'none';
-    v.cardsIcon = v.isCards ? '#171717' : '#525252';
-    v.tableIcon = v.isTable ? '#171717' : '#525252'; v.kanbanIcon = v.isKanban ? '#171717' : '#525252';
+    v.cardsIcon = v.isCards ? 'var(--n-900)' : 'var(--n-600)';
+    v.tableIcon = v.isTable ? 'var(--n-900)' : 'var(--n-600)'; v.kanbanIcon = v.isKanban ? 'var(--n-900)' : 'var(--n-600)';
     v.tapCards = this.tapped('vcards'); v.tapTable = this.tapped('vtable'); v.tapKanban = this.tapped('vkanban');
     v.onCards = () => this.tap('vcards', () => this.setState(st => ({ view: 'cards', swap: st.swap + 1 })));
     v.onTable = () => this.tap('vtable', () => this.setState(st => ({ view: 'table', swap: st.swap + 1 })));
@@ -218,7 +220,7 @@ export const valoresLista = {
     const colKeys = s.statusFilter === 'all' ? ['open', 'in_progress', 'closed'] : [s.statusFilter];
     v.columnCount = String(colKeys.length);
     const dragT = s.dragId ? this.ticket(s.dragId) : null;
-    v.dragHint = s.dragId ? 'Soltá en otra columna para cambiar el estado' : (isAdmin ? 'Arrastrá una tarjeta de columna a columna para cambiar el estado' : 'Podés arrastrar a Cerrados los tickets que tengas asignados');
+    v.dragHint = s.dragId ? 'Suelta en otra columna para cambiar el estado' : (isAdmin ? 'Arrastra una tarjeta de columna a columna para cambiar el estado' : 'Puedes arrastrar a Cerrados los tickets que tengas asignados');
     v.isDragging = !!s.dragId;
     v.columns = colKeys.map(k => {
       const items = filtered.filter(t => t.status === k);
@@ -227,8 +229,8 @@ export const valoresLista = {
       const blocked = !!(dragT && dragT.status !== k && !target);
       return {
         isTarget: target, isOver: over, isBlocked: blocked,
-        colBg: over ? '#dbeaff' : '#f5f5f5',
-        colRing: over ? '1px dashed #2563eb' : target ? '1px dashed #d4d4d4' : '1px solid transparent',
+        colBg: over ? 'var(--azul-tinte)' : 'var(--n-50)',
+        colRing: over ? '1px dashed var(--azul)' : target ? '1px dashed var(--n-300)' : '1px solid transparent',
         colOp: blocked ? '0.55' : '1',
         dropLabel: over ? 'Soltar en ' + ST[k].label : '',
         countKey: k + '-' + items.length,

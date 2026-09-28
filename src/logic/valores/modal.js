@@ -13,6 +13,7 @@ export const valoresModal = {
     if (m) {
       v.modalTitle = m.title; v.modalSub = m.sub; v.modalOkLabel = m.ok; v.modalErr = m.err || '';
       v.modalIsDanger = !!m.danger; v.modalIsSafe = !m.danger;
+      v.modalRef = this.refDialogo(); v.modalRiesgosa = m.danger ? 'si' : 'no';
       v.modalHasName = m.type !== 'confirm';
       v.modalNameLabel = m.type === 'user' ? 'Nombre y apellido' : 'Nombre';
       v.modalName = m.name || '';
@@ -26,8 +27,8 @@ export const valoresModal = {
       v.onModalRol = up('rol');
       v.modalPwdOn = api.USE_API && m.type === 'user'; v.modalPwd = m.pwd || ''; v.onModalPwd = up('pwd');
       v.modalPwdLabel = m.id ? 'Contraseña nueva' : 'Contraseña';
-      v.modalPwdHelp = m.id ? 'La API la pide también para guardar cambios: la que escribas pasa a ser su contraseña.' : 'Con esta inicia sesión. Pasásela por un canal seguro.';
-      v.modalPwdBorder = m.err && m.err.indexOf('contraseña') >= 0 ? '#ea580c' : '#000000';
+      v.modalPwdHelp = m.id ? 'La API la pide también para guardar cambios: la que escribas pasa a ser su contraseña.' : 'Con esta inicia sesión. Pásasela por un canal seguro.';
+      v.modalPwdBorder = m.err && m.err.indexOf('contraseña') >= 0 ? 'var(--naranja)' : 'var(--n-1000)';
       v.onModalCancel = () => m.back ? this.openModal(m.back) : this.closeModal();
       v.modalCanSkip = !!m.skipKey; v.modalSkip = !!m.skip;
       v.onModalSkip = e => { const c = e.target.checked; this.setState(st => ({ modal: Object.assign({}, st.modal, { skip: c }) })); };
@@ -67,7 +68,7 @@ export const valoresModal = {
           this.setState({ modal: Object.assign({}, mm, { err: 'El correo tiene que ser ' + DOMINIO_CORREO + ', por ejemplo nombre' + DOMINIO_CORREO + '.' }) }); return;
         }
         if (api.USE_API && mm.type === 'user' && String(mm.pwd || '').length < 8) {
-          this.setState({ modal: Object.assign({}, mm, { err: 'Escribí una contraseña de al menos 8 caracteres.' }) }); return;
+          this.setState({ modal: Object.assign({}, mm, { err: 'Escribe una contraseña de al menos 8 caracteres.' }) }); return;
         }
         if (api.USE_API && mm.type === 'user') sync.rememberPassword(String(mm.email || '').trim(), mm.pwd);
         if (mm.type === 'cat') {
@@ -87,7 +88,7 @@ export const valoresModal = {
           if (mm.id) {
             const pu = this.state.users.find(u => u.id === mm.id) || {};
             const dm = pu.rol === 'admin' && mm.rol === 'usuario' ? this.demoteMove(pu) : null;
-            const apply = () => { if (dm) this.demoteApply(pu, dm); this.setState(st => ({ users: st.users.map(u => u.id === mm.id ? Object.assign({}, u, { nombre: mm.name.trim(), email: mm.email.trim(), rol: mm.rol }) : u), modal: null })); this.say('Usuario actualizado.' + (dm && dm.act.length ? (dm.alt ? ' Sus tickets pasaron a ' + dm.alt.nombre + '.' : (api.USE_API ? ' Sus tickets siguen a su nombre: reasignalos.' : ' Sus tickets quedaron sin asignar.')) : '')); };
+            const apply = () => { if (dm) this.demoteApply(pu, dm); this.setState(st => ({ users: st.users.map(u => u.id === mm.id ? Object.assign({}, u, { nombre: mm.name.trim(), email: mm.email.trim(), rol: mm.rol }) : u), modal: null })); this.say('Usuario actualizado.' + (dm && dm.act.length ? (dm.alt ? ' Sus tickets pasaron a ' + dm.alt.nombre + '.' : (api.USE_API ? ' Sus tickets siguen a su nombre: reasígnalos.' : ' Sus tickets quedaron sin asignar.')) : '')); };
             if (pu.nombre === mm.name.trim() && pu.email === mm.email.trim() && pu.rol === mm.rol && !(api.USE_API && mm.pwd)) { this.setState({ modal: null }); return; }
             const rolCambia = pu.rol !== mm.rol;
             this.confirmOr('edit-user', { title: '¿Guardar los cambios de ' + pu.nombre + '?', sub: rolCambia ? 'Cambia su rol a ' + (mm.rol === 'admin' ? 'Administrador' : 'Usuario') + ': ' + (mm.rol === 'admin' ? 'va a ver y gestionar todos los tickets.' : 'deja de ver los tickets de los demás.' + (dm ? dm.note : '')) : 'Los datos nuevos se usan desde su próximo inicio de sesión.', ok: 'Guardar cambios', danger: rolCambia, back: mm }, apply);
@@ -109,7 +110,7 @@ export const valoresModal = {
     v.loading = s.loading; v.loaded = !s.loading;
     v.screenKey = 'screen-' + s.screen + '-' + (s.detailId || s.editId || (s.entity ? s.entity.type + (s.entity.id || 'new') : 0));
     v.pageAnim = s.dir === 'fwd' ? 'pageInFwd' : s.dir === 'back' ? 'pageInBack'
-      : s.dir === 'up' ? 'pageInUp' : s.dir === 'down' ? 'pageInDown' : 'pageIn';
+      : s.dir === 'up' ? 'pageInUp' : s.dir === 'down' ? 'pageInDown' : s.dir === 'vt' ? 'none' : 'pageIn';
     v.ghostRows = ['62%', '78%', '54%', '70%', '66%'].map((w, i) => ({ w, id: i }));
     v.ghostCards = ['72%', '58%'].map((w, i) => ({ w, id: i }));
     v.ghostCards6 = ['72%', '58%', '66%', '80%', '62%', '74%'].map((w, i) => ({ w, id: i }));

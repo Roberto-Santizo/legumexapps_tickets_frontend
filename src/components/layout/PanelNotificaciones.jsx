@@ -3,29 +3,33 @@
 import React from 'react';
 import { T, S, L } from '../../utils/runtime.js';
 
+import Escena from '../comunes/Escena.jsx';
 export default function PanelNotificaciones({ V }) {
   return (
     <>
       {" "}
       <div data-m="velo-hoja" data-no-print="" onClick={V["onBellClose"]} style={{ "position": "fixed", "inset": "0", "zIndex": "69" }}></div>
       {" "}
-      <div data-m="notificaciones" data-no-print="" role="dialog" aria-label="Notificaciones" style={{ "position": "fixed", "left": "252px", "top": "20px", "zIndex": "70", "width": "380px", "maxWidth": "calc(100vw - 268px)", "maxHeight": "min(640px,calc(100vh - 40px))", "background": "#ffffff", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px #e5e5e5,0 24px 48px -24px rgba(11,42,30,0.3)", "display": "flex", "flexDirection": "column", "overflow": "hidden", "animation": "dockIn 220ms cubic-bezier(0.22,1,0.36,1) both" }}>
+      <div data-m="notificaciones" data-no-print="" role="dialog" aria-label="Notificaciones" style={{ "position": "fixed", "left": "252px", "top": "20px", "zIndex": "70", "width": "380px", "maxWidth": "calc(100vw - 268px)", "maxHeight": "min(640px,calc(100vh - 40px))", "background": "var(--n-0)", "borderRadius": "16px", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200),0 24px 48px -24px rgba(11,42,30,0.3)", "display": "flex", "flexDirection": "column", "overflow": "hidden", "animation": "dockIn 220ms cubic-bezier(0.22,1,0.36,1) both" }}>
         {" "}
-        <div style={{ "display": "flex", "alignItems": "center", "gap": "8px", "padding": "14px 16px", "borderBottom": "1px solid #e5e5e5" }}>
+        <div style={{ "display": "flex", "alignItems": "center", "gap": "8px", "padding": "14px 16px", "borderBottom": "1px solid var(--n-200)" }}>
           {" "}
-          <div style={{ "fontSize": "16px", "fontWeight": "700", "letterSpacing": "-0.02em", "color": "#171717" }}>
+          <div style={{ "fontSize": "16px", "fontWeight": "700", "letterSpacing": "-0.02em", "color": "var(--n-900)" }}>
             {"Notificaciones"}
           </div>
           {" "}
-          <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252" }}>
+          <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)" }}>
             {T(V["unreadNote"])}
           </span>
           {" "}
           {V["hasUnread"] ? (<>
-            <button onClick={V["onReadAll"]} style={{ "marginLeft": "auto", "background": "#ffffff", "border": "1px solid #e5e5e5", "borderRadius": "8px", "padding": "6px 10px", "fontSize": "12px", "fontWeight": "500", "color": "#171717", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scpg scpb">
+            <button onClick={V["onReadAll"]} style={{ "marginLeft": "auto", "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "6px 10px", "fontSize": "12px", "fontWeight": "500", "color": "var(--n-900)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)" }} className="scpg scpb">
               {"Marcar todo como leído"}
             </button>
           </>) : null}
+          <button onClick={V["onBellClose"]} aria-label="Cerrar notificaciones" title="Cerrar" style={{ "marginLeft": V["hasUnread"] ? "0" : "auto", "flexShrink": "0", "width": "32px", "height": "32px", "border": "1px solid var(--n-200)", "borderRadius": "8px", "background": "var(--n-0)", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center" }} className="scp4">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+          </button>
           {" "}
         </div>
         {" "}
@@ -46,21 +50,21 @@ export default function PanelNotificaciones({ V }) {
                       {T(_n_6?.["kind"])}
                     </span>
                     {" "}
-                    <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252" }}>
+                    <span style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)" }}>
                       {T(_n_6?.["code"])}
                     </span>
                     {" "}
-                    <span style={{ "marginLeft": "auto", "fontSize": "11px", "color": "#525252", "flexShrink": "0" }}>
+                    <span style={{ "marginLeft": "auto", "fontSize": "11px", "color": "var(--n-600)", "flexShrink": "0" }}>
                       {T(_n_6?.["when"])}
                     </span>
                     {" "}
                   </span>
                   {" "}
-                  <span style={{ "fontSize": "14px", "lineHeight": "1.4", "fontWeight": S(_n_6?.["weight"]), "color": "#171717", "textWrap": "pretty" }}>
+                  <span style={{ "fontSize": "14px", "lineHeight": "1.4", "fontWeight": S(_n_6?.["weight"]), "color": "var(--n-900)", "textWrap": "pretty" }}>
                     {T(_n_6?.["title"])}
                   </span>
                   {" "}
-                  <span style={{ "fontSize": "12px", "lineHeight": "1.45", "color": "#525252", "overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap" }}>
+                  <span style={{ "fontSize": "12px", "lineHeight": "1.45", "color": "var(--n-600)", "overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap" }}>
                     {T(_n_6?.["sub"])}
                   </span>
                   {" "}
@@ -72,14 +76,15 @@ export default function PanelNotificaciones({ V }) {
           ))}
           {" "}
           {V["noNotifs"] ? (<>
-            <div style={{ "padding": "32px 16px", "textAlign": "center", "fontSize": "14px", "color": "#525252" }}>
+            <div style={{ "padding": "28px 16px", "textAlign": "center", "fontSize": "14px", "color": "var(--n-600)" }}>
+              <Escena icono="campana" ancho="130px" />
               {"Nada nuevo en tus tickets."}
             </div>
           </>) : null}
           {" "}
         </div>
         {" "}
-        <div style={{ "padding": "10px 16px", "borderTop": "1px solid #e5e5e5", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252" }}>
+        <div style={{ "padding": "10px 16px", "borderTop": "1px solid var(--n-200)", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)" }}>
           {"ÚLTIMAS 72 H · SE ACTUALIZA CADA 45 S"}
         </div>
         {" "}

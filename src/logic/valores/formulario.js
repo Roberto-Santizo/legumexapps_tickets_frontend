@@ -22,9 +22,9 @@ export const valoresFormulario = {
       : vacio ? 'Faltan los datos del ticket'
       : editing ? 'No pudimos guardar los cambios' : 'No pudimos crear el ticket';
     v.formBannerNote = feBanner === 'servidor'
-      ? 'El servidor falló y el ticket no quedó registrado. Tu texto sigue acá: probá de nuevo.'
-      : vacio ? 'Completá título y descripción para poder enviarlo.'
-      : 'Revisá los campos marcados abajo. Nada se perdió: tu texto sigue acá.';
+      ? 'El servidor falló y el ticket no quedó registrado. Tu texto sigue acá: prueba de nuevo.'
+      : vacio ? 'Completa título y descripción para poder enviarlo.'
+      : 'Revisa los campos marcados abajo. Nada se perdió: tu texto sigue acá.';
     v.fTitulo = s.form.titulo; v.fDesc = s.form.desc; v.fCat = s.form.cat;
     v.fStatus = s.form.status; v.fPrio = s.form.prio;
     // B1 · el formulario nunca cierra: cerrar sale solo de Cerrar / Comentar y cerrar / kanban (PATCH /closed + correo)
@@ -32,7 +32,7 @@ export const valoresFormulario = {
     v.fStatusLocked = editing && editPrev.status === 'closed';
     v.fClosedOptOff = !v.fStatusLocked;
     v.fStatusOp = v.fStatusLocked ? '0.6' : '1';
-    v.fStatusTitle = v.fStatusLocked ? 'Está cerrado. Para cambiarlo, reabrilo desde el ticket.' : 'Para cerrar, usá "Cerrar ticket" en el detalle: así le llega el aviso al solicitante.';
+    v.fStatusTitle = v.fStatusLocked ? 'Está cerrado. Para cambiarlo, reábrelo desde el ticket.' : 'Para cerrar, usa "Cerrar ticket" en el detalle: así le llega el aviso al solicitante.';
     v.onFTitulo = e => this.formChanged({ titulo: e.target.value });
     v.onFDesc = e => this.formChanged({ desc: e.target.value });
     v.hasDesc = !!s.form.desc.trim() && !editing;
@@ -55,7 +55,7 @@ export const valoresFormulario = {
     v.onFStatus = e => this.setState(st => ({ form: Object.assign({}, st.form, { status: e.target.value }) }));
     v.onFPrio = e => this.setState(st => ({ form: Object.assign({}, st.form, { prio: e.target.value }) }));
     // Prioridad al crear: la elige quien reporta; la ayuda dice qué significa cada una
-    const PRIO_AYUDA = { high: 'Frena tu trabajo o el de varias personas.', medium: 'Molesta, pero podés seguir trabajando.', low: 'Puede esperar unos días.' };
+    const PRIO_AYUDA = { high: 'Frena tu trabajo o el de varias personas.', medium: 'Molesta, pero puedes seguir trabajando.', low: 'Puede esperar unos días.' };
     v.prioOpts = ['low', 'medium', 'high'].map(k => ({ value: k, label: PR[k].label }));
     v.fPrioDot = (PR[s.form.prio] || PR.medium).dot;
     v.fPrioHint = PRIO_AYUDA[s.form.prio] || PRIO_AYUDA.medium;
@@ -72,9 +72,9 @@ export const valoresFormulario = {
       };
     });
     const fe = s.formErr || {};
-    v.errTituloBorder = fe.titulo ? '#ea580c' : '#000000';
-    v.errDescBorder = fe.desc ? '#ea580c' : '#000000';
-    v.errCatBorder = fe.cat ? '#ea580c' : '#000000';
+    v.errTituloBorder = fe.titulo ? 'var(--naranja)' : 'var(--n-1000)';
+    v.errDescBorder = fe.desc ? 'var(--naranja)' : 'var(--n-1000)';
+    v.errCatBorder = fe.cat ? 'var(--naranja)' : 'var(--n-1000)';
     v.hasFormBanner = !!s.formErr;
     v.errTitulo = !!fe.titulo; v.errTituloMsg = fe.titulo || '';
     v.errDesc = !!fe.desc; v.errDescMsg = fe.desc || '';

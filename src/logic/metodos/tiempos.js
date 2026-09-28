@@ -13,6 +13,29 @@ export const metodosTiempos = {
     return 'hace ' + Math.round(h / 168) + ' sem';
   },
 
+  // (5) Cifras que cuentan: avance 0→1 de la animación (1 = valor final, sin animar)
+  cifra(n) { const e = this._cuentaP == null ? 1 : this._cuentaP; return e >= 1 ? n : Math.round(n * e); },
+  durCuenta(h) {
+    const e = this._cuentaP == null ? 1 : this._cuentaP;
+    // "menos de 1 h" no cuenta: pasar de "0 h" a ese texto movería el bloque
+    if (e >= 1 || typeof h !== 'number' || h < 1) return this.dur(h);
+    return h < 48 ? Math.round(h * e) + ' h' : Math.round(h / 24 * e) + ' d';
+  },
+  contarCifras() {
+    cancelAnimationFrame(this._cuentaRaf);
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { this._cuentaP = 1; return; }
+    this._cuentaP = 0;
+    let t0 = null;
+    const paso = t => {
+      if (t0 == null) t0 = t;
+      const x = Math.min(1, (t - t0) / 950);
+      this._cuentaP = x >= 1 ? 1 : 1 - Math.pow(1 - x, 3);
+      this.forceUpdate();
+      if (x < 1) this._cuentaRaf = requestAnimationFrame(paso);
+    };
+    this._cuentaRaf = requestAnimationFrame(paso);
+  },
+
   dur(h) {
     if (typeof h !== 'number') return '—';
     if (h < 1) return 'menos de 1 h';
@@ -106,7 +129,7 @@ export const metodosTiempos = {
     const out = [];
     (t.comentarios || []).forEach((c, i) => {
       const u = this.user(c.autor) || {};
-      out.push({ key: 'c' + i + '-' + c.h, isComment: true, isEvent: false, isFile: false, autor: u.nombre || '—', ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 64); }, hasBlob: true, noBlob: false, texto: c.texto, meta: '', when: this.ago(c.h), h: c.h, at: c.at || 0, node: '#e5e5e5' });
+      out.push({ key: 'c' + i + '-' + c.h, isComment: true, isEvent: false, isFile: false, autor: u.nombre || '—', ini: this.ini(u.nombre), ring: this.ring(c.autor), blobRef: el => { if (el) el.src = this.blobUrl(c.autor, 64); }, hasBlob: true, noBlob: false, texto: c.texto, meta: '', when: this.ago(c.h), h: c.h, at: c.at || 0, node: 'var(--n-200)' });
     });
     (t.historial || []).forEach((x, i) => {
       const ev = EV[x.kind] || EV.edit;
@@ -114,7 +137,7 @@ export const metodosTiempos = {
     });
     (t.adjuntos || []).forEach((a, i) => {
       const u = this.user(a.autor) || {};
-      out.push({ key: 'f' + i + '-' + a.h, isComment: false, isEvent: false, isFile: true, autor: u.nombre || '—', ini: '', ring: '#a3a3a3', texto: a.nombre, meta: a.tipo + ' · ' + a.peso, when: this.ago(a.h), h: a.h, at: a.at || 0, node: '#a3a3a3' });
+      out.push({ key: 'f' + i + '-' + a.h, isComment: false, isEvent: false, isFile: true, autor: u.nombre || '—', ini: '', ring: 'var(--n-400)', texto: a.nombre, meta: a.tipo + ' · ' + a.peso, when: this.ago(a.h), h: a.h, at: a.at || 0, node: 'var(--n-400)' });
     });
     out.sort((a, b) => (b.h - a.h) || (a.at - b.at));
     return out.map((x, i) => Object.assign(x, { showLine: i < out.length - 1 }));

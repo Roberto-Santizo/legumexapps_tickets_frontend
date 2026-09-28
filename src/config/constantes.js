@@ -2,32 +2,32 @@
 // Solo lectura. La lógica las importa directo (antes eran campos de la clase).
 
 export const ST = {
-  open: { label: 'Abierto', bg: '#fef3c7', dot: '#ea580c' },
-  in_progress: { label: 'En progreso', bg: '#dbeaff', dot: '#2563eb' },
-  closed: { label: 'Cerrado', bg: '#dcfce7', dot: '#16a34a' }
+  open: { label: 'Abierto', bg: 'var(--ambar-tinte)', dot: 'var(--naranja)' },
+  in_progress: { label: 'En progreso', bg: 'var(--azul-tinte)', dot: 'var(--azul)' },
+  closed: { label: 'Cerrado', bg: 'var(--verde-tinte)', dot: 'var(--verde)' }
 };
 
 export const PR = {
-  low: { label: 'Baja', dot: '#16a34a' },
-  medium: { label: 'Media', dot: '#7c3aed' },
-  high: { label: 'Alta', dot: '#ea580c' }
+  low: { label: 'Baja', dot: 'var(--verde)' },
+  medium: { label: 'Media', dot: 'var(--violeta)' },
+  high: { label: 'Alta', dot: 'var(--naranja)' }
 };
 
-export const RING = ['#2563eb', '#7c3aed', '#16a34a', '#ea580c'];
+export const RING = ['var(--azul)', 'var(--violeta)', 'var(--verde)', 'var(--naranja)'];
 
 // Umbral de atención inventado para el prototipo (la API no lo expone): se mide sobre el
 // tiempo SIN MOVIMIENTO, no sobre la edad del ticket.
 export const SLA = { high: 8, medium: 48, low: 120 };
 
 export const EV = {
-  create: { label: 'Creado', color: '#737373' },
-  assign: { label: 'Asignación', color: '#2563eb' },
-  status: { label: 'Estado', color: '#7c3aed' },
-  close: { label: 'Cierre', color: '#16a34a' },
-  reopen: { label: 'Reapertura', color: '#ea580c' },
-  nudge: { label: 'Marcado como bloqueante', color: '#ea580c' },
-  call: { label: 'Llamada', color: '#7c3aed' },
-  edit: { label: 'Edición', color: '#737373' }
+  create: { label: 'Creado', color: 'var(--n-500)' },
+  assign: { label: 'Asignación', color: 'var(--azul)' },
+  status: { label: 'Estado', color: 'var(--violeta)' },
+  close: { label: 'Cierre', color: 'var(--verde)' },
+  reopen: { label: 'Reapertura', color: 'var(--naranja)' },
+  nudge: { label: 'Marcado como bloqueante', color: 'var(--naranja)' },
+  call: { label: 'Llamada', color: 'var(--violeta)' },
+  edit: { label: 'Edición', color: 'var(--n-500)' }
 };
 
 // ── 1. Borradores: nada de lo tipeado se pierde por un 401 o un recargado
@@ -50,7 +50,7 @@ export const STOP = ['para', 'desde', 'como', 'esta', 'este', 'tiene', 'todo', '
 // Solo en el chat y en Actividad: en tablas y asignación las iniciales se leen mejor.
 export const BLOB_HUE = [260, 150, 300, 45];
 
-export const NAV_INK = { tickets: '#2563eb', pulso: '#16a34a', cats: '#7c3aed', users: '#ea580c', chat: '#0891b2' };
+export const NAV_INK = { tickets: 'var(--azul)', pulso: 'var(--verde)', cats: 'var(--violeta)', users: 'var(--naranja)', chat: 'var(--cian)' };
 
 export const MOSTRAR_SIN_ABRIR = true;
 
@@ -66,3 +66,14 @@ export const MQ_MOVIL = '(max-width: 767px), (max-height: 500px) and (pointer: c
 
 // Único dominio de correo que se acepta al crear o editar usuarios
 export const DOMINIO_CORREO = '@legumex.net';
+
+// Cielo según la hora de Guatemala (minutos desde medianoche): el login y el sistema muestran
+// amanecer, día, atardecer o noche; el tema claro/oscuro solo cambia los colores.
+// index.html repite estos cortes en su script inicial (para que no parpadee al abrir).
+export const FASES_CIELO = [
+  { fase: 'noche', hasta: 5 * 60 + 30 },
+  { fase: 'amanecer', hasta: 7 * 60 },
+  { fase: 'dia', hasta: 17 * 60 + 15 },
+  { fase: 'atardecer', hasta: 18 * 60 + 45 },
+  { fase: 'noche', hasta: 24 * 60 }
+];

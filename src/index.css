@@ -1,3 +1,133 @@
+:root{
+  /* Tokens de color (sistema de diseño): un solo lugar para toda la paleta */
+  --n-0:#ffffff;
+  --n-25:#fafafa;
+  --n-50:#f5f5f5;
+  --n-75:#efefef;
+  --n-200:#e5e5e5;
+  --n-300:#d4d4d4;
+  --n-400:#a3a3a3;
+  --n-500:#666666;
+  --n-600:#525252;
+  --n-700:#404040;
+  --n-800:#262626;
+  --n-900:#171717;
+  --n-950:#0a0a0a;
+  --n-1000:#000000;
+  --fondo:#f4f5f1;
+  --fondo-2:#ebede7;
+  --azul:#2563eb;
+  --azul-oscuro:#1e40af;
+  --azul-tinte:#dbeaff;
+  --naranja:#ea580c;
+  --naranja-oscuro:#c2410c;
+  --naranja-claro:#fb923c;
+  --ambar-tinte:#fef3c7;
+  --ambar-borde:#fde68a;
+  --ambar:#fcd34d;
+  --ambar-oscuro:#ca8a04;
+  --verde:#16a34a;
+  --verde-oscuro:#15803d;
+  --verde-tinte:#dcfce7;
+  --rojo:#dc2626;
+  --rojo-tinte:#fee2e2;
+  --violeta:#7c3aed;
+  --cian:#0891b2;
+  --marca:#0b2a1e;
+  --marca-2:#14402c;
+  --fondo-rgb:244,245,241;
+  --sf-rgb:255,255,255;
+  --cielo-2-rgb:230,236,210;
+  --sierra:#0b2a1e;
+  --marca-fondo:#0b2a1e;
+  --sobre-marca:#ffffff;
+  --aviso-no-leido:#f8faf5;
+  --borde-suave:#dcdfd6;
+  --linea-kpi:#d4d6cf;
+  --login-sol:#9bc96a;
+  --login-cielo-1:#eef2df;
+  --login-cielo-2:#e6ecd2;
+  --login-linea:#cfd8cc;
+  --login-hoja:#4d7c2a;
+  /* Login de día: sol, cielo, brillo metálico, motas de luz y aves */
+  --sol-1:#fff4c7;
+  --sol-2:#f8cd5c;
+  --sol-rayo:#f3c14e;
+  --sol-halo-rgb:248,205,92;
+  --login-cielo-alto:#dbe8e2;
+  --brillo:rgba(255,255,255,0.75);
+  --brillo-sierra:rgba(255,255,255,0.34);
+  --mota-rgb:246,196,82;
+  --fugaz:#ffffff;
+  --login-horizonte:rgba(255,236,200,0);
+  --niebla-rgb:244,245,241;
+  --niebla-a:0.6;
+  /* Sistema: nubes y ráfaga de día, luz que sigue al cursor */
+  --nube:#ffffff;
+  /* cielo dentro del sistema: celeste de día (el login conserva el suyo); luna de noche */
+  --cielo-app:#b4d3ea;
+  --luna:#fbf8ec;
+  /* Selección: opción elegida en selectores (Todos/Míos…) y fila elegida en listas.
+     En claro es blanco/gris como siempre; en oscuro tiene que despegarse de la tarjeta. */
+  --sel-bg:#ffffff;
+  --sel-borde:#e5e5e5;
+  --sel-sutil:#f5f5f5;
+  --seg-on:#e1e5dc;
+  --seg-borde:#c6ccc0;
+  --viento:rgba(11,42,30,0.32);
+  --luz-rgb:77,124,42;
+  --luz-a:0.09;
+  --luz-borde:0.45;
+  color-scheme:light;
+}
+/* Modo oscuro: los mismos tokens con valores oscuros (un leve verde, como la marca).
+   Se aplica con data-tema="oscuro" o, en "Auto", cuando el equipo está en oscuro. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]){
+    --n-0:#171a17; --n-25:#1b1e1b; --n-50:#212521; --n-75:#272b27; --n-200:#323731; --n-300:#434942;
+    --n-400:#6d746c; --n-500:#9ba29a; --n-600:#b9bfb8; --n-700:#ccd1cb; --n-800:#dde1dc; --n-900:#eaedea;
+    --n-950:#f2f4f2; --n-1000:#f6f8f6;
+    --fondo:#0e100e; --fondo-2:#1b1e1b; --fondo-rgb:14,16,14; --sf-rgb:23,26,23;
+    --azul:#6b9bff; --azul-oscuro:#a4c1ff; --azul-tinte:#18284a;
+    --naranja:#fb8b3c; --naranja-oscuro:#fdba74; --naranja-claro:#fdba74;
+    --ambar-tinte:#3a2d0e; --ambar-borde:#6e5519; --ambar:#f3c54f; --ambar-oscuro:#f7d565;
+    --verde:#3cc873; --verde-oscuro:#79e3a4; --verde-tinte:#123520;
+    --rojo:#f27070; --rojo-tinte:#401818; --violeta:#a996fb; --cian:#46cbe0;
+    --marca:#d3e7da; --marca-2:#a4ccb1; --sierra:#5d7d68; --marca-fondo:#10231a; --sobre-marca:#e3ece5;
+    --aviso-no-leido:#1c211c; --borde-suave:#383e37; --linea-kpi:#3a4039;
+    --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
+    --login-linea:#9aae9f; --login-hoja:#8fc46a;
+    --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
+    --nube:#223033; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
+    --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
+    --sel-bg:#394139; --sel-borde:#4d564d; --sel-sutil:#2b322b; --seg-on:#3d463d; --seg-borde:#5e685e;
+    --cielo-app:#132530; --luna:#f1edd8; --sol-tinte:0.07;
+    color-scheme:dark;
+  }
+  :root:not([data-tema="claro"]) img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
+}
+:root[data-tema="oscuro"]{
+    --n-0:#171a17; --n-25:#1b1e1b; --n-50:#212521; --n-75:#272b27; --n-200:#323731; --n-300:#434942;
+    --n-400:#6d746c; --n-500:#9ba29a; --n-600:#b9bfb8; --n-700:#ccd1cb; --n-800:#dde1dc; --n-900:#eaedea;
+    --n-950:#f2f4f2; --n-1000:#f6f8f6;
+    --fondo:#0e100e; --fondo-2:#1b1e1b; --fondo-rgb:14,16,14; --sf-rgb:23,26,23;
+    --azul:#6b9bff; --azul-oscuro:#a4c1ff; --azul-tinte:#18284a;
+    --naranja:#fb8b3c; --naranja-oscuro:#fdba74; --naranja-claro:#fdba74;
+    --ambar-tinte:#3a2d0e; --ambar-borde:#6e5519; --ambar:#f3c54f; --ambar-oscuro:#f7d565;
+    --verde:#3cc873; --verde-oscuro:#79e3a4; --verde-tinte:#123520;
+    --rojo:#f27070; --rojo-tinte:#401818; --violeta:#a996fb; --cian:#46cbe0;
+    --marca:#d3e7da; --marca-2:#a4ccb1; --sierra:#5d7d68; --marca-fondo:#10231a; --sobre-marca:#e3ece5;
+    --aviso-no-leido:#1c211c; --borde-suave:#383e37; --linea-kpi:#3a4039;
+    --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
+    --login-linea:#9aae9f; --login-hoja:#8fc46a;
+    --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
+    --nube:#223033; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
+    --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
+    --sel-bg:#394139; --sel-borde:#4d564d; --sel-sutil:#2b322b; --seg-on:#3d463d; --seg-borde:#5e685e;
+    --cielo-app:#132530; --luna:#f1edd8; --sol-tinte:0.07;
+    color-scheme:dark;
+}
+:root[data-tema="oscuro"] img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
 /* Estilos globales: variables, animaciones y resets */
 :root{
     --duration-fast:150ms;
@@ -6,14 +136,14 @@
     --ease-standard:cubic-bezier(0.4,0,0.2,1);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:#f4f5f1;color:#171717;font-family:'Inter','Inter Fallback',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-  a{color:#2563eb;text-decoration:none}
-  a:hover{color:#1e40af}
+  body{margin:0;background:var(--fondo);color:var(--n-900);font-family:'Inter','Inter Fallback',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--azul);text-decoration:none}
+  a:hover{color:var(--azul-oscuro)}
   button{font-family:inherit}
   input,textarea,select{font-family:inherit}
-  input::placeholder,textarea::placeholder{color:#737373}
-  :focus-visible{outline:2px solid #2563eb;outline-offset:2px;border-radius:6px}
-  button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+  input::placeholder,textarea::placeholder{color:var(--n-500)}
+  :focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:6px}
+  button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
   @keyframes popIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
   @keyframes modalOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(0.95)}}
@@ -38,11 +168,11 @@
   @keyframes lineUp{from{transform:translateY(105%)}to{transform:translateY(0)}}
   @keyframes lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   @keyframes cardRise{from{opacity:0;transform:translateY(24px) scale(0.98)}to{opacity:1;transform:none}}
-  @keyframes deskPing{0%{box-shadow:0 0 0 4px #f4f5f1,0 0 0 4px rgba(22,163,74,0.45)}70%{box-shadow:0 0 0 4px #f4f5f1,0 0 0 12px rgba(22,163,74,0)}100%{box-shadow:0 0 0 4px #f4f5f1,0 0 0 12px rgba(22,163,74,0)}}
+  @keyframes deskPing{0%{box-shadow:0 0 0 4px var(--fondo),0 0 0 4px rgba(22,163,74,0.45)}70%{box-shadow:0 0 0 4px var(--fondo),0 0 0 12px rgba(22,163,74,0)}100%{box-shadow:0 0 0 4px var(--fondo),0 0 0 12px rgba(22,163,74,0)}}
   @keyframes sierraRise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
   @media (prefers-reduced-motion:reduce){[data-sierra] *{animation:none!important}[data-login] *{animation-duration:1ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;translate:none!important}}
   @keyframes letterHop{0%{transform:translateY(0)}35%{transform:translateY(-10px)}65%{transform:translateY(2px)}100%{transform:translateY(0)}}
-  @keyframes letterGreen{0%{color:#0b2a1e}40%,100%{color:#15803d}}
+  @keyframes letterGreen{0%{color:var(--marca)}40%,100%{color:var(--verde-oscuro)}}
   @keyframes loginShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
   @keyframes okPop{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
   @keyframes logoLoop{0%{clip-path:inset(0 100% 0 0)}55%{clip-path:inset(0 0 0 0)}80%{clip-path:inset(0 0 0 0);opacity:1}100%{clip-path:inset(0 0 0 0);opacity:0}}
@@ -53,10 +183,10 @@
   @media (max-width:1100px){[data-detail-grid]{grid-template-columns:minmax(0,1fr)!important}}
   @media print{
     aside,[data-no-print]{display:none!important}
-    [data-shell],[data-sheet]{height:auto!important;overflow:visible!important;margin:0!important;box-shadow:none!important;background:#ffffff!important;backdrop-filter:none!important}
+    [data-shell],[data-sheet]{height:auto!important;overflow:visible!important;margin:0!important;box-shadow:none!important;background:var(--n-0)!important;backdrop-filter:none!important}
     [data-detail-grid]{grid-template-columns:minmax(0,1fr)!important}
     [data-detail-grid] button,[data-detail-grid] textarea{display:none!important}
-    *{box-shadow:none!important;color:#000000!important}
+    *{box-shadow:none!important;color:var(--n-1000)!important}
   }
   @keyframes dockIn{from{opacity:0;transform:translateY(16px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
   @keyframes bubbleIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
@@ -89,101 +219,101 @@
   }
 
 /* Estados :hover/:active/:focus de los estilos en línea */
-.scp0:hover{background:#f5f5f5 !important;color:#171717 !important}
-.scp1:hover{background:#262626 !important;--ic:1.15 !important;--im:translateX(3px) !important}
-.scp2:active{transform:scale(0.97) translateY(1px) !important;background:#262626 !important}
-.scp3:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#7c3aed !important;--im:rotate(-12deg) scale(1.08) !important}
-.scp4:active{transform:scale(0.96) translateY(1px) !important;background:#e5e5e5 !important}
+.scp0:hover{background:var(--n-50) !important;color:var(--n-900) !important}
+.scp1:hover{background:var(--n-800) !important;--ic:1.15 !important;--im:translateX(3px) !important}
+.scp2:active{transform:scale(0.97) translateY(1px) !important;background:var(--n-800) !important}
+.scp3:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--violeta) !important;--im:rotate(-12deg) scale(1.08) !important}
+.scp4:active{transform:scale(0.96) translateY(1px) !important;background:var(--n-200) !important}
 .scp5:hover{opacity:0.7 !important}
 .scp6:active{transform:scale(0.96) translateY(1px) !important}
-.scp7:hover{background:#ffffff !important;--ic:1.12 !important;--ir:-14deg !important}
+.scp7:hover{background:var(--n-0) !important;--ic:1.12 !important;--ir:-14deg !important}
 .scp8:active{transform:scale(0.94) translateY(1px) !important}
-.scp9:hover{background:{{ n.hoverBg }} !important;--ic:1.24 !important;--nt:240ms !important;--ne:cubic-bezier(0.34,1.56,0.64,1) !important;--nd:0ms !important;--nb:120ms !important;--nbd:0ms !important}
-.scpa:active{transform:scale(0.96) translateY(1px) !important;background:{{ n.pressBg }} !important}
+.scp9:hover{background:var(--nav-hover,transparent) !important;--ic:1.24 !important;--nt:240ms !important;--ne:cubic-bezier(0.34,1.56,0.64,1) !important;--nd:0ms !important;--nb:120ms !important;--nbd:0ms !important}
+.scpa:active{transform:scale(0.96) translateY(1px) !important;background:var(--nav-press,transparent) !important}
 .scpb:active{transform:scale(0.96) !important}
-.scpc:hover{background:#f4f5f1 !important}
-.scpd:active{transform:scale(0.97) translateY(1px) !important;background:#e5e5e5 !important}
-.scpe:hover{--ic:1.15 !important;--is:#2563eb !important}
-.scpf:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#dc2626 !important;--im:translateX(3px) !important}
-.scpg:hover{background:#f5f5f5 !important}
+.scpc:hover{background:var(--fondo) !important}
+.scpd:active{transform:scale(0.97) translateY(1px) !important;background:var(--n-200) !important}
+.scpe:hover{--ic:1.15 !important;--is:var(--azul) !important}
+.scpf:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--rojo) !important;--im:translateX(3px) !important}
+.scpg:hover{background:var(--n-50) !important}
 .scph:active{transform:scale(0.98) !important}
-.scpi:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important;--is:#2563eb !important}
-.scpj:hover{--ic:1.15 !important;--is:#ea580c !important;--im:rotate(-90deg) !important}
-.scpk:hover{--ic:1.15 !important;--is:#dc2626 !important;--im:rotate(90deg) !important}
-.scpl:hover{--ic:1.15 !important;--is:#171717 !important;--im:translateX(-3px) !important}
-.scpm:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#171717 !important;--im:translateX(-3px) !important}
-.scpn::after{content:'';position:absolute;left:0;right:0;top:calc(100% + 1px);height:64px;background:linear-gradient(to bottom, rgba(244,245,241,1) 0%, rgba(244,245,241,0.85) 30%, rgba(244,245,241,0.4) 65%, rgba(244,245,241,0) 100%);pointer-events:none;opacity:var(--fadeOn,0);transition:opacity 200ms ease}
-.scpo:hover{border-color:#d4d4d4 !important;background:#fafafa !important;--ic:1.12 !important}
+.scpi:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important;--is:var(--azul) !important}
+.scpj:hover{--ic:1.15 !important;--is:var(--naranja) !important;--im:rotate(-90deg) !important}
+.scpk:hover{--ic:1.15 !important;--is:var(--rojo) !important;--im:rotate(90deg) !important}
+.scpl:hover{--ic:1.15 !important;--is:var(--n-900) !important;--im:translateX(-3px) !important}
+.scpm:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--n-900) !important;--im:translateX(-3px) !important}
+.scpn::after{content:'';position:absolute;left:0;right:0;top:calc(100% + 1px);height:64px;background:linear-gradient(to bottom, rgba(var(--fondo-rgb),1) 0%, rgba(var(--fondo-rgb),0.85) 30%, rgba(var(--fondo-rgb),0.4) 65%, rgba(var(--fondo-rgb),0) 100%);pointer-events:none;opacity:var(--fadeOn,0);transition:opacity 200ms ease}
+.scpo:hover{border-color:var(--n-300) !important;background:var(--n-25) !important;--ic:1.12 !important}
 .scpp:active{transform:scale(0.97) translateY(1px) !important}
-.scpq:hover{background:#f5f5f5 !important;--ic:1.15 !important}
-.scpr:active{background:#e5e5e5 !important;transform:scale(0.98) !important}
-.scps:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#2563eb !important}
-.scpt:active{background:#e5e5e5 !important}
-.scpu:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#dc2626 !important;--im:rotate(90deg) !important}
-.scpv:active{transform:scale(0.96) translateY(1px) !important;background:#262626 !important}
-.scpw:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#2563eb !important;--im:rotate(-12deg) !important}
-.scpx:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#171717 !important;--im:rotate(90deg) !important}
-.scpy:active{transform:translateY(-50%) scale(0.88) !important;background:#e5e5e5 !important}
-.scpz:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#7c3aed !important;--im:rotate(-10deg) !important}
-.scp10:active{transform:scale(0.92) translateY(1px) !important;background:#e5e5e5 !important}
-.scp11:hover{--ic:1.15 !important;color:#2563eb !important}
-.scp12:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#16a34a !important;--im:translateY(-2px) !important}
-.scp13:hover{background:#262626 !important;--ic:1.15 !important;--ir:90deg !important}
-.scp14:hover{border-color:#d4d4d4 !important;box-shadow:rgba(0,0,0,0.05) 0px 1px 2px 0px !important}
-.scp15:active{transform:scale(0.985) translateY(1px) !important;border-color:#d4d4d4 !important;box-shadow:none !important}
-.scp16:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#0891b2 !important;--im:translateY(-1px) !important}
+.scpq:hover{background:var(--n-50) !important;--ic:1.15 !important}
+.scpr:active{background:var(--n-200) !important;transform:scale(0.98) !important}
+.scps:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--azul) !important}
+.scpt:active{background:var(--n-200) !important}
+.scpu:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--rojo) !important;--im:rotate(90deg) !important}
+.scpv:active{transform:scale(0.96) translateY(1px) !important;background:var(--n-800) !important}
+.scpw:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--azul) !important;--im:rotate(-12deg) !important}
+.scpx:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--n-900) !important;--im:rotate(90deg) !important}
+.scpy:active{transform:translateY(-50%) scale(0.88) !important;background:var(--n-200) !important}
+.scpz:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--violeta) !important;--im:rotate(-10deg) !important}
+.scp10:active{transform:scale(0.92) translateY(1px) !important;background:var(--n-200) !important}
+.scp11:hover{--ic:1.15 !important;color:var(--azul) !important}
+.scp12:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--verde) !important;--im:translateY(-2px) !important}
+.scp13:hover{background:var(--n-800) !important;--ic:1.15 !important;--ir:90deg !important}
+.scp14:hover{border-color:var(--n-300) !important;box-shadow:rgba(0,0,0,0.05) 0px 1px 2px 0px !important}
+.scp15:active{transform:scale(0.985) translateY(1px) !important;border-color:var(--n-300) !important;box-shadow:none !important}
+.scp16:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--cian) !important;--im:translateY(-1px) !important}
 .scp17:hover{--tt:1 !important;--tx:0px !important}
-.scp18:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#16a34a !important;--im:translateY(-1px) !important}
-.scp19:active{transform:scale(0.94) translateY(1px) !important;background:#e5e5e5 !important}
-.scp1a:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important;--is:#2563eb !important;--im:rotate(-12deg) scale(1.12) !important}
-.scp1b:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important;--is:#16a34a !important;--im:translateY(-2px) !important}
-.scp1c:hover{background:#262626 !important;--ic:1.15 !important}
-.scp1d:hover{--ic:1.15 !important;--is:#171717 !important;--im:translateX(3px) !important}
-.scp1e:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important;--is:#2563eb !important;--im:rotate(-12deg) scale(1.1) !important}
-.scp1f:hover{border-color:#d4d4d4 !important;background:#ffffff !important}
-.scp1g:active{transform:scale(0.985) translateY(1px) !important;background:#e5e5e5 !important}
-.scp1h:hover{background:#262626 !important;--ic:1.15 !important;--im:rotate(90deg) !important}
-.scp1i:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#2563eb !important;--im:rotate(-12deg) scale(1.1) !important}
+.scp18:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--verde) !important;--im:translateY(-1px) !important}
+.scp19:active{transform:scale(0.94) translateY(1px) !important;background:var(--n-200) !important}
+.scp1a:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important;--is:var(--azul) !important;--im:rotate(-12deg) scale(1.12) !important}
+.scp1b:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important;--is:var(--verde) !important;--im:translateY(-2px) !important}
+.scp1c:hover{background:var(--n-800) !important;--ic:1.15 !important}
+.scp1d:hover{--ic:1.15 !important;--is:var(--n-900) !important;--im:translateX(3px) !important}
+.scp1e:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important;--is:var(--azul) !important;--im:rotate(-12deg) scale(1.1) !important}
+.scp1f:hover{border-color:var(--n-300) !important;background:var(--n-0) !important}
+.scp1g:active{transform:scale(0.985) translateY(1px) !important;background:var(--n-200) !important}
+.scp1h:hover{background:var(--n-800) !important;--ic:1.15 !important;--im:rotate(90deg) !important}
+.scp1i:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--azul) !important;--im:rotate(-12deg) scale(1.1) !important}
 .scp1j:hover{--ic:1.15 !important;--im:rotate(-10deg) !important}
 .scp1k:hover{--ic:1.15 !important;--im:translateY(-2px) !important}
-.scp1l:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#ea580c !important;--im:rotate(-50deg) !important}
-.scp1m:hover{--ic:1.15 !important;--is:#ea580c !important}
-.scp1n:hover{background:#262626 !important}
-.scp1o:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important}
-.scp1p:hover{background:#262626 !important;--ic:1.15 !important;--im:translate(2px,-2px) !important}
-.scp1q:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#2563eb !important;--im:rotate(-14deg) !important}
-.scp1r:hover{color:#171717 !important;--ic:1.15 !important;--is:#2563eb !important}
+.scp1l:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--naranja) !important;--im:rotate(-50deg) !important}
+.scp1m:hover{--ic:1.15 !important;--is:var(--naranja) !important}
+.scp1n:hover{background:var(--n-800) !important}
+.scp1o:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important}
+.scp1p:hover{background:var(--n-800) !important;--ic:1.15 !important;--im:translate(2px,-2px) !important}
+.scp1q:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--azul) !important;--im:rotate(-14deg) !important}
+.scp1r:hover{color:var(--n-900) !important;--ic:1.15 !important;--is:var(--azul) !important}
 .scp1s:hover{transform:translateY(-2px) !important}
-.scp1t:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important;--is:#16a34a !important;--im:translateY(-2px) scale(1.06) !important}
+.scp1t:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important;--is:var(--verde) !important;--im:translateY(-2px) scale(1.06) !important}
 .scp1u:active{transform:scale(0.97) !important}
-.scp1v:hover{background:#fee2e2 !important;--ic:1.15 !important;--is:#dc2626 !important;--im:rotate(90deg) !important}
+.scp1v:hover{background:var(--rojo-tinte) !important;--ic:1.15 !important;--is:var(--rojo) !important;--im:rotate(90deg) !important}
 .scp1w:active{transform:scale(0.88) !important}
-.scp1x:hover{background:#262626 !important;--ic:1.15 !important;--im:translateY(-2px) !important}
-.scp1y:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#dc2626 !important;--im:rotate(-8deg) !important}
-.scp1z:active{transform:scale(0.94) !important;background:#fee2e2 !important}
-.scp20:active{transform:scale(0.9) !important;background:#fee2e2 !important}
-.scp21:hover{--tp:1 !important;--tl:#e5e5e5 !important}
+.scp1x:hover{background:var(--n-800) !important;--ic:1.15 !important;--im:translateY(-2px) !important}
+.scp1y:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--rojo) !important;--im:rotate(-8deg) !important}
+.scp1z:active{transform:scale(0.94) !important;background:var(--rojo-tinte) !important}
+.scp20:active{transform:scale(0.9) !important;background:var(--rojo-tinte) !important}
+.scp21:hover{--tp:1 !important;--tl:var(--n-200) !important}
 .scp22:hover{stroke-width:6.5 !important}
 .scp23:active{transform:scale(0.95) !important}
-.scp24:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#16a34a !important;--im:rotate(-14deg) !important}
-.scp25:active{transform:scale(0.92) !important;background:#e5e5e5 !important}
-.scp26:hover{background:#fde68a !important;--ic:1.15 !important;--is:#ea580c !important;--im:rotate(-50deg) !important}
-.scp27:active{background:#fcd34d !important}
-.scp28:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#171717 !important;--im:translateX(3px) !important}
-.scp29:hover{border-color:#d4d4d4 !important;box-shadow:0 6px 16px -8px rgba(0,0,0,0.25) !important;--ic:1.15 !important;--is:#2563eb !important}
-.scp2a:hover{transform:scale(1.12) !important;background:#dc2626 !important}
+.scp24:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--verde) !important;--im:rotate(-14deg) !important}
+.scp25:active{transform:scale(0.92) !important;background:var(--n-200) !important}
+.scp26:hover{background:var(--ambar-borde) !important;--ic:1.15 !important;--is:var(--naranja) !important;--im:rotate(-50deg) !important}
+.scp27:active{background:var(--ambar) !important}
+.scp28:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--n-900) !important;--im:translateX(3px) !important}
+.scp29:hover{border-color:var(--n-300) !important;box-shadow:0 6px 16px -8px rgba(0,0,0,0.25) !important;--ic:1.15 !important;--is:var(--azul) !important}
+.scp2a:hover{transform:scale(1.12) !important;background:var(--rojo) !important}
 .scp2b:active{transform:scale(0.92) !important}
-.scp2c:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important}
-.scp2d:hover{background:#f5f5f5 !important;border-color:#d4d4d4 !important;--ic:1.15 !important;--is:#7c3aed !important;--im:rotate(-12deg) !important}
-.scp2e:hover{border-color:#d4d4d4 !important;box-shadow:rgba(0,0,0,0.05) 0px 1px 2px 0px !important;--ic:1.15 !important;--is:#0891b2 !important;--im:translateX(3px) !important}
+.scp2c:hover{background:var(--n-50) !important;border-color:var(--n-300) !important}
+.scp2d:hover{background:var(--n-50) !important;border-color:var(--n-300) !important;--ic:1.15 !important;--is:var(--violeta) !important;--im:rotate(-12deg) !important}
+.scp2e:hover{border-color:var(--n-300) !important;box-shadow:rgba(0,0,0,0.05) 0px 1px 2px 0px !important;--ic:1.15 !important;--is:var(--cian) !important;--im:translateX(3px) !important}
 .scp2f:active{transform:scale(0.98) translateY(1px) !important}
-.scp2g:hover{background:rgba(255,255,255,0.18) !important}
+.scp2g:hover{background:rgba(var(--sf-rgb),0.18) !important}
 .scp2h:active{transform:scale(0.9) !important}
-.scp2i:hover{background:rgba(255,255,255,0.18) !important;--ic:1.15 !important;--im:translateY(2px) !important}
-.scp2j:hover{background:rgba(255,255,255,0.18) !important;--ic:1.15 !important}
-.scp2k:hover{background:#f5f5f5 !important;--ic:1.15 !important;--is:#ea580c !important;--im:translateX(-3px) !important}
-.scp2l:hover{background:rgba(255,255,255,0.14) !important;--ic:1.15 !important;--is:#fcd34d !important;--im:translateX(-3px) !important}
-.scp2m:active{background:rgba(255,255,255,0.22) !important}
+.scp2i:hover{background:rgba(var(--sf-rgb),0.18) !important;--ic:1.15 !important;--im:translateY(2px) !important}
+.scp2j:hover{background:rgba(var(--sf-rgb),0.18) !important;--ic:1.15 !important}
+.scp2k:hover{background:var(--n-50) !important;--ic:1.15 !important;--is:var(--naranja) !important;--im:translateX(-3px) !important}
+.scp2l:hover{background:rgba(var(--sf-rgb),0.14) !important;--ic:1.15 !important;--is:var(--ambar) !important;--im:translateX(-3px) !important}
+.scp2m:active{background:rgba(var(--sf-rgb),0.22) !important}
 
 /* Laptops (o monitores con zoom de Windows): sin el rótulo "Creados en" y con el buscador
    más corto, los filtros y las acciones con "Crear ticket" caben en una sola línea. */
@@ -211,18 +341,18 @@
      translate(0,0)) encierra a los position:fixed de adentro (hojas, velos, modales) */
   [data-m="pantalla"]{padding:16px 16px calc(96px + env(safe-area-inset-bottom,0px))!important;animation-fill-mode:backwards!important}
   /* barra lateral → menú deslizable */
-  [data-m="menu"]{position:fixed!important;top:0!important;left:0!important;bottom:0!important;height:100vh!important;height:100dvh!important;box-sizing:border-box!important;width:min(300px,86vw)!important;z-index:60!important;background:#f4f5f1!important;padding:calc(20px + env(safe-area-inset-top,0px)) 12px calc(20px + env(safe-area-inset-bottom,0px))!important;transform:translateX(-104%);visibility:hidden;transition:transform 280ms cubic-bezier(0.22,1,0.36,1),visibility 0s linear 280ms,box-shadow 280ms;overscroll-behavior:contain}
+  [data-m="menu"]{position:fixed!important;top:0!important;left:0!important;bottom:0!important;height:100vh!important;height:100dvh!important;box-sizing:border-box!important;width:min(300px,86vw)!important;z-index:60!important;background:var(--fondo)!important;padding:calc(20px + env(safe-area-inset-top,0px)) 12px calc(20px + env(safe-area-inset-bottom,0px))!important;transform:translateX(-104%);visibility:hidden;transition:transform 280ms cubic-bezier(0.22,1,0.36,1),visibility 0s linear 280ms,box-shadow 280ms;overscroll-behavior:contain}
   [data-m="menu"][data-abierto]{transform:none;visibility:visible;transition:transform 280ms cubic-bezier(0.22,1,0.36,1),visibility 0s,box-shadow 280ms;box-shadow:0 24px 64px rgba(11,42,30,0.28)}
   [data-m="campana-lateral"]{display:none!important}
   [data-m="barra"] button:active{transform:scale(0.92)}
   /* controles de la lista: sin blur (encerraba los position:fixed) y sin quedar pegados
      arriba: en un teléfono ocuparían un cuarto de la pantalla */
-  [data-m="controles"]{position:relative!important;z-index:auto!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#ffffff!important;box-shadow:0 1px 2px rgba(0,0,0,0.05),0 0 0 1px #e5e5e5!important;padding:12px!important}
+  [data-m="controles"]{position:relative!important;z-index:auto!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--n-0)!important;box-shadow:0 1px 2px rgba(0,0,0,0.05),0 0 0 1px var(--n-200)!important;padding:12px!important}
   /* menús emergentes → hojas que suben desde abajo, a todo el ancho */
   /* z-index 60: por encima de la barra superior (40), así tocar arriba también cierra */
   [data-m="velo-hoja"]{z-index:60!important;background:rgba(10,10,10,0.38)!important;animation:overlayIn var(--duration-base) var(--ease-standard)}
   [data-m="hoja"]{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:auto!important;max-width:none!important;max-height:80dvh!important;overflow-y:auto!important;overscroll-behavior:contain;border-radius:20px 20px 0 0!important;border:none!important;padding:22px 16px calc(18px + env(safe-area-inset-bottom,0px))!important;box-shadow:0 -12px 40px rgba(11,42,30,0.22)!important;animation:hojaSube 280ms cubic-bezier(0.22,1,0.36,1) both!important;z-index:61!important}
-  [data-m="hoja"]::before{content:"";position:absolute;top:8px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:9999px;background:#d4d4d4}
+  [data-m="hoja"]::before{content:"";position:absolute;top:8px;left:50%;width:36px;height:4px;margin-left:-18px;border-radius:9999px;background:var(--n-300)}
   [data-m="hoja"] button{min-height:44px}
   [data-m="solo-escritorio"]{display:none!important}
   [data-m="orden"]{border-top:none!important;padding-top:0!important}
@@ -237,6 +367,7 @@
   /* encabezado de cada pantalla: sin el aire de escritorio */
   [data-m="encabezado"]{padding:8px 16px 4px!important;margin:0!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;gap:10px!important}
   [data-m="encabezado"] h1{font-size:26px!important;line-height:1.15!important}
+  [data-m="titulo-detalle"]{font-size:24px!important;line-height:1.3!important}
   /* Pulso: indicadores de a dos */
   [data-m="kpis"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:20px!important;margin:4px 0 16px!important}
   [data-m="kpis"]>div{padding:16px 12px 0 0!important}
@@ -245,7 +376,7 @@
   [data-m="tabla-cabecera"]{display:none!important}
   [data-m="fila-cat"]{grid-template-columns:minmax(0,1fr) auto auto!important;row-gap:12px!important;column-gap:12px!important;padding:14px 16px!important}
   [data-m="fila-cat"]>:first-child{grid-column:1/-1}
-  [data-m="fila-cat"]>:nth-child(2)::before{content:"Tickets ";font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;color:#737373}
+  [data-m="fila-cat"]>:nth-child(2)::before{content:"Tickets ";font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;color:var(--n-500)}
   [data-m="fila-cat"]>:nth-child(3){justify-self:end!important}
   [data-m="fila-usuario"]{grid-template-columns:minmax(0,1fr) auto!important;row-gap:12px!important;column-gap:12px!important;padding:14px 16px!important}
   [data-m="fila-usuario"]>:nth-child(1){grid-column:1;grid-row:1}
@@ -258,11 +389,92 @@
   [data-m="paginador"] button{display:inline-flex!important;flex-direction:row!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;min-height:40px}
   /* chat flotante: pantalla completa */
   [data-m="chat-flotante"]{inset:0!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important;border-radius:0!important;padding-top:env(safe-area-inset-top,0px)!important;padding-bottom:env(safe-area-inset-bottom,0px)!important;animation:hojaSube 300ms cubic-bezier(0.22,1,0.36,1) both!important}
+  /* sobre el teclado de cualquier alto: ocupa solo lo visible (ver escucharVisor) */
+  [data-m="chat-flotante"]{top:var(--vv-arriba,0px)!important;bottom:auto!important;height:var(--vv-alto,100dvh)!important}
+  [data-m="chat-flotante"] *{overscroll-behavior:contain}
+  html:has([data-m="chat-flotante"]){overflow:hidden}
+  /* ventanas con campos (nuevo usuario, confirmaciones): quedan sobre el teclado y, si no
+     caben, se desplazan adentro en vez de quedar tapadas */
+  [data-m="velo-modal"]{top:var(--vv-arriba,0px)!important;bottom:auto!important;height:var(--vv-alto,100dvh);overflow-y:auto;align-items:flex-start!important;padding:16px!important;overscroll-behavior:contain}
+  [data-m="velo-modal"]>[role="dialog"]{margin:auto 0}
+  /* redactor liviano: respuestas rápidas en una fila que se desliza (se esfuma en el borde),
+     caja que crece desde una línea y "Responder y cerrar" compacto a la derecha */
+  [data-m="chat-rapidas"]{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-mask-image:linear-gradient(90deg,var(--n-1000) calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,var(--n-1000) calc(100% - 28px),transparent);animation:fadeSwap 200ms var(--ease-standard) both}
+  [data-m="chat-rapidas"]::-webkit-scrollbar{display:none}
+  [data-m="chat-rapidas"] button{padding:7px 12px!important;font-size:13px!important}
+  [data-m="chat-caja"]{max-height:132px;transition:height var(--duration-fast) var(--ease-standard)}
+  [data-m="chat-cerrar"]{align-self:flex-end!important;width:auto!important;animation:dropIn 220ms var(--ease-standard) both}
+  /* aviso "Tómalo para responder": el texto a lo ancho y el botón debajo, a todo el ancho */
+  [data-m="chat-candado"]{flex-wrap:wrap!important}
+  [data-m="chat-candado"]>span{flex-basis:calc(100% - 26px)!important}
+  [data-m="chat-candado"]>button{flex:1 1 100%!important;min-height:42px}
+  /* menú lateral: el cielo de la hora arriba y la sierra al pie (dos cordilleras que suben
+     al abrirlo), como el fondo del sistema en la computadora */
+  [data-m="menu"]{background:var(--menu-astro),linear-gradient(180deg,color-mix(in srgb,var(--cielo-app) 70%,var(--fondo)) 0,var(--fondo) 48%)!important;--menu-astro:radial-gradient(circle at calc(100% - 42px) calc(52px + env(safe-area-inset-top,0px)),var(--sol-1) 0,var(--sol-2) 12px,rgba(var(--sol-halo-rgb),0.32) 14px,transparent 44px)}
+  :root[data-fase="noche"] [data-m="menu"]{--menu-astro:radial-gradient(circle at calc(100% - 42px) calc(52px + env(safe-area-inset-top,0px)),var(--luna) 0 10px,color-mix(in srgb,var(--luna) 22%,transparent) 12px,transparent 36px)}
+  [data-m="menu"]::before,[data-m="menu"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:230px;z-index:-1;pointer-events:none;background:var(--sierra)}
+  [data-m="menu"]::before{opacity:0.1;clip-path:polygon(0 100%,0 34%,13% 20%,27% 31%,44% 9%,61% 27%,78% 13%,100% 28%,100% 100%)}
+  [data-m="menu"]::after{opacity:0.24;clip-path:polygon(0 100%,0 64%,17% 50%,34% 62%,55% 43%,74% 58%,89% 49%,100% 55%,100% 100%)}
+  [data-m="menu"][data-abierto]::before{animation:menuSierra 700ms cubic-bezier(0.22,1,0.36,1) 60ms both}
+  [data-m="menu"][data-abierto]::after{animation:menuSierra 700ms cubic-bezier(0.22,1,0.36,1) 140ms both}
 }
 /* teléfono en horizontal: hay ancho para dos columnas de tarjetas */
 @media (max-height:500px) and (pointer:coarse) and (min-width:640px){
   [data-m="grilla-tarjetas"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+/* Noche: estrellas (capa que solo se ve en modo oscuro). Son puntos hechos con degradados,
+   en dos capas que titilan desfasadas; se desvanecen hacia las montañas. */
+[data-estrellas]{display:none;position:fixed;left:0;right:0;top:0;height:72vh;pointer-events:none;z-index:0;-webkit-mask-image:linear-gradient(#000 35%,transparent);mask-image:linear-gradient(#000 35%,transparent)}
+[data-estrellas="login"]{position:absolute}
+[data-estrellas="app"]{opacity:0.3;height:48vh}
+[data-estrellas]::before,[data-estrellas]::after{content:"";position:absolute;inset:0;animation:titilar 5s ease-in-out infinite alternate}
+[data-estrellas]::before{background-image:radial-gradient(1.3px 1.3px at 11% 17%,#fff 60%,transparent),radial-gradient(1px 1px at 67% 41%,#fff 60%,transparent),radial-gradient(1.6px 1.6px at 38% 73%,#fff 60%,transparent),radial-gradient(1px 1px at 86% 12%,#fff 60%,transparent),radial-gradient(1.2px 1.2px at 23% 88%,#fff 60%,transparent),radial-gradient(1px 1px at 57% 5%,#fff 60%,transparent),radial-gradient(1.4px 1.4px at 93% 63%,#fff 60%,transparent),radial-gradient(1px 1px at 3% 46%,#fff 60%,transparent);background-size:317px 251px}
+[data-estrellas]::after{background-image:radial-gradient(1px 1px at 52% 22%,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 7% 58%,#fff 60%,transparent),radial-gradient(1.1px 1.1px at 79% 77%,#fff 60%,transparent),radial-gradient(1px 1px at 33% 39%,#fff 60%,transparent),radial-gradient(1.3px 1.3px at 64% 93%,#fff 60%,transparent),radial-gradient(1px 1px at 18% 8%,#fff 60%,transparent),radial-gradient(1.2px 1.2px at 97% 31%,#fff 60%,transparent);background-size:433px 307px;animation-delay:-2.5s;animation-duration:7s}
+@keyframes titilar{from{opacity:0.35}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){[data-estrellas]::before,[data-estrellas]::after{animation:none}}
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]) [data-estrellas],:root:not([data-tema="claro"]) [data-luna]{display:block!important}
+}
+:root[data-tema="oscuro"] [data-estrellas],:root[data-tema="oscuro"] [data-luna]{display:block!important}
+/* ──────────── Login vivo: de día y de noche con el mismo nivel ────────────
+   Astro (sol o luna) arriba, en el mismo lugar; brillo metálico que cruza de izquierda a
+   derecha (título, logo y crestas de las montañas); de día cielo, motas de luz y una
+   bandada cada 5 min; de noche estrellas y una estrella fugaz cada 5 min. */
+[data-astro]{position:absolute;right:44%;top:7vh;width:clamp(110px,10vw,150px);aspect-ratio:1}
+@media (max-width:767px){[data-astro]{right:8%;top:4vh;width:96px}}
+[data-sol]{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+[data-sol-rayos]{transform-origin:50px 50px;animation:solGira 90s linear infinite}
+@keyframes solGira{to{transform:rotate(360deg)}}
+[data-cielo]{position:absolute;inset:0;background:radial-gradient(ellipse 75% 32% at 62% 72%,var(--login-horizonte),transparent 70%),linear-gradient(180deg,var(--login-cielo-alto),rgba(var(--fondo-rgb),0) 78%);transition:background 1.2s}
+/* motas de luz de día (las "estrellas" del día): puntos cálidos que suben y brillan */
+[data-motas]{position:absolute;left:0;right:0;top:0;height:70vh;pointer-events:none;-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
+[data-motas]::before,[data-motas]::after{content:"";position:absolute;inset:0;filter:drop-shadow(0 0 3px rgba(var(--mota-rgb),0.9));background-image:radial-gradient(4.5px 4.5px at 14% 22%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 31% 64%,rgba(var(--mota-rgb),1),transparent),radial-gradient(5.0px 5.0px at 58% 16%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 73% 48%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 88% 30%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.0px 4.0px at 44% 38%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 6% 50%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 95% 62%,rgba(var(--mota-rgb),1),transparent);animation:motas 14s ease-in-out infinite}
+[data-motas]::after{background-image:radial-gradient(4.0px 4.0px at 22% 40%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 49% 70%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 66% 28%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 81% 66%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 37% 12%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 10% 80%,rgba(var(--mota-rgb),1),transparent);animation-duration:19s;animation-delay:-7s}
+@keyframes motas{0%{transform:translateY(12px);opacity:0.15}50%{opacity:1}100%{transform:translateY(-28px);opacity:0.15}}
+/* bandada: cruza el cielo de izquierda a derecha cada 5 min (la primera a los 7 s) */
+[data-aves]{position:absolute;left:0;top:15vh;width:120px;height:44px;opacity:0;animation:aves 300s linear 7s infinite}
+[data-aves] path{fill:none;stroke:var(--sierra);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.55;transform-box:fill-box;transform-origin:center;animation:aleteo 700ms ease-in-out infinite alternate}
+[data-aves] path:nth-child(2){animation-delay:-250ms}[data-aves] path:nth-child(3){animation-delay:-480ms}[data-aves] path:nth-child(4){animation-delay:-120ms}
+@keyframes aves{0%{opacity:0;transform:translate(-140px,24px)}0.4%{opacity:1}5.6%{opacity:1}6%{opacity:0;transform:translate(calc(100vw + 20px),-40px)}100%{opacity:0;transform:translate(calc(100vw + 20px),-40px)}}
+@keyframes aleteo{from{transform:scaleY(1)}to{transform:scaleY(0.35)}}
+/* estrella fugaz: solo de noche, cada 5 min (la primera a los 6 s) */
+[data-fugaz]{display:none;position:absolute;left:12%;top:6vh;width:0;height:0;transform:rotate(24deg)}
+[data-fugaz]::before{content:"";position:absolute;left:0;top:0;width:160px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),var(--fugaz));opacity:0;animation:fugaz 300s cubic-bezier(0.3,0,0.7,1) 6s infinite}
+@keyframes fugaz{0%{opacity:0;transform:translateX(0) scaleX(0.3)}0.15%{opacity:1;transform:translateX(12vw) scaleX(1)}0.6%{opacity:0;transform:translateX(52vw) scaleX(0.6)}100%{opacity:0;transform:translateX(52vw)}}
+/* brillo metálico en el título y el logo */
+[data-brillo]{background-image:linear-gradient(105deg,var(--c) 44%,var(--brillo) 50%,var(--c) 56%);background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 9s cubic-bezier(0.45,0,0.2,1) 3.3s infinite}
+[data-brillo-logo]{position:absolute;inset:0;-webkit-mask:var(--logo) center/100% 100% no-repeat;mask:var(--logo) center/100% 100% no-repeat;background-image:linear-gradient(105deg,transparent 44%,var(--brillo) 50%,transparent 56%);background-size:300% 100%;background-position:100% 0;animation:brillo 9s cubic-bezier(0.45,0,0.2,1) 3.1s infinite;pointer-events:none}
+@keyframes brillo{0%{background-position:100% 0}22%,100%{background-position:0 0}}
+/* brillo en las crestas: una franja de luz recortada con la forma de cada cordillera */
+[data-brillo-sierra]{animation:brilloSierra 9s cubic-bezier(0.45,0,0.2,1) 3.6s infinite}
+@keyframes brilloSierra{0%{transform:translateX(-900px) skewX(-18deg)}40%,100%{transform:translateX(2700px) skewX(-18deg)}}
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]) [data-sol],:root:not([data-tema="claro"]) [data-motas],:root:not([data-tema="claro"]) [data-aves]{display:none}
+  :root:not([data-tema="claro"]) [data-fugaz]{display:block}
+}
+:root[data-tema="oscuro"] [data-sol],:root[data-tema="oscuro"] [data-motas],:root[data-tema="oscuro"] [data-aves]{display:none}
+:root[data-tema="oscuro"] [data-fugaz]{display:block}
+@media (prefers-reduced-motion:reduce){[data-brillo],[data-brillo-logo],[data-motas]::before,[data-motas]::after{animation:none!important}[data-aves],[data-fugaz]{display:none!important}}
 /* ──────────── Tablets (táctil, 768–1366 px, alto > 500 px) ────────────
    Mismo diseño que el teléfono, pero con aire y columnas que crecen con la pantalla. */
 @media screen and (pointer:coarse) and (hover:none) and (min-width:768px) and (max-width:1366px) and (min-height:501px){
@@ -304,10 +516,213 @@
   [data-detail-grid]{grid-template-columns:minmax(0,1.7fr) minmax(260px,320px)!important}
 }
 @keyframes hojaSube{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes menuSierra{from{transform:translateY(48px)}to{transform:none}}
 /* capa de arrastrar y soltar: el ícono flota suave mientras el archivo está encima */
 @keyframes soltarFlota{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){[data-m="zona-soltar"] *{animation:none!important}}
 @media (prefers-reduced-motion:reduce){
   [data-m="menu"],[data-m="menu"][data-abierto]{transition:none!important}
+  [data-m="menu"]::before,[data-m="menu"]::after{animation:none!important}
   [data-m="hoja"],[data-m="chat-flotante"],[data-m="notificaciones"],[data-m="velo-hoja"]{animation:none!important}
 }
+
+/* ──────────── Sistema vivo (prototipo) ────────────
+   Cielo dentro de la hoja: detrás del contenido y delante del fondo de la hoja, así se ve
+   en los espacios libres sin tapar texto. De noche estrellas y estrella fugaz; de día
+   mini nubes y una ráfaga de aire de vez en cuando. */
+[data-cielo-app]{position:sticky;top:0;height:0;z-index:0;pointer-events:none}
+[data-cielo-app="frente"]{z-index:2}
+[data-cielo-app]>div{position:absolute;left:0;right:0;top:0;height:100vh;overflow:hidden}
+[data-m="pantalla"],[data-m="encabezado"]{position:relative;z-index:1}
+[data-estrellas="sistema"]{position:absolute;height:70vh;opacity:0.7}
+[data-cielo-app] [data-fugaz]{left:30%;top:4vh}
+[data-nubes]{position:absolute;inset:0}
+[data-nubes] svg{position:absolute;fill:var(--nube);opacity:0.9;animation:nubeViaja linear infinite}
+@keyframes nubeViaja{from{transform:translateX(-160px)}to{transform:translateX(calc(100vw + 40px))}}
+[data-rafaga]{position:absolute;left:0;top:30vh;width:280px;height:60px;opacity:0;animation:rafaga 240s cubic-bezier(0.4,0,0.2,1) 9s infinite}
+[data-rafaga] path{fill:none;stroke:var(--viento);stroke-width:1.8;stroke-linecap:round;stroke-dasharray:90 600;stroke-dashoffset:90;animation:rafagaTrazo 240s cubic-bezier(0.4,0,0.2,1) 9s infinite}
+[data-rafaga] path:nth-child(2){animation-delay:9.15s}[data-rafaga] path:nth-child(3){animation-delay:9.3s}
+@keyframes rafaga{0%{opacity:0;transform:translateX(-300px)}0.2%{opacity:1}1.3%{opacity:1}1.7%{opacity:0;transform:translateX(calc(100vw - 200px))}100%{opacity:0;transform:translateX(calc(100vw - 200px))}}
+@keyframes rafagaTrazo{0%{stroke-dashoffset:90}1.7%,100%{stroke-dashoffset:-300}}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) [data-nubes],:root:not([data-tema="claro"]) [data-rafaga]{display:none}}
+:root[data-tema="oscuro"] [data-nubes],:root[data-tema="oscuro"] [data-rafaga]{display:none}
+@media (prefers-reduced-motion:reduce){[data-cielo-app] *{animation:none!important}[data-rafaga]{display:none}}
+
+/* ──────────── Día con vida (sistema) ────────────
+   Arriba a la derecha el sol con halo (de noche la luna), nubes en dos capas que viajan a
+   distinta velocidad, motas de luz que suben (las "estrellas" del día), una bandada de vez
+   en cuando y dos ráfagas. Qué se ve en cada hora lo decide "Cielo según la hora". */
+[data-astro-app]{position:absolute;right:max(4%,20px);top:calc(8vh + 12px);width:88px;aspect-ratio:1;animation:sunBreath 9s ease-in-out infinite}
+[data-astro-app] svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+[data-cielo-app] [data-motas]{height:62vh;opacity:0.55}
+[data-nubes] [data-nube-lejos]{opacity:0.5}
+[data-cielo-app] [data-aves]{top:21vh;animation-duration:170s;animation-delay:24s}
+[data-rafaga="2"]{top:54vh}
+[data-rafaga="2"],[data-rafaga="2"] path{animation-delay:129s}
+[data-rafaga="2"] path:nth-child(2){animation-delay:129.15s}
+@media (max-width:767px){[data-astro-app]{width:52px;top:62px;right:10px}}
+
+/* (1) Abrir un ticket: la tarjeta se estira hasta volverse el detalle (View Transitions) */
+::view-transition-group(ticket-abierto){animation-duration:460ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
+::view-transition-old(ticket-abierto),::view-transition-new(ticket-abierto){height:100%;object-fit:none;object-position:left top}
+/* el resto de la pantalla: la lista se va rápido y el detalle entra apenas después, sin fantasmas */
+::view-transition-old(root){animation:vtSale 160ms var(--ease-standard) both}
+::view-transition-new(root){animation:vtEntra 300ms var(--ease-standard) 110ms both}
+@keyframes vtSale{to{opacity:0}}
+@keyframes vtEntra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+/* (4) Luz que sigue al cursor: brillo suave adentro y borde encendido cerca del puntero */
+@media (hover:hover) and (pointer:fine){
+  [data-luz]{position:relative;isolation:isolate}
+  [data-luz]::before,[data-luz]::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity 280ms var(--ease-standard)}
+  [data-luz]::before{z-index:-1;background:radial-gradient(320px circle at var(--lx,50%) var(--ly,50%),rgba(var(--luz-rgb),var(--luz-a)),transparent 65%)}
+  [data-luz]::after{inset:-1px;padding:1px;background:radial-gradient(220px circle at var(--lx,50%) var(--ly,50%),rgba(var(--luz-rgb),var(--luz-borde)),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+  [data-luz]:hover::before,[data-luz]:hover::after{opacity:1}
+}
+
+/* (6) El chip de estado cambia con un pulso y un brillo que lo cruza */
+@keyframes chipCambia{0%{transform:scale(0.82);box-shadow:0 0 0 0 var(--chip-anillo);background-position:100% 0}45%{transform:scale(1.07)}100%{transform:scale(1);box-shadow:0 0 0 10px transparent;background-position:0 0}}
+[data-chip-cambia]{background-image:linear-gradient(105deg,transparent 42%,rgba(255,255,255,0.7) 50%,transparent 58%);background-size:300% 100%;background-repeat:no-repeat}
+
+/* (7) Escenas para los estados vacíos: la sierra con el sol (o la luna de noche) */
+[data-escena] [data-escena-luna]{display:none}
+[data-escena-rayos]{transform-box:fill-box;transform-origin:center;animation:solGira 40s linear infinite}
+[data-escena-estrella]{animation:titilar 1.6s ease-in-out infinite alternate}
+[data-escena-icono]{animation:badgePop 520ms cubic-bezier(0.34,1.56,0.64,1) 200ms both}
+[data-escena-sierra]{animation:sierraRise 900ms cubic-bezier(0.22,1,0.36,1) both}
+[data-escena-astro]{animation:escenaFlota 6s ease-in-out infinite}
+@keyframes escenaFlota{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) [data-escena] [data-escena-sol]{display:none}:root:not([data-tema="claro"]) [data-escena] [data-escena-luna]{display:inline}}
+:root[data-tema="oscuro"] [data-escena] [data-escena-sol]{display:none}
+:root[data-tema="oscuro"] [data-escena] [data-escena-luna]{display:inline}
+
+/* (8) Saludo con mini escena: sol de día, luna con estrella de noche (según la hora) */
+[data-saludo-escena]{display:inline-block;vertical-align:-5px;margin-right:6px}
+[data-saludo-escena] [data-rayos]{transform-box:fill-box;transform-origin:center;animation:solGira 24s linear infinite}
+[data-saludo-escena] [data-estrella]{animation:titilar 1.4s ease-in-out infinite alternate}
+
+/* (9) Aviso con barra de tiempo: muestra cuánto queda para leer o deshacer */
+[data-toast-barra]{position:absolute;left:14px;right:14px;bottom:4px;height:2px;border-radius:2px;background:rgba(var(--sf-rgb),0.2);overflow:hidden}
+[data-toast-barra]>span{display:block;height:100%;background:rgba(var(--sf-rgb),0.75);transform-origin:left;animation:toastTiempo linear both}
+@keyframes toastTiempo{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){[data-escena] *,[data-saludo-escena] *{animation:none!important}}
+
+/* ──────────── Cielo según la hora (data-fase en <html>, ver FASES_CIELO) ────────────
+   La hora decide qué hay en el cielo (sol o luna, estrellas, nubes, aves) y el tema solo
+   cambia la paleta. Sin data-fase (JS apagado) queda lo de antes: sol de día, luna en oscuro. */
+@media (prefers-color-scheme:light){:root[data-fase="amanecer"]:not([data-tema="oscuro"]){--login-cielo-alto:#ead8e4;--login-horizonte:rgba(255,186,146,0.6);--sol-1:#fff0d8;--sol-2:#f6ad62;--sol-rayo:#f2a05a;--sol-halo-rgb:246,173,98;--mota-rgb:246,170,110;--brillo-sierra:rgba(255,216,196,0.42);--niebla-rgb:250,232,226;--nube:#f1dde2;}}
+:root[data-fase="amanecer"][data-tema="claro"]{--login-cielo-alto:#ead8e4;--login-horizonte:rgba(255,186,146,0.6);--sol-1:#fff0d8;--sol-2:#f6ad62;--sol-rayo:#f2a05a;--sol-halo-rgb:246,173,98;--mota-rgb:246,170,110;--brillo-sierra:rgba(255,216,196,0.42);--niebla-rgb:250,232,226;--nube:#f1dde2;}
+@media (prefers-color-scheme:light){:root[data-fase="atardecer"]:not([data-tema="oscuro"]){--login-cielo-alto:#f1cfb0;--login-horizonte:rgba(246,132,64,0.55);--sol-1:#ffd6a0;--sol-2:#ee7d3a;--sol-rayo:#e87332;--sol-halo-rgb:238,125,58;--mota-rgb:240,140,70;--brillo-sierra:rgba(255,196,146,0.45);--niebla-rgb:250,226,206;--nube:#f4d8c2;}}
+:root[data-fase="atardecer"][data-tema="claro"]{--login-cielo-alto:#f1cfb0;--login-horizonte:rgba(246,132,64,0.55);--sol-1:#ffd6a0;--sol-2:#ee7d3a;--sol-rayo:#e87332;--sol-halo-rgb:238,125,58;--mota-rgb:240,140,70;--brillo-sierra:rgba(255,196,146,0.45);--niebla-rgb:250,226,206;--nube:#f4d8c2;}
+@media (prefers-color-scheme:light){:root[data-fase="noche"]:not([data-tema="oscuro"]){--login-cielo-alto:#a9b2d2;--login-horizonte:rgba(196,204,236,0.5);--brillo-sierra:rgba(224,230,255,0.32);--niebla-rgb:226,230,244;--nube:#dfe3f1;}}
+:root[data-fase="noche"][data-tema="claro"]{--login-cielo-alto:#a9b2d2;--login-horizonte:rgba(196,204,236,0.5);--brillo-sierra:rgba(224,230,255,0.32);--niebla-rgb:226,230,244;--nube:#dfe3f1;}
+@media (prefers-color-scheme:dark){:root[data-fase="amanecer"]:not([data-tema="claro"]){--login-cielo-alto:#17131a;--login-horizonte:rgba(236,146,108,0.2);--sol-1:#f6d2ae;--sol-2:#d8793f;--sol-rayo:#c96f3a;--sol-halo-rgb:216,121,63;--mota-rgb:216,140,90;--brillo-sierra:rgba(255,200,170,0.14);}}
+:root[data-fase="amanecer"][data-tema="oscuro"]{--login-cielo-alto:#17131a;--login-horizonte:rgba(236,146,108,0.2);--sol-1:#f6d2ae;--sol-2:#d8793f;--sol-rayo:#c96f3a;--sol-halo-rgb:216,121,63;--mota-rgb:216,140,90;--brillo-sierra:rgba(255,200,170,0.14);}
+@media (prefers-color-scheme:dark){:root[data-fase="dia"]:not([data-tema="claro"]){--login-cielo-alto:#0f1a1e;--login-horizonte:rgba(130,176,190,0.12);--sol-1:#f4e2a8;--sol-2:#d8a93e;--sol-rayo:#c99b3b;--sol-halo-rgb:216,169,62;--mota-rgb:214,170,80;}}
+:root[data-fase="dia"][data-tema="oscuro"]{--login-cielo-alto:#0f1a1e;--login-horizonte:rgba(130,176,190,0.12);--sol-1:#f4e2a8;--sol-2:#d8a93e;--sol-rayo:#c99b3b;--sol-halo-rgb:216,169,62;--mota-rgb:214,170,80;}
+@media (prefers-color-scheme:dark){:root[data-fase="atardecer"]:not([data-tema="claro"]){--login-cielo-alto:#1a1310;--login-horizonte:rgba(236,118,58,0.22);--sol-1:#f6b37c;--sol-2:#e0703a;--sol-rayo:#cf6a35;--sol-halo-rgb:224,112,58;--mota-rgb:224,120,60;--brillo-sierra:rgba(255,180,130,0.14);}}
+:root[data-fase="atardecer"][data-tema="oscuro"]{--login-cielo-alto:#1a1310;--login-horizonte:rgba(236,118,58,0.22);--sol-1:#f6b37c;--sol-2:#e0703a;--sol-rayo:#cf6a35;--sol-halo-rgb:224,112,58;--mota-rgb:224,120,60;--brillo-sierra:rgba(255,180,130,0.14);}
+/* qué hay en el cielo en cada fase (gana sobre las reglas por tema) */
+:root[data-fase] [data-sol],:root[data-fase] [data-motas],:root[data-fase] [data-aves],:root[data-fase] [data-nubes],:root[data-fase] [data-rafaga]{display:block!important}
+:root[data-fase] [data-luna],:root[data-fase] [data-estrellas],:root[data-fase] [data-fugaz]{display:none!important}
+:root[data-fase="noche"] [data-sol],:root[data-fase="noche"] [data-motas],:root[data-fase="noche"] [data-aves],:root[data-fase="noche"] [data-nubes],:root[data-fase="noche"] [data-rafaga]{display:none!important}
+:root[data-fase="noche"] [data-luna],:root[data-fase="noche"] [data-estrellas],:root[data-fase="noche"] [data-fugaz]{display:block!important}
+/* al amanecer y al atardecer quedan las últimas (o primeras) estrellas, tenues */
+:root[data-fase="amanecer"] [data-estrellas],:root[data-fase="atardecer"] [data-estrellas]{display:block!important;opacity:0.28}
+:root[data-fase="amanecer"] [data-motas],:root[data-fase="atardecer"] [data-motas]{opacity:0.7}
+/* sol bajo, grande y detrás de las montañas al amanecer y al atardecer */
+:root[data-fase="amanecer"] [data-astro],:root[data-fase="atardecer"] [data-astro]{top:auto;bottom:calc(clamp(170px,38vh,360px) - 46px);width:clamp(150px,13vw,200px)}
+/* en el hueco libre entre el texto y la tarjeta: al amanecer un poco más a la izquierda (este) */
+:root[data-fase="amanecer"] [data-astro]{right:47%}
+:root[data-fase="atardecer"] [data-astro]{right:41%}
+@media (max-width:767px){:root[data-fase="amanecer"] [data-astro],:root[data-fase="atardecer"] [data-astro]{width:120px;bottom:auto;top:18vh}:root[data-fase="amanecer"] [data-astro]{right:auto;left:6%}:root[data-fase="atardecer"] [data-astro]{right:6%}}
+/* escenas de los vacíos y del saludo: misma regla (luna solo de noche) */
+:root[data-fase] [data-escena] [data-escena-sol]{display:inline!important}
+:root[data-fase] [data-escena] [data-escena-luna]{display:none!important}
+:root[data-fase="noche"] [data-escena] [data-escena-sol]{display:none!important}
+:root[data-fase="noche"] [data-escena] [data-escena-luna]{display:inline!important}
+
+/* ──────────── Montañas con profundidad: degradado en cada cordillera y neblina entre ellas ──────────── */
+[data-niebla]{position:absolute;left:0;width:200%;pointer-events:none;background:radial-gradient(ellipse 14% 60% at 10% 55%,rgba(var(--niebla-rgb),var(--niebla-a)),transparent 70%),radial-gradient(ellipse 20% 50% at 34% 60%,rgba(var(--niebla-rgb),calc(var(--niebla-a) * 0.8)),transparent 70%),radial-gradient(ellipse 16% 55% at 60% 50%,rgba(var(--niebla-rgb),var(--niebla-a)),transparent 70%),radial-gradient(ellipse 22% 45% at 86% 58%,rgba(var(--niebla-rgb),calc(var(--niebla-a) * 0.75)),transparent 70%);animation:sierraDrift 160s linear infinite}
+[data-niebla="2"]{animation-duration:110s;animation-direction:reverse}
+
+/* ──────────── Teléfono: la escena se ve (texto compacto y tarjeta translúcida) ──────────── */
+@media (max-width:767px){
+  [data-login-copy] p{display:none}
+  [data-login-copy]{padding-bottom:8px!important}
+  [data-login-tarjeta]{background:rgba(var(--sf-rgb),0.8)!important;-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2)}
+}
+
+/* ──────────── Entrada al sistema: el cielo continúa (View Transitions) ────────────
+   La sierra del login se acomoda en la del sistema y el astro baja hasta el saludo. */
+::view-transition-group(sierra){animation-duration:900ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
+::view-transition-group(astro){animation-duration:1100ms;animation-timing-function:cubic-bezier(0.5,0,0.2,1)}
+::view-transition-old(astro),::view-transition-new(astro){height:100%;width:100%}
+:root[data-vt="entrada"]::view-transition-old(root){animation:vtSale 420ms var(--ease-standard) both}
+:root[data-vt="entrada"]::view-transition-new(root){animation:vtEntra 620ms var(--ease-standard) 260ms both}
+/* El cielo de la hora sigue adentro del sistema: un tinte suave arriba del fondo
+   (celeste de día, cálido al atardecer, lila de noche en tema claro) */
+/* amanecer, atardecer y noche usan el mismo tono que el login; el día tiene su celeste */
+:root[data-fase="amanecer"],:root[data-fase="atardecer"],:root[data-fase="noche"]{--cielo-app:var(--login-cielo-alto)}
+body{background-image:radial-gradient(ellipse 60% 38vh at 88% 0,rgba(var(--sol-halo-rgb),var(--sol-tinte,0.16)),transparent 70%),linear-gradient(180deg,color-mix(in srgb,var(--cielo-app) 74%,var(--fondo)) 0,var(--fondo) 66vh);background-attachment:fixed}
+:root[data-fase="noche"]{--sol-tinte:0}
+
+/* ──────────── Ficha de una persona (Métricas) ──────────── */
+@keyframes fichaEntra{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:none}}
+@keyframes barraSube{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+::view-transition-group(ficha-avatar){animation-duration:520ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
+[data-m="fila-persona"]:hover{background:var(--fondo-2)!important}
+/* teléfono: hoja desde abajo */
+@media (max-width:767px){
+  [data-m="ficha"]{top:auto!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;max-height:88dvh;border-radius:20px 20px 0 0!important;animation:hojaSube 320ms cubic-bezier(0.22,1,0.36,1) both!important;padding-bottom:env(safe-area-inset-bottom,0px)}
+}
+@media (prefers-reduced-motion:reduce){[data-m="ficha"],[data-m="ficha"] *{animation:none!important}}
+
+/* ──────────── Teléfono: aire bajo la barra y listas sin scroll interno ──────────── */
+@media (max-width:767px),(pointer:coarse) and (hover:none) and (max-width:1366px){
+  [data-m="encabezado"]{padding-top:20px!important;padding-bottom:10px!important}
+  [data-m="lista-usuarios"]{max-height:none!important;overflow:visible!important}
+}
+
+/* ──────────── Visor de imágenes en teléfono y tablet: pantalla completa y gestos ────────────
+   Pellizco, arrastre, doble toque y deslizar (logic/valores/capas.js); sin botones de zoom. */
+@media (max-width:767px),(pointer:coarse) and (hover:none) and (max-width:1366px){
+  [data-m="visor"]{background:rgb(0,0,0)!important}
+  [data-m="visor-barra"]{padding:calc(10px + env(safe-area-inset-top,0px)) 12px 10px 16px!important;gap:8px!important}
+  [data-m="visor-zoom"],[data-m="visor-flecha"]{display:none!important}
+  [data-m="visor-area"]{padding:0 0 calc(36px + env(safe-area-inset-bottom,0px))!important}
+  [data-m="visor-area"]>div{border-radius:0!important}
+}
+
+/* ──────────── Pantallas táctiles: sin tooltips de mouse y áreas de toque de 40 px ────────────
+   Los globos que aparecen al pasar el mouse no existen con el dedo (y quedaban pegados tras
+   tocar). Los botones chicos (iconos de 30 px de las tarjetas, "Marcar todo", filtros de la
+   bandeja) conservan su dibujo pero reciben un área de toque invisible más grande. */
+@media (hover:none) and (pointer:coarse){
+  [role="tooltip"]{display:none!important}
+  button:not([style*="position"]){position:relative}
+  button::before{content:"";position:absolute;inset:-9px}
+  a[href]:not([style*="position"]){position:relative}
+  a[href][aria-label]::before{content:"";position:absolute;inset:-9px}
+}
+
+/* ──────────── iPhone / iPad (y todo lo táctil): sin zoom al escribir ────────────
+   Safari agranda la página al tocar un campo con letra menor a 16 px y la deja agrandada
+   (también después del login). En pantallas táctiles y en cualquier iPhone o iPad (aunque
+   use teclado y trackpad) los campos van a 16 px. El texto no se infla al girar. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* La página nunca se corre hacia los lados: nada puede ensanchar el ancho desplazable
+   (clip no crea contenedor de desplazamiento, así el encabezado sticky sigue funcionando),
+   sin rebote lateral, y el doble toque ya no agranda (el pellizco para agrandar sí). */
+html{overflow-x:hidden;overscroll-behavior-x:none;touch-action:manipulation}
+@supports (overflow:clip){html{overflow-x:clip}}
+@media (pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select{font-size:16px!important}
+}
+@supports (-webkit-touch-callout:none){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select{font-size:16px!important}
+}
+/* buscadores: type="search" trae el teclado con la tecla "Buscar"; sin el dibujo ni la X propios del navegador */
+input[type=search]{-webkit-appearance:none;appearance:none}
+input[type=search]::-webkit-search-decoration,input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display:none}

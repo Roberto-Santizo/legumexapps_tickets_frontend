@@ -12,6 +12,14 @@ export const valoresDetalle = {
       const st = ST[det.status], pr = PR[det.prio], asig = this.user(det.asig);
       v.dTitulo = det.titulo; v.dCode = 'TIC-' + det.id; v.dDesc = det.desc;
       v.dStatusLabel = st.label; v.dStatusBg = st.bg; v.dStatusDot = st.dot;
+      // (6) Si el estado cambió con el ticket abierto, el chip se vuelve a montar con un pulso
+      // y un brillo que lo cruza; al abrir un ticket no se anima (no hubo cambio)
+      const vis = this._chipVisto;
+      if (vis && vis.id === det.id && vis.st !== det.status) this._chipCambio = { id: det.id, t: Date.now() };
+      this._chipVisto = { id: det.id, st: det.status };
+      const cambio = this._chipCambio && this._chipCambio.id === det.id && Date.now() - this._chipCambio.t < 900;
+      v.dChipKey = 'chip-' + det.status;
+      v.dChipStyle = { '--chip-anillo': st.dot, animation: cambio ? 'chipCambia 700ms cubic-bezier(0.34,1.56,0.64,1) both' : 'none' };
       v.dStatusOpen = det.status === 'open'; v.dStatusProg = det.status === 'in_progress'; v.dStatusClosed = det.status === 'closed';
       v.dPrioLabel = pr.label; v.dPrioDot = pr.dot;
       v.dCat = this.cat(det.cat); v.dAutor = (this.user(det.autor) || {}).nombre || '—';
@@ -20,8 +28,8 @@ export const valoresDetalle = {
       const dsla = this.sla(det);
       v.dSlaLabel = dsla.label; v.dSlaFull = dsla.full || dsla.label;
       v.dSlaLate = dsla.late; v.dSlaWatch = dsla.watch; v.dSlaOk = dsla.ok && !dsla.waiting; v.dSlaDone = dsla.done; v.dSlaWaiting = !!dsla.waiting;
-      v.dSlaBg = '#ffffff';
-      v.dSlaBorder = dsla.late ? '1px solid #ea580c' : dsla.done ? '1px solid #16a34a' : dsla.waiting ? '1px solid #d4d4d4' : '1px solid #e5e5e5';
+      v.dSlaBg = 'var(--n-0)';
+      v.dSlaBorder = dsla.late ? '1px solid var(--naranja)' : dsla.done ? '1px solid var(--verde)' : dsla.waiting ? '1px solid var(--n-300)' : '1px solid var(--n-200)';
       // "En tiempo" sin decir en tiempo para qué no significa nada, y la meta es jerga interna
       // que nadie se compromete a cumplir: el solicitante ve la línea de situación en su lugar.
       v.dShowMeta = isAdmin;
@@ -41,14 +49,14 @@ export const valoresDetalle = {
       v.dCommentCount = String(det.comentarios.length);
       const puedeCerrar = det.status !== 'closed' && det.asig === me.id;
       // D1 · un cierre enlatado hace sentir procesado: la macro deja un hueco obligatorio.
-      const HUECO = 'Se resolvió: ______. Si vuelve a pasar, respondé este correo y lo reabrimos.';
+      const HUECO = 'Se resolvió: ______. Si vuelve a pasar, responde este correo y lo reabrimos.';
       const macroList = (isAdmin ? MACROS : MACROS_USER).map(m => ({ label: m.label, text: m.text }));
       const rl = this.replyLock(det);
       v.dCanReply = !rl; v.dReplyLocked = !!rl; v.dReplyLockMsg = rl ? rl.msg : ''; v.dReplyLockTake = !!(rl && rl.take);
       v.dReplyLockTake = !!(rl && (rl.take || rl.reopen || rl.follow));
       v.dReplyTakeLabel = rl && rl.follow ? 'Sigue pasando' : rl && rl.reopen ? 'Reabrir ticket' : rl && rl.steal ? 'Tomar yo' : 'Tomar para responder';
       v.dReplyOnTake = () => rl && rl.follow ? this.followUp(det) : rl && rl.reopen ? v.onReopen() : rl && rl.steal ? this.quickAssign(det, me.id) : this.take(det);
-      v.commentPh = isAdmin ? 'Escribí una actualización para el solicitante' : 'Escribile al área: qué probaste, qué cambió, cuándo estás';
+      v.commentPh = isAdmin ? 'Escribe una actualización para el solicitante' : 'Escríbele al área: qué probaste, qué cambió, cuándo estás';
       const tieneResp = (det.comentarios || []).some(c => c.autor !== det.autor);
       v.dResolvedShow = !isAdmin && det.autor === me.id && det.status !== 'closed';
       const yaAviso = this.resolvedSent(det);
@@ -128,7 +136,7 @@ export const valoresDetalle = {
     v.onSendStaged = () => this.tap('stage', () => this.sendStaged());
     v.onDropStaged = () => this.setState(st => ({ staged: st.staged.filter(y => y.tid !== s.detailId) }));
       // en computadora también se puede arrastrar la imagen desde la carpeta: se sube al soltarla
-      v.uploadRule = s.movil ? 'JPG, PNG o WEBP, hasta 5 MB — se revisa antes de subir' : 'JPG, PNG o WEBP, hasta 5 MB — o arrastrala acá y se sube sola';
+      v.uploadRule = s.movil ? 'JPG, PNG o WEBP, hasta 5 MB — se revisa antes de subir' : 'JPG, PNG o WEBP, hasta 5 MB — o arrástrala acá y se sube sola';
       v.canClose = det.status !== 'closed' && det.asig === me.id;
       v.canEdit = (isAdmin && !this.othersTicket(det)) || (!isAdmin && det.autor === me.id && det.status !== 'closed');
       const act = this.visible().filter(t => t.status !== 'closed');
@@ -136,14 +144,14 @@ export const valoresDetalle = {
         if (id && det.asig === id) { this.setState({ asigOpen: false }); return; } // elegir a quien ya lo tiene no escribe historial
         if (!sure && id && !det.asig) {
           this.setState({ asigOpen: false });
-          this.confirmOr('assign', { title: '¿Asignar TIC-' + det.id + ' a ' + (id === me.id ? 'vos' : this.user(id).nombre) + '?', sub: det.status === 'open' ? 'Pasa a En progreso y aparece en su bandeja.' : 'Aparece en su bandeja.', ok: 'Asignar' }, () => setAsig(id, true));
+          this.confirmOr('assign', { title: '¿Asignar TIC-' + det.id + ' a ' + (id === me.id ? 'ti' : this.user(id).nombre) + '?', sub: det.status === 'open' ? 'Pasa a En progreso y aparece en su bandeja.' : 'Aparece en su bandeja.', ok: 'Asignar' }, () => setAsig(id, true));
           return;
         }
         if (!sure && id && det.asig && det.asig !== id) {
           this.setState({ asigOpen: false });
           const prevN = (this.user(det.asig) || {}).nombre || 'otra persona';
           this.confirmOr('reassign', id === me.id
-            ? { title: '¿Tomar TIC-' + det.id + '?', sub: 'Hoy lo tiene ' + prevN + '. Pasa a vos y a ' + prevN.split(' ')[0] + ' le deja de aparecer en su bandeja.', ok: 'Tomar ticket' }
+            ? { title: '¿Tomar TIC-' + det.id + '?', sub: 'Hoy lo tiene ' + prevN + '. Pasa a ti y a ' + prevN.split(' ')[0] + ' le deja de aparecer en su bandeja.', ok: 'Tomar ticket' }
             : { title: '¿Reasignar TIC-' + det.id + ' a ' + this.user(id).nombre + '?', sub: 'Hoy lo tiene ' + prevN + '. Le deja de aparecer en su bandeja.', ok: 'Reasignar' }, () => setAsig(id, true));
           return;
         }
@@ -165,11 +173,11 @@ export const valoresDetalle = {
         const remSent = manual || idle >= W_REM;
         const remAgo = manual ? det.recordado : idle - W_REM;
         const sol = (this.user(det.autor) || {}).nombre || 'el solicitante';
-        const dot = done => ({ dotBg: done ? '#2563eb' : '#ffffff', dotBorder: done ? '#2563eb' : '#d4d4d4' });
+        const dot = done => ({ dotBg: done ? 'var(--azul)' : 'var(--n-0)', dotBorder: done ? 'var(--azul)' : 'var(--n-300)' });
         v.fuSteps = [
           Object.assign({ label: 'El área respondió', sub: 'hace ' + this.dur(idle), done: true }, dot(true)),
           Object.assign({ label: 'Recordatorio a ' + sol, sub: remSent ? (manual ? 'Enviado a mano ' : 'Salió solo ') + (remAgo < 1 ? 'recién' : 'hace ' + this.dur(remAgo)) + ' por correo' : 'Sale solo en ' + this.dur(W_REM - idle) + ' por correo', done: remSent }, dot(remSent)),
-          Object.assign({ label: 'Cierre automático', sub: (isAdmin ? 'Si no contesta, se cierra solo' : 'Si no respondés, lo cerramos') + ' · se puede reabrir', done: false }, dot(false))
+          Object.assign({ label: 'Cierre automático', sub: (isAdmin ? 'Si no contesta, se cierra solo' : 'Si no respondes, lo cerramos') + ' · se puede reabrir', done: false }, dot(false))
         ];
         v.fuLeft = 'CIERRA EN ' + this.dur(Math.max(0, W_CLOSE - idle)).toUpperCase();
         v.fuPct = Math.min(100, Math.round(idle / W_CLOSE * 100)) + '%';
@@ -206,17 +214,17 @@ export const valoresDetalle = {
           id: u.id, ini: this.ini(u.nombre), ring: this.ring(u.id),
           isAdmin: u.rol === 'admin', on: det.asig === u.id, isMe: u.id === me.id,
           load: n === 0 ? 'Libre' : n + (n === 1 ? ' activo' : ' activos'),
-          loadInk: lateN > 0 ? '#171717' : '#737373',
+          loadInk: lateN > 0 ? 'var(--n-900)' : 'var(--n-500)',
           hasLate: lateN > 0, lateLabel: lateN + ' sin mover',
           pick: () => setAsig(u.id)
         });
       }).sort((a, b) => (b.on - a.on) || (b.isMe - a.isMe) || (a.hasLate === b.hasLate ? 0 : a.hasLate ? 1 : -1));
 
       v.tapClose = this.tapped('close');
-      v.onAskClose = () => this.tap('close', () => this.openModal({ type: 'confirm', kind: 'ticket', danger: true, title: 'Cerrar TIC-' + det.id + '?', sub: 'El solicitante recibe un aviso y el ticket deja de aparecer entre los activos. Podés reabrirlo desde el historial.', ok: 'Cerrar ticket' }));
+      v.onAskClose = () => this.tap('close', () => this.openModal({ type: 'confirm', kind: 'ticket', danger: true, title: 'Cerrar TIC-' + det.id + '?', sub: 'El solicitante recibe un aviso y el ticket deja de aparecer entre los activos. Puedes reabrirlo desde el historial.', ok: 'Cerrar ticket' }));
       v.onEditTicket = () => this.openEdit(det);
     }
-    v.onBack = () => { this.setState({ screen: 'tickets', detailId: null, dir: 'back' }); this.load(450); };
+    v.onBack = () => this.volverAlListado();
     v.comment = s.comment; v.commentErr = s.commentErr;
     v.onComment = e => {
       const txt = e.target.value;
@@ -227,13 +235,13 @@ export const valoresDetalle = {
     v.draftLine = 'Borrador guardado en este equipo — si se cae la sesión, sigue acá';
     v.tapComment = this.tapped('comment', 'iconSend', 620);
     v.onAddComment = () => {
-      if (!s.comment.trim()) { this.setState({ commentErr: 'Escribí un comentario antes de publicar.' }); return; }
+      if (!s.comment.trim()) { this.setState({ commentErr: 'Escribe un comentario antes de publicar.' }); return; }
       this.tap('comment');
       this.run('comment', 500, () => this.addComment(false));
     };
     v.tapCommentClose = this.tapped('commentclose');
     v.onCommentAndClose = () => {
-      if (!s.comment.trim()) { this.setState({ commentErr: 'Escribí la respuesta con la que querés cerrar el ticket.' }); return; }
+      if (!s.comment.trim()) { this.setState({ commentErr: 'Escribe la respuesta con la que quieres cerrar el ticket.' }); return; }
       this.tap('commentclose');
       this.confirmOr('close', { title: '¿Publicar y cerrar TIC-' + det.id + '?', sub: 'La respuesta se publica y el ticket pasa a Cerrado.', ok: 'Publicar y cerrar', danger: true }, () => this.heavy('Publicando y cerrando', 900, () => this.addComment(true)));
     };

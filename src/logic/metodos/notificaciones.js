@@ -6,7 +6,7 @@ import * as sync from '../../services/sync.js';
 export const metodosNotificaciones = {
   // Notificaciones derivadas en cliente: GET /api/tickets cada 45 s + comparación. Sin endpoint propio.
   notifList(me, isAdmin) {
-    const K = { create: ['NUEVO', '#15803d'], assign: ['ASIGNACIÓN', '#525252'], status: ['ESTADO', '#525252'], close: ['CERRADO', '#525252'], reopen: ['REABIERTO', '#c2410c'], prio: ['PRIORIDAD', '#c2410c'], comment: ['RESPUESTA', '#2563eb'] };
+    const K = { create: ['NUEVO', 'var(--verde-oscuro)'], assign: ['ASIGNACIÓN', 'var(--n-600)'], status: ['ESTADO', 'var(--n-600)'], close: ['CERRADO', 'var(--n-600)'], reopen: ['REABIERTO', 'var(--naranja-oscuro)'], prio: ['PRIORIDAD', 'var(--naranja-oscuro)'], comment: ['RESPUESTA', 'var(--azul)'] };
     const read = this.readSet(me), out = [];
     this.state.tickets.forEach(t => {
       if (!isAdmin && t.autor !== me.id && t.asig !== me.id) return;
@@ -18,7 +18,7 @@ export const metodosNotificaciones = {
         if (!adminMine && e.kind !== 'create' && !(e.kind === 'assign' && (e.texto || '').indexOf(me.nombre) >= 0)) return;
         const toMe = e.kind === 'assign' && (e.texto || '').indexOf(me.nombre) >= 0;
         out.push({ tid: t.id, h: e.h, key: t.id + '|' + e.kind + '|' + e.h + '|' + (e.texto || '').slice(0, 24),
-          kind: toMe ? 'TE ASIGNARON' : K[e.kind][0], kindColor: toMe ? '#2563eb' : K[e.kind][1],
+          kind: toMe ? 'TE ASIGNARON' : K[e.kind][0], kindColor: toMe ? 'var(--azul)' : K[e.kind][1],
           title: e.kind === 'create' ? t.titulo : e.texto, sub: e.kind === 'create' ? 'Abierto por ' + e.autor : e.autor + ' · ' + t.titulo });
       });
       (t.comentarios || []).forEach(c => {

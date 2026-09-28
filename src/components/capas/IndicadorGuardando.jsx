@@ -4,7 +4,7 @@
 export default function IndicadorGuardando({ V }) {
   return (
     <>
-      <div key="savepill" role="status" aria-live="polite" style={{ "position": "fixed", "right": "24px", "top": "24px", "zIndex": "70", "display": "inline-flex", "alignItems": "center", "gap": "8px", "background": "#ffffff", "border": "1px solid #e5e5e5", "borderRadius": "9999px", "padding": "8px 16px", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "#525252", "whiteSpace": "nowrap", "boxShadow": "rgba(0,0,0,0.08) 0px 4px 12px -2px" }}>
+      <div key="savepill" role="status" aria-live="polite" style={{ "position": "fixed", "right": "24px", "top": "24px", "zIndex": "70", "display": "inline-flex", "alignItems": "center", "gap": "8px", "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "9999px", "padding": "8px 16px", "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "whiteSpace": "nowrap", "boxShadow": "rgba(0,0,0,0.08) 0px 4px 12px -2px" }}>
         {" "}
         <span style={{ "position": "relative", "height": "16px", "width": "48px", "flexShrink": "0", "display": "block" }}>
           {" "}
