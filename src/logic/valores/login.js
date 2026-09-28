@@ -21,7 +21,7 @@ export const valoresLogin = {
       v.deskState = open ? 'Atendiendo' : 'Cerrada';
       v.deskDot = open ? 'var(--verde)' : 'var(--n-400)';
       v.deskPulse = open ? 'deskPing 2.4s ease-out infinite' : 'none';
-      v.loginHello = hh < 12 ? 'Buenos días' : hh < 19 ? 'Buenas tardes' : 'Buenas noches';
+      v.loginHello = this.saludoHora();
       const tk = s.tickets || [];
       const wk = Date.now() - 7 * 864e5;
       v.loginClosedWeek = String(tk.filter(t => t.status === 'closed' && new Date(t.closedAt || t.updatedAt || 0).getTime() >= wk).length || tk.filter(t => t.status === 'closed').length);
@@ -81,7 +81,7 @@ export const valoresLogin = {
     this.finishLogin = this.finishLogin || (() => {
       const s = this.state;
       const found = s.users.find(u => u.email.toLowerCase() === s.email.trim().toLowerCase());
-      this.setState({ authed: true, loginErr: '', loginPhase: '', showPwd: false, screen: 'tickets', role: found ? found.rol : s.role, password: '', greet: true, greetOut: false });
+      this.entrarAlSistema(suave => this.setState({ authed: true, loginErr: '', loginPhase: '', showPwd: false, screen: 'tickets', role: found ? found.rol : s.role, password: '', greet: true, greetOut: false, entradaSuave: suave }));
       clearTimeout(this._greet); clearTimeout(this._greet2);
       this._greet = setTimeout(() => this.setState({ greetOut: true }), 6500);
       this._greet2 = setTimeout(() => this.setState({ greet: false, greetOut: false }), 6800);

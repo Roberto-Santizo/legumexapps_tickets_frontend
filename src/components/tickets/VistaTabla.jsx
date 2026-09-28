@@ -3,6 +3,7 @@
 import React from 'react';
 import { T, S, L } from '../../utils/runtime.js';
 
+import Escena from '../comunes/Escena.jsx';
 export default function VistaTabla({ V }) {
   return (
     <>
@@ -73,7 +74,7 @@ export default function VistaTabla({ V }) {
           {L(V["rows"]).map((_t_20, $index) => (
             <React.Fragment key={$index}>
               {" "}
-              <div data-reveal="" onClick={_t_20?.["open"]} onKeyDown={_t_20?.["key"]} tabIndex="0" role="button" style={{ "minWidth": "924px", "display": "grid", "gridTemplateColumns": "minmax(0,1fr) 132px 116px 136px 168px 44px", "gap": "16px", "alignItems": "center", "padding": "12px 16px", "borderBottom": "1px solid var(--n-200)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard)" }} className="scpg scpt">
+              <div data-reveal="" data-vt={_t_20?.["vtId"]} onClick={_t_20?.["open"]} onKeyDown={_t_20?.["key"]} tabIndex="0" role="button" style={{ "minWidth": "924px", "display": "grid", "gridTemplateColumns": "minmax(0,1fr) 132px 116px 136px 168px 44px", "gap": "16px", "alignItems": "center", "padding": "12px 16px", "borderBottom": "1px solid var(--n-200)", "cursor": "pointer", "transition": "background-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard)" }} className="scpg scpt">
                 {" "}
                 <div style={{ "display": "flex", "alignItems": "center", "gap": "12px", "minWidth": "0" }}>
                   {" "}
@@ -227,12 +228,7 @@ export default function VistaTabla({ V }) {
           {" "}
           <div style={{ "padding": "64px 24px", "textAlign": "center" }}>
             {" "}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--n-400)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "margin": "0 auto 12px", "display": "block" }}>
-              <path d="m13.5 8.5-5 5"></path>
-              <path d="m8.5 8.5 5 5"></path>
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </svg>
+            <Escena icono={V["emptyDayOne"] ? "listo" : "lupa"} />
             <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-500)", "letterSpacing": "0.04em" }}>
               {"SIN RESULTADOS"}
             </div>

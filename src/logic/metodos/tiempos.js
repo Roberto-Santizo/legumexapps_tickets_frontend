@@ -13,6 +13,29 @@ export const metodosTiempos = {
     return 'hace ' + Math.round(h / 168) + ' sem';
   },
 
+  // (5) Cifras que cuentan: avance 0→1 de la animación (1 = valor final, sin animar)
+  cifra(n) { const e = this._cuentaP == null ? 1 : this._cuentaP; return e >= 1 ? n : Math.round(n * e); },
+  durCuenta(h) {
+    const e = this._cuentaP == null ? 1 : this._cuentaP;
+    // "menos de 1 h" no cuenta: pasar de "0 h" a ese texto movería el bloque
+    if (e >= 1 || typeof h !== 'number' || h < 1) return this.dur(h);
+    return h < 48 ? Math.round(h * e) + ' h' : Math.round(h / 24 * e) + ' d';
+  },
+  contarCifras() {
+    cancelAnimationFrame(this._cuentaRaf);
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { this._cuentaP = 1; return; }
+    this._cuentaP = 0;
+    let t0 = null;
+    const paso = t => {
+      if (t0 == null) t0 = t;
+      const x = Math.min(1, (t - t0) / 950);
+      this._cuentaP = x >= 1 ? 1 : 1 - Math.pow(1 - x, 3);
+      this.forceUpdate();
+      if (x < 1) this._cuentaRaf = requestAnimationFrame(paso);
+    };
+    this._cuentaRaf = requestAnimationFrame(paso);
+  },
+
   dur(h) {
     if (typeof h !== 'number') return '—';
     if (h < 1) return 'menos de 1 h';

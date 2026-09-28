@@ -3,6 +3,7 @@
 import React from 'react';
 import { T, S, L } from '../../utils/runtime.js';
 
+import Escena from '../comunes/Escena.jsx';
 export default function PanelNotificaciones({ V }) {
   return (
     <>
@@ -72,7 +73,8 @@ export default function PanelNotificaciones({ V }) {
           ))}
           {" "}
           {V["noNotifs"] ? (<>
-            <div style={{ "padding": "32px 16px", "textAlign": "center", "fontSize": "14px", "color": "var(--n-600)" }}>
+            <div style={{ "padding": "28px 16px", "textAlign": "center", "fontSize": "14px", "color": "var(--n-600)" }}>
+              <Escena icono="campana" ancho="130px" />
               {"Nada nuevo en tus tickets."}
             </div>
           </>) : null}

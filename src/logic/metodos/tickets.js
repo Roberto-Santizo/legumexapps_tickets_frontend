@@ -1,12 +1,64 @@
 // Tickets: búsqueda, permisos y acciones (tomar, mover, cerrar, reabrir, comentar).
 // Se mezclan en Logica.prototype: "this" es la instancia de Logica.
+import { flushSync } from 'react-dom';
 import * as api from '../../services/api.js';
 import { ST, PR, MOSTRAR_SIN_ABRIR, PCODE } from '../../config/constantes.js';
 
 export const metodosTickets = {
   openTicket(id, dir) {
+    // (1) Desde la lista, la tarjeta se estira hasta volverse el detalle (sin la carga simulada:
+    // el detalle llega ya pintado). Si el navegador no puede, se entra como siempre.
+    const conTransicion = this.transicionTicket('[data-vt="' + id + '"]', '[data-vt-detalle]',
+      () => this.setState({ screen: 'detail', detailId: id, comment: this.readDraft('t' + id), commentErr: '', dir: 'vt', formErr: null, loading: false }));
+    if (conTransicion) return;
     this.setState({ screen: 'detail', detailId: id, comment: this.readDraft('t' + id), commentErr: '', dir: dir || 'fwd', formErr: null });
     this.load(500);
+  },
+
+  // Volver al listado: el detalle se encoge hasta su tarjeta
+  volverAlListado() {
+    const id = this.state.detailId;
+    const conTransicion = this.transicionTicket('[data-vt-detalle]', '[data-vt="' + id + '"]',
+      () => this.setState({ screen: 'tickets', detailId: null, dir: 'vt', loading: false }));
+    if (conTransicion) return;
+    this.setState({ screen: 'tickets', detailId: null, dir: 'back' }); this.load(450);
+  },
+
+  // Entrada al sistema sin corte: la sierra del login se acomoda en la del sistema y el sol
+  // (o la luna) baja hasta el saludo. Sin View Transitions se entra como siempre.
+  entrarAlSistema(cambio) {
+    const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reducido) { cambio(false); return; }
+    const raiz = document.documentElement;
+    const nombrar = (sel, n) => { const el = document.querySelector(sel); if (el) el.style.viewTransitionName = n; return el; };
+    const viejos = [nombrar('[data-login-sierra]', 'sierra'), nombrar('[data-astro]', 'astro')];
+    let nuevos = [];
+    raiz.setAttribute('data-vt', 'entrada');
+    const vt = document.startViewTransition(() => {
+      viejos.forEach(el => { if (el) el.style.viewTransitionName = ''; });
+      flushSync(() => cambio(true));
+      nuevos = [nombrar('[data-app-sierra]', 'sierra'), nombrar('[data-saludo-escena]', 'astro')];
+    });
+    vt.finished.finally(() => { nuevos.forEach(el => { if (el) el.style.viewTransitionName = ''; }); raiz.removeAttribute('data-vt'); });
+  },
+
+  // View Transitions: el elemento de origen y el de destino comparten nombre, y el navegador
+  // anima el cambio de uno al otro. Devuelve false si no se puede (se navega sin animación).
+  transicionTicket(desdeSel, haciaSel, cambio) {
+    const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const desde = document.querySelector(desdeSel);
+    if (!document.startViewTransition || reducido || !desde) return false;
+    clearTimeout(this._load);
+    desde.style.viewTransitionName = 'ticket-abierto';
+    let hacia = null;
+    const vt = document.startViewTransition(() => {
+      desde.style.viewTransitionName = '';
+      flushSync(cambio);
+      hacia = document.querySelector(haciaSel);
+      if (hacia) hacia.style.viewTransitionName = 'ticket-abierto';
+    });
+    vt.finished.finally(() => { if (hacia) hacia.style.viewTransitionName = ''; });
+    return true;
   },
 
   // El cierre es el final del trabajo: merece el mismo peso que la creación
@@ -230,6 +282,7 @@ export const metodosTickets = {
       hasFiles: t.adjuntos.length > 0, fileCount: String(t.adjuntos.length),
       hasComments: t.comentarios.length > 0, commentCount: String(t.comentarios.length),
       open: () => this.openTicket(t.id),
+      vtId: String(t.id),
       key: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.openTicket(t.id); } },
       canEdit: (this.state.role === 'admin' && !this.othersTicket(t)) || (this.state.role !== 'admin' && t.autor === this.me().id && t.status !== 'closed'),
       editLabel: 'Editar TIC-' + t.id,

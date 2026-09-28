@@ -12,6 +12,14 @@ export const valoresDetalle = {
       const st = ST[det.status], pr = PR[det.prio], asig = this.user(det.asig);
       v.dTitulo = det.titulo; v.dCode = 'TIC-' + det.id; v.dDesc = det.desc;
       v.dStatusLabel = st.label; v.dStatusBg = st.bg; v.dStatusDot = st.dot;
+      // (6) Si el estado cambió con el ticket abierto, el chip se vuelve a montar con un pulso
+      // y un brillo que lo cruza; al abrir un ticket no se anima (no hubo cambio)
+      const vis = this._chipVisto;
+      if (vis && vis.id === det.id && vis.st !== det.status) this._chipCambio = { id: det.id, t: Date.now() };
+      this._chipVisto = { id: det.id, st: det.status };
+      const cambio = this._chipCambio && this._chipCambio.id === det.id && Date.now() - this._chipCambio.t < 900;
+      v.dChipKey = 'chip-' + det.status;
+      v.dChipStyle = { '--chip-anillo': st.dot, animation: cambio ? 'chipCambia 700ms cubic-bezier(0.34,1.56,0.64,1) both' : 'none' };
       v.dStatusOpen = det.status === 'open'; v.dStatusProg = det.status === 'in_progress'; v.dStatusClosed = det.status === 'closed';
       v.dPrioLabel = pr.label; v.dPrioDot = pr.dot;
       v.dCat = this.cat(det.cat); v.dAutor = (this.user(det.autor) || {}).nombre || '—';
@@ -216,7 +224,7 @@ export const valoresDetalle = {
       v.onAskClose = () => this.tap('close', () => this.openModal({ type: 'confirm', kind: 'ticket', danger: true, title: 'Cerrar TIC-' + det.id + '?', sub: 'El solicitante recibe un aviso y el ticket deja de aparecer entre los activos. Podés reabrirlo desde el historial.', ok: 'Cerrar ticket' }));
       v.onEditTicket = () => this.openEdit(det);
     }
-    v.onBack = () => { this.setState({ screen: 'tickets', detailId: null, dir: 'back' }); this.load(450); };
+    v.onBack = () => this.volverAlListado();
     v.comment = s.comment; v.commentErr = s.commentErr;
     v.onComment = e => {
       const txt = e.target.value;

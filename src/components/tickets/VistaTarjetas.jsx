@@ -3,6 +3,7 @@
 import React from 'react';
 import { T, S, L } from '../../utils/runtime.js';
 
+import Escena from '../comunes/Escena.jsx';
 export default function VistaTarjetas({ V }) {
   return (
     <>
@@ -64,7 +65,7 @@ export default function VistaTarjetas({ V }) {
             {L(V["rows"]).map((_t_15, $index) => (
               <React.Fragment key={$index}>
                 {" "}
-                <div data-reveal="" onClick={_t_15?.["open"]} onKeyDown={_t_15?.["key"]} tabIndex="0" role="button" style={{ "background": "var(--n-0)", "border": "1px solid " + S(_t_15?.["focusBorder"]), "borderRadius": "12px", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "14px", "cursor": "pointer", "boxShadow": S(_t_15?.["focusShadow"]), "transition": "transform var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard)" }} className="scp14 scp15">
+                <div data-luz="" data-vt={_t_15?.["vtId"]} data-reveal="" onClick={_t_15?.["open"]} onKeyDown={_t_15?.["key"]} tabIndex="0" role="button" style={{ "background": "var(--n-0)", "border": "1px solid " + S(_t_15?.["focusBorder"]), "borderRadius": "12px", "padding": "16px", "display": "flex", "flexDirection": "column", "gap": "14px", "cursor": "pointer", "boxShadow": S(_t_15?.["focusShadow"]), "transition": "transform var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard)" }} className="scp14 scp15">
                   {" "}
                   <div style={{ "display": "flex", "alignItems": "flex-start", "gap": "12px" }}>
                     {" "}
@@ -389,12 +390,7 @@ export default function VistaTarjetas({ V }) {
           {" "}
           <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "64px 24px", "textAlign": "center" }}>
             {" "}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--n-400)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "margin": "0 auto 12px", "display": "block" }}>
-              <path d="m13.5 8.5-5 5"></path>
-              <path d="m8.5 8.5 5 5"></path>
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </svg>
+            <Escena icono={V["emptyDayOne"] ? "listo" : "lupa"} />
             <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-500)", "letterSpacing": "0.04em" }}>
               {"SIN RESULTADOS"}
             </div>

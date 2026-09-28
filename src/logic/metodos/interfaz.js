@@ -1,7 +1,7 @@
 // Ayudantes de interfaz: avisos, modales, carga, paginación y formato de texto.
 // Se mezclan en Logica.prototype: "this" es la instancia de Logica.
 import * as api from '../../services/api.js';
-import { RING, BLOB_HUE, PAGE_SIZE, MQ_MOVIL } from '../../config/constantes.js';
+import { RING, BLOB_HUE, PAGE_SIZE, MQ_MOVIL, FASES_CIELO } from '../../config/constantes.js';
 
 export const metodosInterfaz = {
   // Diseño móvil: sigue el ancho de la ventana (girar el teléfono, achicar el navegador).
@@ -123,7 +123,7 @@ export const metodosInterfaz = {
   // aviso = true: es una advertencia (ícono de alerta y un poco más de tiempo para leerla)
   say(msg, undo, aviso) {
     clearTimeout(this._t); clearTimeout(this._toast);
-    this.setState({ toast: msg, toastOut: false, toastAviso: !!aviso, undo: api.USE_API ? null : (undo || null) });
+    this.setState(st => ({ toast: msg, toastOut: false, toastAviso: !!aviso, undo: api.USE_API ? null : (undo || null), toastN: (st.toastN || 0) + 1, toastMs: aviso ? 4500 : 2800 }));
     this._t = setTimeout(() => {
       this.setState({ toastOut: true });
       this._toast = setTimeout(() => this.setState({ toast: '', toastOut: false, undo: null }), 150);
@@ -211,11 +211,45 @@ export const metodosInterfaz = {
     this.aplicarTema(orden[(orden.indexOf(this.state.tema) + 1) % orden.length]);
   },
 
-  // Saludo según la hora local
+  // (4) Luz que sigue al cursor: un solo oyente para todas las tarjetas marcadas con
+  // data-luz; solo mueve dos variables CSS (--lx/--ly), sin volver a pintar React
+  escucharLuz() {
+    if (this._onLuz || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    this._onLuz = e => {
+      const el = e.target && e.target.closest && e.target.closest('[data-luz]');
+      if (!el) return;
+      const b = el.getBoundingClientRect();
+      el.style.setProperty('--lx', (e.clientX - b.left) + 'px');
+      el.style.setProperty('--ly', (e.clientY - b.top) + 'px');
+    };
+    document.addEventListener('pointermove', this._onLuz, { passive: true });
+  },
+
+  // Hora de Guatemala (UTC-6), la misma que usa el login, sin depender del reloj del equipo
+  horaGT() { return new Date(Date.now() + (new Date().getTimezoneOffset() - 360) * 60000); },
+
+  // Fase del cielo según la hora: amanecer, día, atardecer o noche (cortes en constantes.js)
+  faseCielo() {
+    const d = this.horaGT(), min = d.getHours() * 60 + d.getMinutes();
+    return (FASES_CIELO.find(f => min < f.hasta) || FASES_CIELO[0]).fase;
+  },
+
+  // La fase se marca en <html data-fase>: el CSS decide sol o luna, estrellas, nubes y colores.
+  // Se revisa cada minuto para que el cielo cambie solo mientras la persona trabaja.
+  aplicarFase() {
+    const f = this.faseCielo();
+    if (document.documentElement.getAttribute('data-fase') !== f) document.documentElement.setAttribute('data-fase', f);
+  },
+
+  // Saludo que coincide con el cielo: de noche siempre "Buenas noches"
+  saludoHora() {
+    const h = this.horaGT().getHours();
+    return this.faseCielo() === 'noche' ? 'Buenas noches' : h < 12 ? 'Buenos días' : 'Buenas tardes';
+  },
+
   saludo() {
-    const h = new Date().getHours();
     const n = (this.me().nombre || '').split(' ')[0];
-    return (h < 6 ? 'Buenas noches' : h < 13 ? 'Buenos días' : h < 20 ? 'Buenas tardes' : 'Buenas noches') + ', ' + n;
+    return this.saludoHora() + ', ' + n;
   },
 
   seg(active) { return active ? { bg: 'var(--n-0)', border: '1px solid var(--n-200)' } : { bg: 'transparent', border: '1px solid transparent' }; },

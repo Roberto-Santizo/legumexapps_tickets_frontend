@@ -3,6 +3,7 @@
 import React from 'react';
 import { T, S, L } from '../../utils/runtime.js';
 
+import Escena from '../comunes/Escena.jsx';
 export default function ChatFlotante({ V }) {
   return (
     <>
@@ -253,10 +254,7 @@ export default function ChatFlotante({ V }) {
               {" "}
               <div style={{ "padding": "40px 20px", "textAlign": "center" }}>
                 {" "}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--n-400)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "margin": "0 auto 8px", "display": "block" }}>
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </svg>
+                <Escena icono="lupa" ancho="120px" />
                 {" "}
                 <div style={{ "fontSize": "14px", "color": "var(--n-600)" }}>
                   {"Ningún ticket coincide con lo que buscás."}

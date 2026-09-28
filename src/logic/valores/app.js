@@ -64,6 +64,8 @@ export const valoresApp = {
     v.navPillOn = activeIdx >= 0;
     v.navPillY = (activeIdx < 0 ? 0 : activeIdx * 48) + 'px';
     v.booting = s.booting;
+    // si se entró con la transición del login, la sierra ya está en su lugar: no vuelve a subir
+    v.fondoSinSubida = !!s.entradaSuave;
     v.bootAnim = s.bootFading ? 'bootOut var(--duration-page) var(--ease-standard) both' : 'none';
     // Móvil: la barra lateral es un menú deslizable. Cualquier botón o enlace de adentro
     // navega o filtra, así que al tocarlo el menú se cierra (como en Gmail).

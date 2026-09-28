@@ -99,7 +99,7 @@ export default function Pulso({ V }) {
           {" "}
           <div style={{ "display": "grid", "gridTemplateColumns": "repeat(auto-fit,minmax(260px,1fr))", "gap": "12px", "marginBottom": "16px" }}>
             {" "}
-            <div style={{ "background": S(V["pLateBg"]), "border": S(V["pLateBorder"]), "borderRadius": "12px", "padding": "16px" }}>
+            <div data-luz="" style={{ "background": S(V["pLateBg"]), "border": S(V["pLateBorder"]), "borderRadius": "12px", "padding": "16px" }}>
               {" "}
               <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
                 <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
@@ -136,7 +136,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "16px" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "16px" }}>
               {" "}
               <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
                 <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
@@ -157,7 +157,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "16px" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "16px" }}>
               {" "}
               <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
                 <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
@@ -178,7 +178,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "16px" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "16px" }}>
               {" "}
               <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-600)", "letterSpacing": "0.12em", "display": "flex", "alignItems": "center", "gap": "12px" }}>
                 <span aria-hidden="true" style={{ "width": "28px", "height": "1px", "background": "var(--n-400)", "flexShrink": "0" }}></span>
@@ -203,7 +203,7 @@ export default function Pulso({ V }) {
           {" "}
           <div style={{ "display": "flex", "flexWrap": "wrap", "gap": "16px", "marginBottom": "16px", "alignItems": "stretch" }}>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px", "flex": "2 1 460px", "minWidth": "0" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px", "flex": "2 1 460px", "minWidth": "0" }}>
               {" "}
               <div style={{ "display": "flex", "alignItems": "flex-start", "gap": "16px", "flexWrap": "wrap" }}>
                 {" "}
@@ -334,7 +334,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px", "flex": "1 1 300px", "minWidth": "0" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px", "flex": "1 1 300px", "minWidth": "0" }}>
               {" "}
               <h3 style={{ "fontSize": "16px", "fontWeight": "600", "margin": "0", "color": "var(--n-900)" }}>
                 {"Estado de lo activo"}
@@ -416,7 +416,7 @@ export default function Pulso({ V }) {
           {" "}
           <div style={{ "display": "grid", "gridTemplateColumns": "repeat(auto-fit,minmax(320px,1fr))", "gap": "16px", "alignItems": "start" }}>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px" }}>
               {" "}
               <h3 style={{ "fontSize": "16px", "fontWeight": "600", "margin": "0", "color": "var(--n-900)" }}>
                 {"Carga por persona"}
@@ -472,7 +472,7 @@ export default function Pulso({ V }) {
               {" "}
             </div>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px" }}>
               {" "}
               <h3 style={{ "fontSize": "16px", "fontWeight": "600", "margin": "0", "color": "var(--n-900)" }}>
                 {"De dónde vienen"}
@@ -524,7 +524,7 @@ export default function Pulso({ V }) {
           {" "}
           {V["pHasLate"] ? (<>
             {" "}
-            <div style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px", "marginTop": "16px" }}>
+            <div data-luz="" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "12px", "padding": "24px", "marginTop": "16px" }}>
               {" "}
               <div style={{ "display": "flex", "alignItems": "center", "gap": "8px", "marginBottom": "4px" }}>
                 {" "}

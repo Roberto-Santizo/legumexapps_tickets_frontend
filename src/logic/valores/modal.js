@@ -110,7 +110,7 @@ export const valoresModal = {
     v.loading = s.loading; v.loaded = !s.loading;
     v.screenKey = 'screen-' + s.screen + '-' + (s.detailId || s.editId || (s.entity ? s.entity.type + (s.entity.id || 'new') : 0));
     v.pageAnim = s.dir === 'fwd' ? 'pageInFwd' : s.dir === 'back' ? 'pageInBack'
-      : s.dir === 'up' ? 'pageInUp' : s.dir === 'down' ? 'pageInDown' : 'pageIn';
+      : s.dir === 'up' ? 'pageInUp' : s.dir === 'down' ? 'pageInDown' : s.dir === 'vt' ? 'none' : 'pageIn';
     v.ghostRows = ['62%', '78%', '54%', '70%', '66%'].map((w, i) => ({ w, id: i }));
     v.ghostCards = ['72%', '58%'].map((w, i) => ({ w, id: i }));
     v.ghostCards6 = ['72%', '58%', '66%', '80%', '62%', '74%'].map((w, i) => ({ w, id: i }));

@@ -3,6 +3,7 @@
 import React from 'react';
 import { T, S, L } from '../../utils/runtime.js';
 
+import Escena from '../comunes/Escena.jsx';
 export default function ChatConversacion({ V }) {
   return (
     <>
@@ -407,13 +408,7 @@ export default function ChatConversacion({ V }) {
           {" "}
           <div style={{ "flex": "1", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "gap": "10px", "padding": "32px", "textAlign": "center", "background": "var(--n-25)" }}>
             {" "}
-            <span style={{ "width": "56px", "height": "56px", "borderRadius": "9999px", "background": "var(--n-0)", "border": "1px solid var(--n-200)", "display": "flex", "alignItems": "center", "justifyContent": "center", "animation": "badgePop 480ms cubic-bezier(0.34,1.56,0.64,1) both" }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cian)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                <path d="M8 9h8"></path>
-                <path d="M8 13h5"></path>
-              </svg>
-            </span>
+            <Escena icono="chat" ancho="170px" />
             {" "}
             <div style={{ "fontSize": "16px", "fontWeight": "600", "color": "var(--n-900)" }}>
               {T(V["chatEmptyTitle"])}

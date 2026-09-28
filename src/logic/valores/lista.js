@@ -131,6 +131,8 @@ export const valoresLista = {
     v.onlyNudged = () => this.setState(st => ({ nudgedOnly: true, screen: 'tickets', detailId: null, dir: 'none', statusFilter: 'all', prioFilter: 'all', dStatus: 'all', dPrio: 'all', q: '', sort: 'urgencia', cursor: -1, swap: st.swap + 1, page: Object.assign({}, st.page, { tickets: 0 }) }));
     const per = s.period || '30';
     v.saludo = this.saludo();
+    // mini escena junto al saludo: la luna de noche, el sol el resto (la misma fase que el cielo)
+    v.saludoNoche = this.faseCielo() === 'noche'; v.saludoDia = !v.saludoNoche;
     v.showGreet = !!s.greet && s.screen === 'tickets';
     v.greetAnim = s.greetOut ? 'toastOut 300ms var(--ease-standard) both' : 'dropIn 420ms var(--ease-standard) both';
     v.periodLabel = { hoy: 'hoy', '7': '7 días', '30': '30 días', todo: 'todo el historial' }[per];

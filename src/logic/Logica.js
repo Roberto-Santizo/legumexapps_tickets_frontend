@@ -79,6 +79,8 @@ export class Logica extends LogicaBase {
     window.addEventListener('scroll', this._onScroll, true);
     this.escucharMovil();
     this.escucharArrastre();
+    this.escucharLuz();
+    this.aplicarFase(); this._faseIv = setInterval(() => this.aplicarFase(), 60000);
     this.aplicarTema(this.state.tema);
     this.load(650);
     this._vis = () => {
@@ -146,8 +148,10 @@ export class Logica extends LogicaBase {
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll, true);
     if (this._mqMovil) this._mqMovil.removeEventListener('change', this._onMq);
     this.dejarDeEscucharArrastre();
+    if (this._onLuz) document.removeEventListener('pointermove', this._onLuz);
+    clearInterval(this._faseIv);
     if (this._onRecMedir) { window.removeEventListener('resize', this._onRecMedir); window.removeEventListener('scroll', this._onRecMedir, true); }
-    clearInterval(this._recT); cancelAnimationFrame(this._recRaf);
+    clearInterval(this._recT); cancelAnimationFrame(this._recRaf); cancelAnimationFrame(this._cuentaRaf);
     clearTimeout(this._boot); clearTimeout(this._bootOut);
     cancelAnimationFrame(this._fillRaf);
     clearTimeout(this._fabT);

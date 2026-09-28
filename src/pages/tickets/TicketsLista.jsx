@@ -20,6 +20,19 @@ export default function TicketsLista({ V }) {
           <div style={{ "minWidth": "0", "display": "flex", "alignItems": "baseline", "gap": "8px", "flexWrap": "wrap" }}>
             {V["showGreet"] ? (<>
               <span style={{ "fontSize": "14px", "lineHeight": "1.43", "fontWeight": "500", "color": "var(--n-900)", "whiteSpace": "nowrap", "animation": S(V["greetAnim"]) }}>
+                <svg data-saludo-escena="" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  {V["saludoDia"] ? (<>
+                    <g data-rayos="" style={{ "stroke": "var(--sol-rayo)", "strokeWidth": "1.6", "strokeLinecap": "round" }}>
+                      <path d="M12 2v2.5"></path><path d="M12 19.5V22"></path><path d="M2 12h2.5"></path><path d="M19.5 12H22"></path>
+                      <path d="m4.9 4.9 1.8 1.8"></path><path d="m17.3 17.3 1.8 1.8"></path><path d="m4.9 19.1 1.8-1.8"></path><path d="m17.3 6.7 1.8-1.8"></path>
+                    </g>
+                    <circle cx="12" cy="12" r="4.6" style={{ "fill": "var(--sol-2)" }}></circle>
+                  </>) : null}
+                  {V["saludoNoche"] ? (<>
+                    <path d="M15.5 4.5a8 8 0 1 0 4 12.5a6.5 6.5 0 1 1-4-12.5z" style={{ "fill": "var(--ambar)" }}></path>
+                    <path data-estrella="" d="M19 3.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" style={{ "fill": "var(--ambar)" }}></path>
+                  </>) : null}
+                </svg>
                 {T(V["saludo"])}{"."}
               </span>
             </>) : null}

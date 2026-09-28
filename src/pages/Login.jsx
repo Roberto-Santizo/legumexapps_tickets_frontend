@@ -77,12 +77,13 @@ export default function Login({ V }) {
           {" "}
         </div>
         {" "}
-        <div aria-hidden="true" data-sierra="" style={{ "position": "fixed", "left": "0", "right": "0", "bottom": "0", "height": "clamp(170px,38vh,360px)", "pointerEvents": "none" }}>
+        <div aria-hidden="true" data-sierra="" data-login-sierra="" style={{ "position": "fixed", "left": "0", "right": "0", "bottom": "0", "height": "clamp(170px,38vh,360px)", "pointerEvents": "none" }}>
           {" "}
           <div style={{ "position": "absolute", "inset": "-34% -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -4px) calc(var(--my,0) * -1px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1400ms cubic-bezier(0.22,1,0.36,1) 1500ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 200s linear infinite reverse" }}>
               <polygon points="0,240 0,90 140,55 300,85 430,30 600,70 760,20 920,65 1080,35 1280,90 1420,55 1580,85 1710,30 1880,70 2040,20 2200,65 2360,35 2560,90 2560,240" fill="var(--sierra)" fillOpacity="0.05"></polygon>
+              <linearGradient id="prof-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0.5" }}></stop><stop offset="0.55" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0" }}></stop></linearGradient><polygon points="0,240 0,90 140,55 300,85 430,30 600,70 760,20 920,65 1080,35 1280,90 1420,55 1580,85 1710,30 1880,70 2040,20 2200,65 2360,35 2560,90 2560,240" fill="url(#prof-1)"></polygon>
             </svg>
             {" "}
           </div>
@@ -91,26 +92,31 @@ export default function Login({ V }) {
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 120s linear infinite" }}>
               <polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240" fill="var(--sierra)" fillOpacity="0.10"></polygon>
+              <linearGradient id="prof-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0.5" }}></stop><stop offset="0.55" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0" }}></stop></linearGradient><polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240" fill="url(#prof-2)"></polygon>
               <clipPath id="crestas-2"><polygon points="0,240 0,60 170,10 340,50 520,0 700,45 870,4 1050,40 1190,12 1280,60 1280,60 1450,10 1620,50 1800,0 1980,45 2150,4 2330,40 2470,12 2560,60 2560,240"></polygon></clipPath>
               <linearGradient id="luz-crestas-2"><stop offset="0" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop><stop offset="0.4" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="0.5" style={{ "stopColor": "var(--brillo-sierra)" }}></stop><stop offset="0.6" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="1" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop></linearGradient><g clipPath="url(#crestas-2)"><rect data-brillo-sierra="" x="0" y="0" width="220" height="240" fill="url(#luz-crestas-2)" style={{ "animationDelay": "3.9s" }}></rect></g>
             </svg>
             {" "}
           </div>
           {" "}
+          <div aria-hidden="true" data-niebla="1" style={{ "bottom": "46%", "height": "40%" }}></div>
           <div style={{ "position": "absolute", "inset": "0 -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -16px) calc(var(--my,0) * -4px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1200ms cubic-bezier(0.22,1,0.36,1) 1620ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 80s linear infinite reverse" }}>
               <polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240" fill="var(--sierra)" fillOpacity="0.35"></polygon>
+              <linearGradient id="prof-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0.5" }}></stop><stop offset="0.55" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0" }}></stop></linearGradient><polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240" fill="url(#prof-3)"></polygon>
               <clipPath id="crestas-3"><polygon points="0,240 0,120 210,75 400,110 610,60 830,115 1020,80 1280,120 1280,120 1490,75 1680,110 1890,60 2110,115 2300,80 2560,120 2560,240"></polygon></clipPath>
               <linearGradient id="luz-crestas-3"><stop offset="0" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop><stop offset="0.4" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="0.5" style={{ "stopColor": "var(--brillo-sierra)" }}></stop><stop offset="0.6" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="1" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop></linearGradient><g clipPath="url(#crestas-3)"><rect data-brillo-sierra="" x="0" y="0" width="220" height="240" fill="url(#luz-crestas-3)" style={{ "animationDelay": "3.75s" }}></rect></g>
             </svg>
             {" "}
           </div>
           {" "}
+          <div aria-hidden="true" data-niebla="2" style={{ "bottom": "30%", "height": "34%" }}></div>
           <div style={{ "position": "absolute", "inset": "0 -48px -12px -48px", "overflow": "hidden", "translate": "calc(var(--mx,0) * -28px) calc(var(--my,0) * -7px)", "transition": "translate 900ms cubic-bezier(0.22,1,0.36,1)", "animation": "sierraRise 1200ms cubic-bezier(0.22,1,0.36,1) 1740ms both" }}>
             {" "}
             <svg viewBox="0 0 2560 240" preserveAspectRatio="none" style={{ "position": "absolute", "top": "0", "left": "0", "width": "200%", "height": "100%", "display": "block", "animation": "sierraDrift 52s linear infinite" }}>
               <polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240" fill="var(--marca-fondo)" fillOpacity="1"></polygon>
+              <linearGradient id="prof-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0.5" }}></stop><stop offset="0.55" style={{ "stopColor": "rgb(var(--niebla-rgb))", "stopOpacity": "0" }}></stop></linearGradient><polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240" fill="url(#prof-4)"></polygon>
               <clipPath id="crestas-4"><polygon points="0,240 0,180 250,140 460,175 680,130 900,172 1100,145 1280,180 1280,180 1530,140 1740,175 1960,130 2180,172 2380,145 2560,180 2560,240"></polygon></clipPath>
               <linearGradient id="luz-crestas-4"><stop offset="0" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop><stop offset="0.4" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="0.5" style={{ "stopColor": "var(--brillo-sierra)" }}></stop><stop offset="0.6" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0.35" }}></stop><stop offset="1" style={{ "stopColor": "var(--brillo-sierra)", "stopOpacity": "0" }}></stop></linearGradient><g clipPath="url(#crestas-4)"><rect data-brillo-sierra="" x="0" y="0" width="220" height="240" fill="url(#luz-crestas-4)" style={{ "animationDelay": "3.6s" }}></rect></g>
             </svg>
@@ -167,7 +173,7 @@ export default function Login({ V }) {
         {" "}
         <div style={{ "position": "relative", "zIndex": "2", "flex": "1 1 420px", "display": "flex", "alignItems": "center", "justifyContent": "center", "padding": "clamp(16px,4vh,48px) 24px" }}>
           {" "}
-          <div style={{ "width": "100%", "maxWidth": "420px", "background": "var(--n-0)", "borderRadius": "16px", "padding": "clamp(20px,4vh,32px)", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200),0 32px 64px -32px rgba(11,42,30,0.28)", "animation": "cardRise 900ms cubic-bezier(0.22,1,0.36,1) 1880ms both" }}>
+          <div data-login-tarjeta="" style={{ "width": "100%", "maxWidth": "420px", "background": "var(--n-0)", "borderRadius": "16px", "padding": "clamp(20px,4vh,32px)", "boxShadow": "0 1px 2px rgba(0,0,0,0.06),0 0 0 1px var(--n-200),0 32px 64px -32px rgba(11,42,30,0.28)", "animation": "cardRise 900ms cubic-bezier(0.22,1,0.36,1) 1880ms both" }}>
             {" "}
             {V["loginTitleIdle"] ? (<>
               <h1 style={{ "fontSize": "clamp(28px,5vh,36px)", "lineHeight": "1.05", "fontWeight": "700", "letterSpacing": "-0.03em", "margin": "0 0 8px", "color": "var(--marca)" }}>

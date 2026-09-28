@@ -4,14 +4,18 @@
 export const valoresPulso = {
   valoresPulso(v, ctx) {
     const { s } = ctx;
+    // (5) Las cifras cuentan desde 0 al entrar a Métricas o al cambiar el período
+    if (!v.showPulso) this._cuentaClave = null;
     if (v.showPulso) {
+      const clave = 'pulso|' + (s.period || '30');
+      if (this._cuentaClave !== clave) { this._cuentaClave = clave; this.contarCifras(); }
       const p = this.pulse();
       const maxLoad = this.maxLoad();
-      v.pFirstResp = p.firstResp != null ? this.dur(p.firstResp) : '—';
+      v.pFirstResp = p.firstResp != null ? this.durCuenta(p.firstResp) : '—';
       v.pFirstRespNote = p.frCount + (p.frCount === 1 ? ' ticket con respuesta del área' : ' tickets con respuesta del área');
-      v.pResolution = p.resolution != null ? this.dur(p.resolution) : '—';
+      v.pResolution = p.resolution != null ? this.durCuenta(p.resolution) : '—';
       v.pResolutionNote = p.rsCount + (p.rsCount === 1 ? ' ticket cerrado medido' : ' tickets cerrados medidos');
-      v.pLate = String(p.late.length);
+      v.pLate = String(this.cifra(p.late.length));
       // Gráficos: series reales derivadas de los tickets (sin librería; SVG + grid)
       const dias = 14, W = 640, H = 200, top = 16, bot = 12;
       const ins = new Array(dias).fill(0), outs = new Array(dias).fill(0);
@@ -49,7 +53,7 @@ export const valoresPulso = {
           tip: (ago === 0 ? 'Hoy' : ago === 1 ? 'Ayer' : 'Hace ' + ago + ' días') + ' · ' + n + ' entraron · ' + outs[i] + ' cerraron' };
       });
       const tin = ins.reduce((a, b) => a + b, 0), tout = outs.reduce((a, b) => a + b, 0), net = tout - tin;
-      v.pInTotal = String(tin); v.pOutTotal = String(tout);
+      v.pInTotal = String(this.cifra(tin)); v.pOutTotal = String(this.cifra(tout));
       v.pNet = (net > 0 ? '−' : net < 0 ? '+' : '±') + Math.abs(net) + ' en cola';
       v.pNetInk = net >= 0 ? 'var(--verde)' : 'var(--naranja)';
       const grp = { late: 0, watch: 0, ok: 0, waiting: 0 };
@@ -62,7 +66,7 @@ export const valoresPulso = {
           off: (25 - acc).toFixed(2), title: g[1] + ': ' + grp[g[0]] };
         acc += len; return seg;
       });
-      v.pActTotal = String(p.act.length);
+      v.pActTotal = String(this.cifra(p.act.length));
       v.pLateNote = p.late.length === 0 ? 'Todo dentro del margen' : 'Pasaron su margen de atención';
       // A1 · lo que espera al solicitante no es deuda del área, pero sí hay que mirarlo
       const esperando = this.visible().filter(t => this.waitingOnRequester(t));
@@ -74,7 +78,7 @@ export const valoresPulso = {
       v.pWaitWeekNote = semana.length + (semana.length === 1 ? ' hace más de una semana' : ' hace más de una semana');
       v.pLateBg = 'var(--n-0)';
       v.pLateBorder = p.late.length > 0 ? '1px solid var(--naranja)' : '1px solid var(--n-200)';
-      v.pUnassigned = String(p.sinAsignar);
+      v.pUnassigned = String(this.cifra(p.sinAsignar));
       v.pUnassignedNote = p.sinAsignar === 0 ? 'Nadie esperando triage' : 'Activos sin dueño';
       v.pLoad = s.users.map(u => {
         const ld = this.loadOf(u.id), n = ld.n, lateN = ld.late;

@@ -59,6 +59,15 @@
   --brillo-sierra:rgba(255,255,255,0.34);
   --mota-rgb:246,196,82;
   --fugaz:#ffffff;
+  --login-horizonte:rgba(255,236,200,0);
+  --niebla-rgb:244,245,241;
+  --niebla-a:0.6;
+  /* Sistema: nubes y ráfaga de día, luz que sigue al cursor */
+  --nube:#dfeae4;
+  --viento:rgba(11,42,30,0.32);
+  --luz-rgb:77,124,42;
+  --luz-a:0.09;
+  --luz-borde:0.45;
   color-scheme:light;
 }
 /* Modo oscuro: los mismos tokens con valores oscuros (un leve verde, como la marca).
@@ -79,6 +88,8 @@
     --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
     --login-linea:#9aae9f; --login-hoja:#8fc46a;
     --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
+    --nube:#1c241f; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
+    --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
     color-scheme:dark;
   }
   :root:not([data-tema="claro"]) img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -98,6 +109,8 @@
     --login-sol:#5f8a3c; --login-cielo-1:#161a14; --login-cielo-2:#1b2117; --cielo-2-rgb:27,33,23;
     --login-linea:#9aae9f; --login-hoja:#8fc46a;
     --login-cielo-alto:#0b1410; --brillo:rgba(255,255,255,0.95); --brillo-sierra:rgba(214,236,222,0.16); --fugaz:#f4f1e2;
+    --nube:#1c241f; --viento:rgba(214,236,222,0.2); --luz-rgb:143,196,106; --luz-a:0.14; --luz-borde:0.6;
+    --login-horizonte:rgba(120,150,140,0); --niebla-rgb:120,145,132; --niebla-a:0.14;
     color-scheme:dark;
 }
 :root[data-tema="oscuro"] img[src*="/marca/legumex-"]{filter:brightness(0) invert(0.9)}
@@ -390,7 +403,7 @@
 [data-sol]{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 [data-sol-rayos]{transform-origin:50px 50px;animation:solGira 90s linear infinite}
 @keyframes solGira{to{transform:rotate(360deg)}}
-[data-cielo]{position:absolute;left:0;right:0;top:0;height:75vh;background:linear-gradient(180deg,var(--login-cielo-alto),rgba(var(--fondo-rgb),0))}
+[data-cielo]{position:absolute;inset:0;background:radial-gradient(ellipse 75% 32% at 62% 72%,var(--login-horizonte),transparent 70%),linear-gradient(180deg,var(--login-cielo-alto),rgba(var(--fondo-rgb),0) 78%);transition:background 1.2s}
 /* motas de luz de día (las "estrellas" del día): puntos cálidos que suben y brillan */
 [data-motas]{position:absolute;left:0;right:0;top:0;height:70vh;pointer-events:none;-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
 [data-motas]::before,[data-motas]::after{content:"";position:absolute;inset:0;filter:drop-shadow(0 0 3px rgba(var(--mota-rgb),0.9));background-image:radial-gradient(4.5px 4.5px at 14% 22%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 31% 64%,rgba(var(--mota-rgb),1),transparent),radial-gradient(5.0px 5.0px at 58% 16%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 73% 48%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 88% 30%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.0px 4.0px at 44% 38%,rgba(var(--mota-rgb),1),transparent),radial-gradient(3.5px 3.5px at 6% 50%,rgba(var(--mota-rgb),1),transparent),radial-gradient(4.5px 4.5px at 95% 62%,rgba(var(--mota-rgb),1),transparent);animation:motas 14s ease-in-out infinite}
@@ -468,3 +481,128 @@
   [data-m="menu"],[data-m="menu"][data-abierto]{transition:none!important}
   [data-m="hoja"],[data-m="chat-flotante"],[data-m="notificaciones"],[data-m="velo-hoja"]{animation:none!important}
 }
+
+/* ──────────── Sistema vivo (prototipo) ────────────
+   Cielo dentro de la hoja: detrás del contenido y delante del fondo de la hoja, así se ve
+   en los espacios libres sin tapar texto. De noche estrellas y estrella fugaz; de día
+   mini nubes y una ráfaga de aire de vez en cuando. */
+[data-cielo-app]{position:sticky;top:0;height:0;z-index:0;pointer-events:none}
+[data-cielo-app="frente"]{z-index:2}
+[data-cielo-app]>div{position:absolute;left:0;right:0;top:0;height:100vh;overflow:hidden}
+[data-m="pantalla"],[data-m="encabezado"]{position:relative;z-index:1}
+[data-estrellas="sistema"]{position:absolute;height:70vh;opacity:0.7}
+[data-cielo-app] [data-fugaz]{left:30%;top:4vh}
+[data-nubes]{position:absolute;inset:0}
+[data-nubes] svg{position:absolute;fill:var(--nube);opacity:0.9;animation:nubeViaja linear infinite}
+@keyframes nubeViaja{from{transform:translateX(-160px)}to{transform:translateX(calc(100vw + 40px))}}
+[data-rafaga]{position:absolute;left:0;top:30vh;width:280px;height:60px;opacity:0;animation:rafaga 240s cubic-bezier(0.4,0,0.2,1) 9s infinite}
+[data-rafaga] path{fill:none;stroke:var(--viento);stroke-width:1.8;stroke-linecap:round;stroke-dasharray:90 600;stroke-dashoffset:90;animation:rafagaTrazo 240s cubic-bezier(0.4,0,0.2,1) 9s infinite}
+[data-rafaga] path:nth-child(2){animation-delay:9.15s}[data-rafaga] path:nth-child(3){animation-delay:9.3s}
+@keyframes rafaga{0%{opacity:0;transform:translateX(-300px)}0.2%{opacity:1}1.3%{opacity:1}1.7%{opacity:0;transform:translateX(calc(100vw - 200px))}100%{opacity:0;transform:translateX(calc(100vw - 200px))}}
+@keyframes rafagaTrazo{0%{stroke-dashoffset:90}1.7%,100%{stroke-dashoffset:-300}}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) [data-nubes],:root:not([data-tema="claro"]) [data-rafaga]{display:none}}
+:root[data-tema="oscuro"] [data-nubes],:root[data-tema="oscuro"] [data-rafaga]{display:none}
+@media (prefers-reduced-motion:reduce){[data-cielo-app] *{animation:none!important}[data-rafaga]{display:none}}
+
+/* (1) Abrir un ticket: la tarjeta se estira hasta volverse el detalle (View Transitions) */
+::view-transition-group(ticket-abierto){animation-duration:460ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
+::view-transition-old(ticket-abierto),::view-transition-new(ticket-abierto){height:100%;object-fit:none;object-position:left top}
+/* el resto de la pantalla: la lista se va rápido y el detalle entra apenas después, sin fantasmas */
+::view-transition-old(root){animation:vtSale 160ms var(--ease-standard) both}
+::view-transition-new(root){animation:vtEntra 300ms var(--ease-standard) 110ms both}
+@keyframes vtSale{to{opacity:0}}
+@keyframes vtEntra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+/* (4) Luz que sigue al cursor: brillo suave adentro y borde encendido cerca del puntero */
+@media (hover:hover) and (pointer:fine){
+  [data-luz]{position:relative;isolation:isolate}
+  [data-luz]::before,[data-luz]::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity 280ms var(--ease-standard)}
+  [data-luz]::before{z-index:-1;background:radial-gradient(320px circle at var(--lx,50%) var(--ly,50%),rgba(var(--luz-rgb),var(--luz-a)),transparent 65%)}
+  [data-luz]::after{inset:-1px;padding:1px;background:radial-gradient(220px circle at var(--lx,50%) var(--ly,50%),rgba(var(--luz-rgb),var(--luz-borde)),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+  [data-luz]:hover::before,[data-luz]:hover::after{opacity:1}
+}
+
+/* (6) El chip de estado cambia con un pulso y un brillo que lo cruza */
+@keyframes chipCambia{0%{transform:scale(0.82);box-shadow:0 0 0 0 var(--chip-anillo);background-position:100% 0}45%{transform:scale(1.07)}100%{transform:scale(1);box-shadow:0 0 0 10px transparent;background-position:0 0}}
+[data-chip-cambia]{background-image:linear-gradient(105deg,transparent 42%,rgba(255,255,255,0.7) 50%,transparent 58%);background-size:300% 100%;background-repeat:no-repeat}
+
+/* (7) Escenas para los estados vacíos: la sierra con el sol (o la luna de noche) */
+[data-escena] [data-escena-luna]{display:none}
+[data-escena-rayos]{transform-box:fill-box;transform-origin:center;animation:solGira 40s linear infinite}
+[data-escena-estrella]{animation:titilar 1.6s ease-in-out infinite alternate}
+[data-escena-icono]{animation:badgePop 520ms cubic-bezier(0.34,1.56,0.64,1) 200ms both}
+[data-escena-sierra]{animation:sierraRise 900ms cubic-bezier(0.22,1,0.36,1) both}
+[data-escena-astro]{animation:escenaFlota 6s ease-in-out infinite}
+@keyframes escenaFlota{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) [data-escena] [data-escena-sol]{display:none}:root:not([data-tema="claro"]) [data-escena] [data-escena-luna]{display:inline}}
+:root[data-tema="oscuro"] [data-escena] [data-escena-sol]{display:none}
+:root[data-tema="oscuro"] [data-escena] [data-escena-luna]{display:inline}
+
+/* (8) Saludo con mini escena: sol de día, luna con estrella de noche (según la hora) */
+[data-saludo-escena]{display:inline-block;vertical-align:-5px;margin-right:6px}
+[data-saludo-escena] [data-rayos]{transform-box:fill-box;transform-origin:center;animation:solGira 24s linear infinite}
+[data-saludo-escena] [data-estrella]{animation:titilar 1.4s ease-in-out infinite alternate}
+
+/* (9) Aviso con barra de tiempo: muestra cuánto queda para leer o deshacer */
+[data-toast-barra]{position:absolute;left:14px;right:14px;bottom:4px;height:2px;border-radius:2px;background:rgba(var(--sf-rgb),0.2);overflow:hidden}
+[data-toast-barra]>span{display:block;height:100%;background:rgba(var(--sf-rgb),0.75);transform-origin:left;animation:toastTiempo linear both}
+@keyframes toastTiempo{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){[data-escena] *,[data-saludo-escena] *{animation:none!important}}
+
+/* ──────────── Cielo según la hora (data-fase en <html>, ver FASES_CIELO) ────────────
+   La hora decide qué hay en el cielo (sol o luna, estrellas, nubes, aves) y el tema solo
+   cambia la paleta. Sin data-fase (JS apagado) queda lo de antes: sol de día, luna en oscuro. */
+@media (prefers-color-scheme:light){:root[data-fase="amanecer"]:not([data-tema="oscuro"]){--login-cielo-alto:#ead8e4;--login-horizonte:rgba(255,186,146,0.6);--sol-1:#fff0d8;--sol-2:#f6ad62;--sol-rayo:#f2a05a;--sol-halo-rgb:246,173,98;--mota-rgb:246,170,110;--brillo-sierra:rgba(255,216,196,0.42);--niebla-rgb:250,232,226;--nube:#f1dde2;}}
+:root[data-fase="amanecer"][data-tema="claro"]{--login-cielo-alto:#ead8e4;--login-horizonte:rgba(255,186,146,0.6);--sol-1:#fff0d8;--sol-2:#f6ad62;--sol-rayo:#f2a05a;--sol-halo-rgb:246,173,98;--mota-rgb:246,170,110;--brillo-sierra:rgba(255,216,196,0.42);--niebla-rgb:250,232,226;--nube:#f1dde2;}
+@media (prefers-color-scheme:light){:root[data-fase="atardecer"]:not([data-tema="oscuro"]){--login-cielo-alto:#f1cfb0;--login-horizonte:rgba(246,132,64,0.55);--sol-1:#ffd6a0;--sol-2:#ee7d3a;--sol-rayo:#e87332;--sol-halo-rgb:238,125,58;--mota-rgb:240,140,70;--brillo-sierra:rgba(255,196,146,0.45);--niebla-rgb:250,226,206;--nube:#f4d8c2;}}
+:root[data-fase="atardecer"][data-tema="claro"]{--login-cielo-alto:#f1cfb0;--login-horizonte:rgba(246,132,64,0.55);--sol-1:#ffd6a0;--sol-2:#ee7d3a;--sol-rayo:#e87332;--sol-halo-rgb:238,125,58;--mota-rgb:240,140,70;--brillo-sierra:rgba(255,196,146,0.45);--niebla-rgb:250,226,206;--nube:#f4d8c2;}
+@media (prefers-color-scheme:light){:root[data-fase="noche"]:not([data-tema="oscuro"]){--login-cielo-alto:#a9b2d2;--login-horizonte:rgba(196,204,236,0.5);--brillo-sierra:rgba(224,230,255,0.32);--niebla-rgb:226,230,244;--nube:#dfe3f1;}}
+:root[data-fase="noche"][data-tema="claro"]{--login-cielo-alto:#a9b2d2;--login-horizonte:rgba(196,204,236,0.5);--brillo-sierra:rgba(224,230,255,0.32);--niebla-rgb:226,230,244;--nube:#dfe3f1;}
+@media (prefers-color-scheme:dark){:root[data-fase="amanecer"]:not([data-tema="claro"]){--login-cielo-alto:#17131a;--login-horizonte:rgba(236,146,108,0.2);--sol-1:#f6d2ae;--sol-2:#d8793f;--sol-rayo:#c96f3a;--sol-halo-rgb:216,121,63;--mota-rgb:216,140,90;--brillo-sierra:rgba(255,200,170,0.14);}}
+:root[data-fase="amanecer"][data-tema="oscuro"]{--login-cielo-alto:#17131a;--login-horizonte:rgba(236,146,108,0.2);--sol-1:#f6d2ae;--sol-2:#d8793f;--sol-rayo:#c96f3a;--sol-halo-rgb:216,121,63;--mota-rgb:216,140,90;--brillo-sierra:rgba(255,200,170,0.14);}
+@media (prefers-color-scheme:dark){:root[data-fase="dia"]:not([data-tema="claro"]){--login-cielo-alto:#0f1a1e;--login-horizonte:rgba(130,176,190,0.12);--sol-1:#f4e2a8;--sol-2:#d8a93e;--sol-rayo:#c99b3b;--sol-halo-rgb:216,169,62;--mota-rgb:214,170,80;}}
+:root[data-fase="dia"][data-tema="oscuro"]{--login-cielo-alto:#0f1a1e;--login-horizonte:rgba(130,176,190,0.12);--sol-1:#f4e2a8;--sol-2:#d8a93e;--sol-rayo:#c99b3b;--sol-halo-rgb:216,169,62;--mota-rgb:214,170,80;}
+@media (prefers-color-scheme:dark){:root[data-fase="atardecer"]:not([data-tema="claro"]){--login-cielo-alto:#1a1310;--login-horizonte:rgba(236,118,58,0.22);--sol-1:#f6b37c;--sol-2:#e0703a;--sol-rayo:#cf6a35;--sol-halo-rgb:224,112,58;--mota-rgb:224,120,60;--brillo-sierra:rgba(255,180,130,0.14);}}
+:root[data-fase="atardecer"][data-tema="oscuro"]{--login-cielo-alto:#1a1310;--login-horizonte:rgba(236,118,58,0.22);--sol-1:#f6b37c;--sol-2:#e0703a;--sol-rayo:#cf6a35;--sol-halo-rgb:224,112,58;--mota-rgb:224,120,60;--brillo-sierra:rgba(255,180,130,0.14);}
+/* qué hay en el cielo en cada fase (gana sobre las reglas por tema) */
+:root[data-fase] [data-sol],:root[data-fase] [data-motas],:root[data-fase] [data-aves],:root[data-fase] [data-nubes],:root[data-fase] [data-rafaga]{display:block!important}
+:root[data-fase] [data-luna],:root[data-fase] [data-estrellas],:root[data-fase] [data-fugaz]{display:none!important}
+:root[data-fase="noche"] [data-sol],:root[data-fase="noche"] [data-motas],:root[data-fase="noche"] [data-aves],:root[data-fase="noche"] [data-nubes],:root[data-fase="noche"] [data-rafaga]{display:none!important}
+:root[data-fase="noche"] [data-luna],:root[data-fase="noche"] [data-estrellas],:root[data-fase="noche"] [data-fugaz]{display:block!important}
+/* al amanecer y al atardecer quedan las últimas (o primeras) estrellas, tenues */
+:root[data-fase="amanecer"] [data-estrellas],:root[data-fase="atardecer"] [data-estrellas]{display:block!important;opacity:0.28}
+:root[data-fase="amanecer"] [data-motas],:root[data-fase="atardecer"] [data-motas]{opacity:0.7}
+/* sol bajo, grande y detrás de las montañas al amanecer y al atardecer */
+:root[data-fase="amanecer"] [data-astro],:root[data-fase="atardecer"] [data-astro]{top:auto;bottom:calc(clamp(170px,38vh,360px) - 46px);width:clamp(150px,13vw,200px)}
+/* en el hueco libre entre el texto y la tarjeta: al amanecer un poco más a la izquierda (este) */
+:root[data-fase="amanecer"] [data-astro]{right:47%}
+:root[data-fase="atardecer"] [data-astro]{right:41%}
+@media (max-width:767px){:root[data-fase="amanecer"] [data-astro],:root[data-fase="atardecer"] [data-astro]{width:120px;bottom:auto;top:18vh}:root[data-fase="amanecer"] [data-astro]{right:auto;left:6%}:root[data-fase="atardecer"] [data-astro]{right:6%}}
+/* escenas de los vacíos y del saludo: misma regla (luna solo de noche) */
+:root[data-fase] [data-escena] [data-escena-sol]{display:inline!important}
+:root[data-fase] [data-escena] [data-escena-luna]{display:none!important}
+:root[data-fase="noche"] [data-escena] [data-escena-sol]{display:none!important}
+:root[data-fase="noche"] [data-escena] [data-escena-luna]{display:inline!important}
+
+/* ──────────── Montañas con profundidad: degradado en cada cordillera y neblina entre ellas ──────────── */
+[data-niebla]{position:absolute;left:0;width:200%;pointer-events:none;background:radial-gradient(ellipse 14% 60% at 10% 55%,rgba(var(--niebla-rgb),var(--niebla-a)),transparent 70%),radial-gradient(ellipse 20% 50% at 34% 60%,rgba(var(--niebla-rgb),calc(var(--niebla-a) * 0.8)),transparent 70%),radial-gradient(ellipse 16% 55% at 60% 50%,rgba(var(--niebla-rgb),var(--niebla-a)),transparent 70%),radial-gradient(ellipse 22% 45% at 86% 58%,rgba(var(--niebla-rgb),calc(var(--niebla-a) * 0.75)),transparent 70%);animation:sierraDrift 160s linear infinite}
+[data-niebla="2"]{animation-duration:110s;animation-direction:reverse}
+
+/* ──────────── Teléfono: la escena se ve (texto compacto y tarjeta translúcida) ──────────── */
+@media (max-width:767px){
+  [data-login-copy] p{display:none}
+  [data-login-copy]{padding-bottom:8px!important}
+  [data-login-tarjeta]{background:rgba(var(--sf-rgb),0.8)!important;-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2)}
+}
+
+/* ──────────── Entrada al sistema: el cielo continúa (View Transitions) ────────────
+   La sierra del login se acomoda en la del sistema y el astro baja hasta el saludo. */
+::view-transition-group(sierra){animation-duration:900ms;animation-timing-function:cubic-bezier(0.22,1,0.36,1)}
+::view-transition-group(astro){animation-duration:1100ms;animation-timing-function:cubic-bezier(0.5,0,0.2,1)}
+::view-transition-old(astro),::view-transition-new(astro){height:100%;width:100%}
+:root[data-vt="entrada"]::view-transition-old(root){animation:vtSale 420ms var(--ease-standard) both}
+:root[data-vt="entrada"]::view-transition-new(root){animation:vtEntra 620ms var(--ease-standard) 260ms both}
+/* El cielo de la hora sigue adentro del sistema: un tinte suave arriba del fondo
+   (celeste de día, cálido al atardecer, lila de noche en tema claro) */
+body{background-image:linear-gradient(180deg,color-mix(in srgb,var(--login-cielo-alto) 60%,var(--fondo)) 0,var(--fondo) 60vh);background-attachment:fixed}

@@ -14,7 +14,7 @@ export default function DetalleCabecera({ V }) {
         {"Volver al listado"}
       </button>
       {" "}
-      <span style={{ "display": "inline-flex", "alignItems": "center", "gap": "6px", "background": S(V["dStatusBg"]), "borderRadius": "9999px", "padding": "6px 12px", "fontSize": "12px", "fontWeight": "500", "color": "var(--n-900)" }}>
+      <span key={V["dChipKey"]} data-chip-cambia="" style={Object.assign({ "display": "inline-flex", "alignItems": "center", "gap": "6px", "backgroundColor": S(V["dStatusBg"]), "borderRadius": "9999px", "padding": "6px 12px", "fontSize": "12px", "fontWeight": "500", "color": "var(--n-900)" }, V["dChipStyle"])}>
         {V["dStatusOpen"] ? (<>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={V["dStatusDot"]} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0" }}>
             <circle cx="12" cy="12" r="10"></circle>

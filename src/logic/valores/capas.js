@@ -120,6 +120,8 @@ export const valoresCapas = {
       this._fillRaf = requestAnimationFrame(step);
     };
     v.hasToast = !!s.toast; v.toast = s.toast; v.toastAviso = !!s.toastAviso; v.toastOk = !s.toastAviso;
+    // barra que se vacía en el tiempo que el aviso queda a la vista (y se puede deshacer)
+    v.toastBarraKey = 'tb' + (s.toastN || 0); v.toastBarraStyle = { animationDuration: (s.toastMs || 2800) + 'ms' };
     v.hasUndo = !!s.undo;
     v.onUndo = () => { const fn = s.undo; if (fn) fn(); };
     // Recorrido guiado: paso actual, recuadro iluminado y dónde va la tarjeta (sin tapar lo que se explica)

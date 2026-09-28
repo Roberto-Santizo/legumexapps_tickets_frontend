@@ -66,3 +66,14 @@ export const MQ_MOVIL = '(max-width: 767px), (max-height: 500px) and (pointer: c
 
 // Único dominio de correo que se acepta al crear o editar usuarios
 export const DOMINIO_CORREO = '@legumex.net';
+
+// Cielo según la hora de Guatemala (minutos desde medianoche): el login y el sistema muestran
+// amanecer, día, atardecer o noche; el tema claro/oscuro solo cambia los colores.
+// index.html repite estos cortes en su script inicial (para que no parpadee al abrir).
+export const FASES_CIELO = [
+  { fase: 'noche', hasta: 5 * 60 + 30 },
+  { fase: 'amanecer', hasta: 7 * 60 },
+  { fase: 'dia', hasta: 17 * 60 + 15 },
+  { fase: 'atardecer', hasta: 18 * 60 + 45 },
+  { fase: 'noche', hasta: 24 * 60 }
+];

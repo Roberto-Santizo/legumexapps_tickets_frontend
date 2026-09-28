@@ -28,6 +28,7 @@ export default function Toast({ V }) {
             {"Deshacer"}
           </button>
         </>) : null}
+        <span data-toast-barra="" aria-hidden="true"><span key={V["toastBarraKey"]} style={V["toastBarraStyle"]}></span></span>
       </div>
     </>
   );
