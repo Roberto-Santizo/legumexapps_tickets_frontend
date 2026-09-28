@@ -31,6 +31,7 @@ export const valoresChat = {
     v.onCloseChat = () => this.setState({ chatOpen: false });
     // en el teléfono el panel ya ocupa toda la pantalla: no hay a dónde "expandir"
     v.chatExpandOn = !s.movil;
+    v.chatVolverOn = !!s.movil;
     v.onChatExpand = () => { const already = s.screen === 'chat'; this.setState({ chatOpen: false, screen: 'chat', detailId: null, dir: already ? 'none' : 'up' }); if (!already) this.load(420); };
     v.onChatBack = () => this.setState({ chatId: null, chatMsg: '', chatErr: '' });
     v.canChatDetail = !!det;

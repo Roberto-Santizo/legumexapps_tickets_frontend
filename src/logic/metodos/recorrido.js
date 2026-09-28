@@ -5,6 +5,9 @@ import { RECORRIDO_ADMIN, RECORRIDO_USUARIO } from '../../config/textos.js';
 // Fijo o pegajoso (barras, botón flotante): no se desplaza la página para mostrarlo
 const fijo = el => { for (let e = el; e && e !== document.body; e = e.parentElement) { const p = getComputedStyle(e).position; if (p === 'fixed' || p === 'sticky') return true; } return false; };
 
+// Contenedor con scroll propio más cercano (p. ej. el menú del teléfono)
+const conScroll = el => { for (let e = el.parentElement; e && e !== document.body; e = e.parentElement) { if (/(auto|scroll)/.test(getComputedStyle(e).overflowY) && e.scrollHeight > e.clientHeight + 1) return e; } return null; };
+
 export const metodosRecorrido = {
   pasosRecorrido() { return this.state.role === 'admin' ? RECORRIDO_ADMIN : RECORRIDO_USUARIO; },
 
@@ -19,7 +22,9 @@ export const metodosRecorrido = {
     }
     // Lo explicado puede moverse sin que haya desplazamiento (la lista termina de cargar, entra un
     // aviso arriba, animaciones): mientras dura el recorrido se mide seguido; solo repinta si cambió
-    clearInterval(this._recT); this._recT = setInterval(() => this.medirRecorrido(), 250);
+    // durante el primer momento de cada paso también se acomoda (llevar): el menú del teléfono
+    // puede estar deslizándose y el elemento todavía no está en su lugar
+    clearInterval(this._recT); this._recT = setInterval(() => this.medirRecorrido(Date.now() < (this._recLlevarHasta || 0)), 250);
     this.medirRecorrido();
   },
 
@@ -32,6 +37,7 @@ export const metodosRecorrido = {
     // escondido: el menú se abre solo en esos pasos y se cierra en los demás
     const paso = this.pasosRecorrido()[i] || {};
     this.setState({ recorrido: { i }, menuMovil: !!(this.state.movil && paso.enMenu) });
+    this._recLlevarHasta = Date.now() + 900;
     requestAnimationFrame(() => this.medirRecorrido(true));
   },
 
@@ -56,6 +62,17 @@ export const metodosRecorrido = {
     };
     let el = null;
     for (const sel of paso.donde || []) { el = Array.prototype.find.call(document.querySelectorAll(sel), visible) || null; if (el) break; }
+    // Dentro de un panel fijo con scroll propio (el menú del teléfono): se desplaza ese panel
+    // hasta que el elemento quede entero a la vista (la página no se mueve)
+    if (el && llevar && fijo(el)) {
+      const c = conScroll(el);
+      if (c) {
+        const cb = c.getBoundingClientRect(), b = el.getBoundingClientRect();
+        const arriba = Math.max(cb.top, 0) + 16, abajo = Math.min(cb.bottom, H) - 16;
+        if (b.top < arriba) c.scrollTop -= arriba - b.top;
+        else if (b.bottom > abajo) c.scrollTop += Math.min(b.bottom - abajo, b.top - arriba);
+      }
+    }
     if (el && llevar && !fijo(el)) {
       const b = el.getBoundingClientRect();
       if (this.state.movil) {

@@ -5,19 +5,19 @@ import { T, S } from '../../utils/runtime.js';
 export default function VisorImagen({ V }) {
   return (
     <>
-      <div role="dialog" aria-modal="true" aria-label="Imagen ampliada" style={{ "position": "fixed", "inset": "0", "zIndex": "70", "background": "rgba(10,10,10,0.9)", "display": "flex", "flexDirection": "column", "animation": "overlayIn var(--duration-base) var(--ease-standard) both" }}>
+      <div data-m="visor" role="dialog" aria-modal="true" aria-label="Imagen ampliada" style={{ "position": "fixed", "inset": "0", "zIndex": "70", "background": "rgba(10,10,10,0.9)", "display": "flex", "flexDirection": "column", "animation": "overlayIn var(--duration-base) var(--ease-standard) both" }}>
         {" "}
         <div onClick={V["onLbClose"]} style={{ "position": "absolute", "inset": "0", "cursor": "zoom-out" }}></div>
         {" "}
-        <div style={{ "position": "relative", "display": "flex", "alignItems": "center", "gap": "12px", "padding": "16px 20px" }}>
+        <div data-m="visor-barra" style={{ "position": "relative", "display": "flex", "alignItems": "center", "gap": "12px", "padding": "16px 20px" }}>
           {" "}
-          <div style={{ "minWidth": "0" }}>
+          <div style={{ "minWidth": "0", "flex": "1" }}>
             {" "}
             <div style={{ "fontSize": "14px", "fontWeight": "500", "color": "var(--n-0)", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
               {T(V["lbNombre"])}
             </div>
             {" "}
-            <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-300)", "letterSpacing": "0.04em", "marginTop": "2px" }}>
+            <div style={{ "fontFamily": "'JetBrains Mono',monospace", "fontSize": "11px", "color": "var(--n-300)", "letterSpacing": "0.04em", "marginTop": "2px", "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }}>
               {T(V["lbMeta"])}
             </div>
             {" "}
@@ -27,7 +27,7 @@ export default function VisorImagen({ V }) {
             {" "}
             {V["lbHasUrl"] ? (<>
               {" "}
-              <div style={{ "display": "flex", "alignItems": "center", "gap": "6px", "marginRight": "8px" }}>
+              <div data-m="visor-zoom" style={{ "display": "flex", "alignItems": "center", "gap": "6px", "marginRight": "8px" }}>
                 {" "}
                 <button onClick={V["onLbOut"]} aria-label="Alejar (−)" title="Alejar (−)" style={{ "background": "rgba(255,255,255,0.08)", "color": "var(--n-0)", "border": "1px solid rgba(255,255,255,0.28)", "borderRadius": "9999px", "width": "40px", "height": "40px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp2g scp2h">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--n-0)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -81,7 +81,7 @@ export default function VisorImagen({ V }) {
           {" "}
         </div>
         {" "}
-        <div style={{ "position": "relative", "flex": "1", "minHeight": "0", "display": "flex", "alignItems": "center", "justifyContent": "center", "padding": "0 80px 40px", "pointerEvents": "none" }}>
+        <div data-m="visor-area" style={{ "position": "relative", "flex": "1", "minHeight": "0", "display": "flex", "alignItems": "center", "justifyContent": "center", "padding": "0 80px 40px", "pointerEvents": "none" }}>
           {" "}
           {V["lbHasUrl"] ? (<>
             {" "}
@@ -121,13 +121,13 @@ export default function VisorImagen({ V }) {
         {" "}
         {V["lbMulti"] ? (<>
           {" "}
-          <button onClick={V["onLbPrev"]} aria-label="Imagen anterior" title="Imagen anterior" style={{ "position": "absolute", "left": "20px", "top": "50%", "marginTop": "-20px", "background": "rgba(255,255,255,0.08)", "color": "var(--n-0)", "border": "1px solid rgba(255,255,255,0.28)", "borderRadius": "9999px", "width": "40px", "height": "40px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp2j scp2h">
+          <button data-m="visor-flecha" onClick={V["onLbPrev"]} aria-label="Imagen anterior" title="Imagen anterior" style={{ "position": "absolute", "left": "20px", "top": "50%", "marginTop": "-20px", "background": "rgba(255,255,255,0.08)", "color": "var(--n-0)", "border": "1px solid rgba(255,255,255,0.28)", "borderRadius": "9999px", "width": "40px", "height": "40px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp2j scp2h">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--n-0)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
               <path d="m15 18-6-6 6-6"></path>
             </svg>
           </button>
           {" "}
-          <button onClick={V["onLbNext"]} aria-label="Imagen siguiente" title="Imagen siguiente" style={{ "position": "absolute", "right": "20px", "top": "50%", "marginTop": "-20px", "background": "rgba(255,255,255,0.08)", "color": "var(--n-0)", "border": "1px solid rgba(255,255,255,0.28)", "borderRadius": "9999px", "width": "40px", "height": "40px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp2j scp2h">
+          <button data-m="visor-flecha" onClick={V["onLbNext"]} aria-label="Imagen siguiente" title="Imagen siguiente" style={{ "position": "absolute", "right": "20px", "top": "50%", "marginTop": "-20px", "background": "rgba(255,255,255,0.08)", "color": "var(--n-0)", "border": "1px solid rgba(255,255,255,0.28)", "borderRadius": "9999px", "width": "40px", "height": "40px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp2j scp2h">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--n-0)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
               <path d="m9 18 6-6-6-6"></path>
             </svg>

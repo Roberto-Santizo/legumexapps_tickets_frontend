@@ -80,6 +80,7 @@ export class Logica extends LogicaBase {
     this.escucharMovil();
     this.escucharArrastre();
     this.escucharLuz();
+    this.escucharTeclado();
     this.aplicarFase(); this._faseIv = setInterval(() => this.aplicarFase(), 60000);
     this.aplicarTema(this.state.tema);
     this.load(650);
@@ -120,6 +121,7 @@ export class Logica extends LogicaBase {
       }
       if (e.key === 'Escape' && s.menuMovil) { this.setState({ menuMovil: false }); return; }
       if (e.key === 'Escape' && s.qa) { this.setState({ qa: null }); return; }
+      if (e.key === 'Escape' && s.notifOpen) { this.setState({ notifOpen: false }); return; }
       if (e.key === 'Escape' && (s.viewOpen || s.periodOpen)) { this.setState({ viewOpen: false, periodOpen: false }); return; }
       if (e.key === 'Escape') {
         if (s.asigOpen) { this.setState({ asigOpen: false }); return; }
@@ -150,6 +152,8 @@ export class Logica extends LogicaBase {
     if (this._mqMovil) this._mqMovil.removeEventListener('change', this._onMq);
     this.dejarDeEscucharArrastre();
     if (this._onLuz) document.removeEventListener('pointermove', this._onLuz);
+    if (this._onFoco) document.removeEventListener('focusin', this._onFoco);
+    clearTimeout(this._focoT);
     clearInterval(this._faseIv);
     if (this._onRecMedir) { window.removeEventListener('resize', this._onRecMedir); window.removeEventListener('scroll', this._onRecMedir, true); }
     clearInterval(this._recT); cancelAnimationFrame(this._recRaf); cancelAnimationFrame(this._cuentaRaf);

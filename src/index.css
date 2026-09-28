@@ -623,3 +623,25 @@ body{background-image:linear-gradient(180deg,color-mix(in srgb,var(--login-cielo
   [data-m="encabezado"]{padding-top:20px!important;padding-bottom:10px!important}
   [data-m="lista-usuarios"]{max-height:none!important;overflow:visible!important}
 }
+
+/* ──────────── Visor de imágenes en teléfono y tablet: pantalla completa y gestos ────────────
+   Pellizco, arrastre, doble toque y deslizar (logic/valores/capas.js); sin botones de zoom. */
+@media (max-width:767px),(pointer:coarse) and (hover:none) and (max-width:1366px){
+  [data-m="visor"]{background:rgb(0,0,0)!important}
+  [data-m="visor-barra"]{padding:calc(10px + env(safe-area-inset-top,0px)) 12px 10px 16px!important;gap:8px!important}
+  [data-m="visor-zoom"],[data-m="visor-flecha"]{display:none!important}
+  [data-m="visor-area"]{padding:0 0 calc(36px + env(safe-area-inset-bottom,0px))!important}
+  [data-m="visor-area"]>div{border-radius:0!important}
+}
+
+/* ──────────── Pantallas táctiles: sin tooltips de mouse y áreas de toque de 40 px ────────────
+   Los globos que aparecen al pasar el mouse no existen con el dedo (y quedaban pegados tras
+   tocar). Los botones chicos (iconos de 30 px de las tarjetas, "Marcar todo", filtros de la
+   bandeja) conservan su dibujo pero reciben un área de toque invisible más grande. */
+@media (hover:none) and (pointer:coarse){
+  [role="tooltip"]{display:none!important}
+  button:not([style*="position"]){position:relative}
+  button::before{content:"";position:absolute;inset:-9px}
+  a[href]:not([style*="position"]){position:relative}
+  a[href][aria-label]::before{content:"";position:absolute;inset:-9px}
+}

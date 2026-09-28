@@ -234,6 +234,19 @@ export const metodosInterfaz = {
 
   // (4) Luz que sigue al cursor: un solo oyente para todas las tarjetas marcadas con
   // data-luz; solo mueve dos variables CSS (--lx/--ly), sin volver a pintar React
+  // Teléfono y tablet: al escribir, el campo enfocado se centra cuando el teclado terminó de
+  // abrir (el navegador a veces lo deja pegado al borde del teclado o tapado)
+  escucharTeclado() {
+    if (this._onFoco) return;
+    this._onFoco = e => {
+      const el = e.target;
+      if (!this.state.movil || !el || !/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || /^(checkbox|radio|file)$/.test(el.type)) return;
+      clearTimeout(this._focoT);
+      this._focoT = setTimeout(() => { if (document.activeElement === el) el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 350);
+    };
+    document.addEventListener('focusin', this._onFoco);
+  },
+
   escucharLuz() {
     if (this._onLuz || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     this._onLuz = e => {

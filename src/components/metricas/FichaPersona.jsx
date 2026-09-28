@@ -98,7 +98,7 @@ export default function FichaPersona({ V }) {
             ) : (<div style={{ "fontSize": "14px", "color": "var(--n-600)", "marginTop": "8px" }}>{"Sin tickets activos."}</div>)}
           </section>
           <p style={{ "margin": "0", "fontSize": "12px", "lineHeight": "1.5", "color": "var(--n-500)", "borderTop": "1px solid var(--n-200)", "paddingTop": "12px" }}>
-            {T(V["fichaComentarios"])}{". Calculado con los tickets del sistema; no mide horas trabajadas porque el sistema no registra jornadas."}
+            {T(V["fichaComentarios"])}{"."}
           </p>
         </div>
       </aside>

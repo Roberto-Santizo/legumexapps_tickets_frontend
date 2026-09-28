@@ -289,8 +289,8 @@ En modo demostración siguen visibles, como en el prototipo.
   palabras"), cuatro cifras comparadas con el promedio del equipo, cierres por día,
   categorías y tickets activos. Cálculo en `statsPersona` / `statsEquipo`
   (`logic/metodos/pulso.js`): cierres por el historial ("Ticket cerrado" con su autor),
-  primera respuesta por sus comentarios, margen por prioridad. No mide horas
-  trabajadas: el backend no registra jornadas.
+  primera respuesta por sus comentarios, margen por prioridad. No hay horas trabajadas
+  (el backend no registra jornadas); la ficha no lo menciona.
   - El logo se aclara con un filtro.
 - **Selector de tema**: botón junto al nombre en la tarjeta del usuario; cambia entre
   Claro, Oscuro y Auto (`aplicarTema` / `ciclarTema` en `logic/metodos/interfaz.js`).
@@ -327,6 +327,21 @@ En modo demostración siguen visibles, como en el prototipo.
 - **Teclado del teléfono**: `interactive-widget=resizes-content` en el viewport de
   `index.html` hace que el teclado achique la pantalla y el cuadro de escribir quede a la vista.
 - **Usuarios en el teléfono**: la lista no tiene scroll propio; se desplaza la página.
+- **Pantallas táctiles** (sección al final de `index.css`): sin tooltips de mouse
+  (`[role="tooltip"]` se oculta: quedaban pegados tras tocar) y áreas de toque de al menos
+  40 px con un `::before` invisible en botones y enlaces con ícono. Al enfocar un campo, se
+  centra cuando abre el teclado (`escucharTeclado`).
+- **Visor de imágenes en el táctil**: pellizco para el zoom, un dedo para moverse, doble
+  toque para acercar o ajustar, deslizar de lado para cambiar de imagen y hacia abajo para
+  cerrar (`logic/valores/capas.js`); fondo negro y sin botones de zoom.
+- **Al cambiar de pantalla** se empieza arriba y al volver de un ticket la lista sigue donde
+  iba (`acomodarScroll`). El recorrido desplaza el menú del teléfono hasta mostrar entero lo
+  que explica.
+- **Chat en el teléfono**: flecha ← para volver en la lista de conversaciones.
+- **Reglas para no repetir errores en el táctil**: nada de textos con clic, rueda, Enter o
+  arrastrar en pantallas táctiles; nada de listas con scroll propio dentro de la página;
+  nada que dependa del hover; paneles con botón para cerrar; capas fijas fuera de la hoja
+  (su desenfoque atrapa a los `position: fixed`).
 
 Un solo código para PC y teléfono: **no hay una versión móvil aparte**. En escritorio nada
 cambia (se verificó comparando el DOM contra la versión anterior en recorridos

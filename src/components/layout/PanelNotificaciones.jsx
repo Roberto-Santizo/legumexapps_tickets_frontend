@@ -27,6 +27,9 @@ export default function PanelNotificaciones({ V }) {
               {"Marcar todo como leído"}
             </button>
           </>) : null}
+          <button onClick={V["onBellClose"]} aria-label="Cerrar notificaciones" title="Cerrar" style={{ "marginLeft": V["hasUnread"] ? "0" : "auto", "flexShrink": "0", "width": "32px", "height": "32px", "border": "1px solid var(--n-200)", "borderRadius": "8px", "background": "var(--n-0)", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center" }} className="scp4">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+          </button>
           {" "}
         </div>
         {" "}

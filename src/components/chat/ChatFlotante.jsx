@@ -100,9 +100,16 @@ export default function ChatFlotante({ V }) {
           {" "}
           {V["chatListPane"] ? (<>
             {" "}
+            {/* en el teléfono el panel ocupa toda la pantalla: flecha para volver, como en el resto */}
+            {V["chatVolverOn"] ? (
+              <button onClick={V["onCloseChat"]} aria-label="Volver" title="Volver" style={{ "flexShrink": "0", "width": "36px", "height": "36px", "marginLeft": "-6px", "border": "none", "borderRadius": "8px", "background": "transparent", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center" }} className="scp4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--n-900)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+              </button>
+            ) : (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--n-900)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0" }}>
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
+            )}
             {" "}
             <div style={{ "minWidth": "0", "flex": "1" }}>
               {" "}
