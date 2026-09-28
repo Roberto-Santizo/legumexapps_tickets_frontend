@@ -353,6 +353,10 @@ En modo demostración siguen visibles, como en el prototipo.
   - **Teclado adecuado por campo**: correos con `inputMode="email"`, sin mayúscula inicial
     ni autocorrector; buscadores `type="search"` (tecla "Buscar"); chat con tecla
     "Enviar" (`enterKeyHint`). Mantenerlo en campos nuevos del mismo tipo.
+  - **La página no se corre hacia los lados**: `html` recorta lo que sobresale a lo ancho
+    (`overflow-x: clip`, que no rompe el encabezado sticky), sin rebote lateral, y el doble
+    toque no agranda (`touch-action: manipulation`; el pellizco sí). Con el chat a pantalla
+    completa el fondo no se desplaza (`html:has(...)`).
   - Desenfoques con `WebkitBackdropFilter` además de `backdropFilter`, y máscaras con
     `-webkit-mask-image`.
   - Se revisa con `ios` (auditoría en iPhone, iPhone SE y iPad: campos < 16 px y desborde
