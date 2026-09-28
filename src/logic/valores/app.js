@@ -10,7 +10,8 @@ export const valoresApp = {
     const shortVh = typeof window !== 'undefined' && window.innerHeight < 652;
     const noPageScroll = !s.movil && ((s.screen === 'chat' && !shortVh) || s.screen === 'users');
     v.sheetOverflow = noPageScroll ? 'hidden' : 'auto';
-    v.onSheetScroll = this._onSheetScroll || (this._onSheetScroll = e => this.sheetEdges(e.currentTarget));
+    // además guarda dónde iba la lista, para volver ahí al salir de un ticket
+    v.onSheetScroll = this._onSheetScroll || (this._onSheetScroll = e => { if (this.state.screen === 'tickets') this._scrollLista = e.currentTarget.scrollTop; this.sheetEdges(e.currentTarget); });
     if (typeof requestAnimationFrame !== 'undefined') requestAnimationFrame(() => { const el = document.querySelector('[data-sheet]'); if (el) this.sheetEdges(el); });
     v.padBottom = noPageScroll ? '16px' : '96px';
     v.sheetMask = s.screen === 'tickets' ? 'linear-gradient(to bottom, var(--n-1000) 0, var(--n-1000) calc(100% - 72px), rgba(0,0,0,var(--fb,0.12)) 100%)' : 'none';

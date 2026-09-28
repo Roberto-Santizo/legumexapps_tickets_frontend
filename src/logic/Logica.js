@@ -159,6 +159,9 @@ export class Logica extends LogicaBase {
   }
 
   componentDidUpdate(prev) {
+    // App.jsx no pasa el estado anterior de la lógica: se guarda acá el último que se pintó
+    this.acomodarScroll(this._estadoPintado);
+    this._estadoPintado = this.state;
     if (prev.estadoError !== this.props.estadoError) {
       const v = this.props.estadoError || 'ninguno';
       this.setState({ forced: v, err500: v === '500', err500Line: 'HTTP 500 · GET /api/tickets' });

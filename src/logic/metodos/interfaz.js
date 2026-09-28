@@ -152,6 +152,26 @@ export const metodosInterfaz = {
   },
 
   // Bordes del área de scroll: arriba solo si bajaste, abajo solo si queda contenido
+  // Al cambiar de pantalla (ticket, Métricas, formularios…) se empieza arriba; al volver de
+  // un ticket a la lista, se regresa a donde iba. Corre dentro de la transición, antes de que
+  // el navegador tome la foto de la pantalla nueva.
+  acomodarScroll(antes) {
+    const s = this.state;
+    if (!antes || !s.authed) return;
+    const hoja = document.querySelector('[data-sheet]');
+    const poner = y => { if (hoja) hoja.scrollTop = y; if (window.scrollY) window.scrollTo(0, y); };
+    const cambio = antes.screen !== s.screen || antes.detailId !== s.detailId || antes.editId !== s.editId || antes.entity !== s.entity;
+    if (cambio) {
+      const volverALista = s.screen === 'tickets' && (antes.screen === 'detail' || antes.screen === 'edit');
+      this._restaurar = volverALista ? (this._scrollLista || 0) : 0;
+      poner(this._restaurar);
+      if (!s.loading) this._restaurar = null;
+      return;
+    }
+    // la lista pudo volver con su carga: al terminar de pintar se reubica
+    if (this._restaurar != null && antes.loading && !s.loading) { poner(this._restaurar); this._restaurar = null; }
+  },
+
   sheetEdges(el) {
     const on = el.scrollTop > 4 ? '1' : '0';
     const fb = el.scrollTop + el.clientHeight >= el.scrollHeight - 4 ? '1' : '0.12';
