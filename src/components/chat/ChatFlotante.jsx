@@ -118,14 +118,14 @@ export default function ChatFlotante({ V }) {
             {" "}
           </>) : null}
           {" "}
-          <button onClick={V["onChatExpand"]} aria-label="Abrir en la sección Chat" title="Abrir en pantalla completa" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "6px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "flexShrink": "0", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scpq scp19">
+          {V["chatExpandOn"] ? (<><button onClick={V["onChatExpand"]} aria-label="Abrir en la sección Chat" title="Abrir en pantalla completa" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "6px", "cursor": "pointer", "display": "flex", "alignItems": "center", "justifyContent": "center", "flexShrink": "0", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scpq scp19">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ "flexShrink": "0", "transform": "scale(var(--ic,1))", "transition": "transform var(--duration-base) var(--ease-standard)" }}>
               <path d="M15 3h6v6"></path>
               <path d="m21 3-7 7"></path>
               <path d="m3 21 7-7"></path>
               <path d="M9 21H3v-6"></path>
             </svg>
-          </button>
+          </button></>) : null}
           {" "}
           <button onClick={V["onCloseChat"]} aria-label="Cerrar conversaciones" title="Cerrar" style={{ "background": "var(--n-0)", "border": "1px solid var(--n-200)", "borderRadius": "8px", "padding": "6px", "cursor": "pointer", "display": "flex", "alignItems": "center", "flexShrink": "0", "transition": "background-color var(--duration-fast) var(--ease-standard)" }} className="scpx scpt">
             <svg style={{ "transform": "var(--im,rotate(0deg)) scale(var(--ic,1))", "transformOrigin": "center", "transition": "transform var(--duration-base) var(--ease-standard),stroke var(--duration-fast) var(--ease-standard)", "stroke": "var(--is,var(--n-600))" }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n-600)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -497,7 +497,7 @@ export default function ChatFlotante({ V }) {
                   </svg>
                 </label>
                 {" "}
-                <textarea value={(V["chatMsg"] ?? "")} onChange={V["onChatMsg"]} onKeyDown={V["onChatKey"]} rows="2" placeholder="Escribe tu respuesta — Enter envía, Shift+Enter salta línea" style={{ "flex": "1", "minWidth": "0", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "10px", "padding": "9px 11px", "fontSize": "14px", "lineHeight": "1.5", "fontFamily": "inherit", "resize": "none", "outline": "none" }}></textarea>
+                <textarea value={(V["chatMsg"] ?? "")} onChange={V["onChatMsg"]} onKeyDown={V["onChatKey"]} rows="2" placeholder={V["chatPh"]} style={{ "flex": "1", "minWidth": "0", "background": "var(--n-0)", "color": "var(--n-900)", "border": "1px solid var(--n-200)", "borderRadius": "10px", "padding": "9px 11px", "fontSize": "14px", "lineHeight": "1.5", "fontFamily": "inherit", "resize": "none", "outline": "none" }}></textarea>
                 {" "}
                 <button onClick={V["onChatSend"]} aria-label="Enviar respuesta" title="Enviar respuesta" style={{ "background": "var(--n-950)", "color": "var(--n-0)", "border": "none", "borderRadius": "10px", "padding": "10px", "cursor": "pointer", "display": "flex", "alignItems": "center", "flexShrink": "0", "transition": "transform var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard)" }} className="scp1c scp8">
                   {V["chatIdle"] ? (<>

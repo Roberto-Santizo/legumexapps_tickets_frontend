@@ -134,7 +134,7 @@ export const valoresCapas = {
       v.recPaso = 'PASO ' + (i + 1) + ' DE ' + pasos.length;
       v.recHayAnterior = i > 0;
       v.recSiguiente = i === pasos.length - 1 ? 'Terminar' : i === 0 ? 'Empezar' : 'Siguiente';
-      v.recPuntos = pasos.map((_, k) => ({ key: 'p' + k, bg: k === i ? 'var(--n-900)' : 'var(--n-300)', w: k === i ? '18px' : '6px' }));
+      v.recPuntos = pasos.map((_, k) => ({ key: 'p' + k, bg: k === i ? 'var(--n-900)' : 'var(--n-300)', w: k === i ? '14px' : '5px' }));
       v.recFoco = !!R; v.recSinFoco = !R;
       v.recFocoStyle = R ? { left: (R.x - pad) + 'px', top: (R.y - pad) + 'px', width: (R.w + pad * 2) + 'px', height: (R.h + pad * 2) + 'px', borderRadius: (R.r + pad) + 'px' } : {};
       const px = n => Math.round(n) + 'px', entre = (n, a, b) => Math.max(a, Math.min(b, n));

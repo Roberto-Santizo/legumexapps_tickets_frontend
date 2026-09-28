@@ -6,6 +6,8 @@ import { MACROS, MACROS_USER } from '../../config/textos.js';
 export const valoresChat = {
   valoresChat(v, ctx) {
     const { s, me, isAdmin, mine, det } = ctx;
+    // en pantallas táctiles no hay Shift+Enter: el cuadro solo invita a escribir
+    v.chatPh = s.movil ? 'Escribe tu respuesta' : 'Escribe tu respuesta — Enter envía, Shift+Enter salta línea';
     // --- conversaciones (dock, solo admin) ---
     // Admin: espera si el último comentario es del solicitante. Usuario: si el último es de alguien del área.
     const waits = t => {
@@ -27,6 +29,8 @@ export const valoresChat = {
     v.chatOpen = !!s.chatOpen;
     v.onOpenChat = () => this.setState({ chatOpen: true, chatId: null, chatMsg: '', chatErr: '', chatQ: '' });
     v.onCloseChat = () => this.setState({ chatOpen: false });
+    // en el teléfono el panel ya ocupa toda la pantalla: no hay a dónde "expandir"
+    v.chatExpandOn = !s.movil;
     v.onChatExpand = () => { const already = s.screen === 'chat'; this.setState({ chatOpen: false, screen: 'chat', detailId: null, dir: already ? 'none' : 'up' }); if (!already) this.load(420); };
     v.onChatBack = () => this.setState({ chatId: null, chatMsg: '', chatErr: '' });
     v.canChatDetail = !!det;
@@ -58,7 +62,7 @@ export const valoresChat = {
       this._chatRO.observe(el);
     });
     v.chatPageRef = this._chatPageRef;
-    v.chatPageHint = nWait > 0 ? 'Arriba de la lista están las ' + nWait + ' que esperan tu respuesta. Enter envía, Shift+Enter salta línea.' : 'Nadie espera respuesta ahora. Lo que escribas acá se publica como comentario del ticket.';
+    v.chatPageHint = nWait > 0 ? 'Arriba de la lista están las ' + nWait + ' que esperan tu respuesta.' + (s.movil ? '' : ' Enter envía, Shift+Enter salta línea.') : 'Nadie espera respuesta ahora. Lo que escribas acá se publica como comentario del ticket.';
     v.chatSub = !isAdmin
       ? (nWait > 0 ? 'El área te escribió en ' + nWait + (nWait === 1 ? ' ticket' : ' tickets') : 'Tus conversaciones con el área')
       : (nWait > 0 ? (() => { const nm = mine.filter(t => waits(t) && t.asig === me.id).length; return 'Esperan respuesta: ' + nm + (nm === 1 ? ' tuyo' : ' tuyos') + ' · ' + (nWait - nm) + ' del equipo'; })() : 'Nadie espera respuesta');
@@ -120,7 +124,7 @@ export const valoresChat = {
       : !isAdmin
       ? (wl.length ? 'El área te escribió en ' + (wl.length === 1 ? '1 ticket' : wl.length + ' tickets') : 'Estás al día con el área')
       : (wl.length ? (wl.length === 1 ? '1 persona espera tu respuesta' : wl.length + ' personas esperan tu respuesta') : 'Nadie espera respuesta');
-    v.chatPageHint = wl.length ? 'Empieza por la más vieja. Enter envía, Shift+Enter salta línea.' : 'Elige cualquier conversación de la lista; lo que escribas se publica como comentario del ticket.';
+    v.chatPageHint = wl.length ? 'Empieza por la más vieja.' + (s.movil ? '' : ' Enter envía, Shift+Enter salta línea.') : 'Elige cualquier conversación de la lista; lo que escribas se publica como comentario del ticket.';
     v.chatFabOn = !!v.chatFab && s.screen !== 'chat';
     this._chatEls = this._chatEls || new Set();
     v.chatRef = this._chatRefFn || (this._chatRefFn = el => { if (el) { this._chatEls.add(el); el.scrollTop = el.scrollHeight; } });

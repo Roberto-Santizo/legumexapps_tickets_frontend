@@ -312,13 +312,21 @@ En modo demostración siguen visibles, como en el prototipo.
   `donde`), reglas en `logic/metodos/recorrido.js`, posición de la tarjeta en
   `logic/valores/capas.js` y capa en `components/capas/Recorrido.jsx` (z-index 90).
   Los elementos se marcan con `data-recorrido="…"`; si se renombra o quita uno, actualizar
-  el paso. En teléfono y tablet la tarjeta es una hoja arriba o abajo. Teclado: ← → y Esc.
+  el paso. En teléfono y tablet la tarjeta es una hoja arriba o abajo, y los pasos marcados
+  `enMenu` (navegación, bandeja, tema) abren el menú solos para señalar lo real. Teclado: ← → y Esc.
   Solo lectura: no llama a la API.
 - Sierra animada en el fondo y logo de Legumex (`public/marca/`).
 - Tickets en tres vistas en escritorio: tarjetas, tabla y kanban (arrastrar entre
   columnas). En el teléfono, una sola: tarjetas (ver abajo).
 
 ## Diseño responsivo (teléfonos y tablets)
+
+- **Chat en teléfono y tablet**: "Chat" del menú abre el panel flotante a pantalla completa
+  (no la página de Chat, que es de escritorio) y el botón de "expandir" no aparece. El
+  cuadro de escribir dice solo "Escribe tu respuesta" (sin atajos de teclado).
+- **Teclado del teléfono**: `interactive-widget=resizes-content` en el viewport de
+  `index.html` hace que el teclado achique la pantalla y el cuadro de escribir quede a la vista.
+- **Usuarios en el teléfono**: la lista no tiene scroll propio; se desplaza la página.
 
 Un solo código para PC y teléfono: **no hay una versión móvil aparte**. En escritorio nada
 cambia (se verificó comparando el DOM contra la versión anterior en recorridos

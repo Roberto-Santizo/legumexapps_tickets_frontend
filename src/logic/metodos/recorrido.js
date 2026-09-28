@@ -28,7 +28,10 @@ export const metodosRecorrido = {
     const n = this.pasosRecorrido().length, i = r.i + d;
     if (i < 0) return;
     if (i >= n) { this.salirRecorrido(); return; }
-    this.setState({ recorrido: { i } });
+    // En el teléfono y la tablet, lo que vive en el menú (navegación, bandeja, tema) está
+    // escondido: el menú se abre solo en esos pasos y se cierra en los demás
+    const paso = this.pasosRecorrido()[i] || {};
+    this.setState({ recorrido: { i }, menuMovil: !!(this.state.movil && paso.enMenu) });
     requestAnimationFrame(() => this.medirRecorrido(true));
   },
 
@@ -39,7 +42,7 @@ export const metodosRecorrido = {
       window.removeEventListener('scroll', this._onRecMedir, true);
       this._onRecMedir = null;
     }
-    this.setState({ recorrido: null, recRect: null });
+    this.setState({ recorrido: null, recRect: null, menuMovil: false });
   },
 
   // Busca el primer elemento visible del paso y guarda su rectángulo (null = tarjeta centrada)

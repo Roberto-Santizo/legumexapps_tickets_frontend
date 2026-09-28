@@ -48,7 +48,7 @@ export default function Usuarios({ V }) {
             {" "}
           </div>
           {" "}
-          <div style={{ "maxHeight": "calc(100vh - 400px)", "minHeight": "96px", "overflowY": "auto", "overscrollBehavior": "contain" }}>
+          <div data-m="lista-usuarios" style={{ "maxHeight": "calc(100vh - 400px)", "minHeight": "96px", "overflowY": "auto", "overscrollBehavior": "contain" }}>
             {" "}
             {V["loading"] ? (<>
               {" "}

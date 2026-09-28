@@ -8,7 +8,7 @@ export const valoresApp = {
     const { s, me, isAdmin } = ctx;
     const bare = true;
     const shortVh = typeof window !== 'undefined' && window.innerHeight < 652;
-    const noPageScroll = (s.screen === 'chat' && !shortVh) || s.screen === 'users';
+    const noPageScroll = !s.movil && ((s.screen === 'chat' && !shortVh) || s.screen === 'users');
     v.sheetOverflow = noPageScroll ? 'hidden' : 'auto';
     v.onSheetScroll = this._onSheetScroll || (this._onSheetScroll = e => this.sheetEdges(e.currentTarget));
     if (typeof requestAnimationFrame !== 'undefined') requestAnimationFrame(() => { const el = document.querySelector('[data-sheet]'); if (el) this.sheetEdges(el); });
@@ -97,6 +97,8 @@ export const valoresApp = {
       onLeave: () => this.setState({ navHover: '' }),
       go: () => {
         if (this.state.nudgedOnly) this.setState({ nudgedOnly: false });
+        // teléfono y tablet: Chat abre el panel flotante a pantalla completa (se lleva mejor con el teclado)
+        if (n.key === 'chat' && this.state.movil) { this.setState({ chatOpen: true, menuMovil: false, notifOpen: false }); return; }
         if (n.key === 'chat') { this.setState({ chatOpen: false, chatQ: '' }); }
         const from = navDefs.findIndex(x => x.key === activeKey), to = navDefs.findIndex(x => x.key === n.key);
         this.setState({ screen: n.key, detailId: null, fichaId: null, dir: to === from ? 'none' : to > from ? 'up' : 'down' });

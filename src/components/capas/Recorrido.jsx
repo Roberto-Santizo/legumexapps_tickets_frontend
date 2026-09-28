@@ -24,9 +24,9 @@ export default function Recorrido({ V }) {
           <p id="rec-texto" style={{ "fontSize": "14px", "lineHeight": "1.5", "color": "var(--n-600)", "margin": "0" }}>{T(V["recTexto"])}</p>
         </div>
         <div style={{ "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "12px", "marginTop": "16px" }}>
-          <div aria-hidden="true" style={{ "display": "flex", "gap": "4px", "alignItems": "center", "flexWrap": "wrap" }}>
+          <div aria-hidden="true" style={{ "display": "flex", "gap": "3px", "alignItems": "center", "flexWrap": "nowrap", "minWidth": "0", "overflow": "hidden" }}>
             {L(V["recPuntos"]).map(p => (
-              <span key={p.key} style={{ "width": p.w, "height": "6px", "borderRadius": "3px", "background": p.bg, "transition": "width 240ms var(--ease-standard),background-color 240ms var(--ease-standard)" }} />
+              <span key={p.key} style={{ "width": p.w, "flexShrink": "0", "height": "5px", "borderRadius": "3px", "background": p.bg, "transition": "width 240ms var(--ease-standard),background-color 240ms var(--ease-standard)" }} />
             ))}
           </div>
           <div style={{ "display": "flex", "gap": "8px", "flexShrink": "0" }}>
